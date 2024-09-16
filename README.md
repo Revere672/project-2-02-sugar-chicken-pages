@@ -7,7 +7,7 @@ Contributors:
 
 Alexey Bobkov - Project Manager
 
-Vikram Kanthadai
+Vikram Kanthadai - Back End
 
 Aidan Briggs - Front end
 
