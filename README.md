@@ -7,8 +7,6 @@ Contributors:
 Alexey Bobkov 
 Vikram Kanthadai
 Aidan Briggs
-Luis Almanza
+Luis Almanza - Back End 1
 Reeve Baker
 Joshua George
-
-This is a test
