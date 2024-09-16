@@ -4,9 +4,15 @@ Purpose:
 This project has the goal to design and develop a restaurant's point-of-sale (POS) and inventory solution. 
 
 Contributors:
-Alexey Bobkov 
-Vikram Kanthadai
-Aidan Briggs
+
+Alexey Bobkov - Project Manager
+
+Vikram Kanthadai - Back End
+
+Aidan Briggs - Front end
+
 Luis Almanza - Back End 1
+
 Reeve Baker
-Joshua George
+
+Joshua George - Connector
