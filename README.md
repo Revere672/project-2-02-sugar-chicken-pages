@@ -15,5 +15,5 @@ Luis Almanza
 
 Reeve Baker
 
-Joshua George
+Joshua George - Connector
 
