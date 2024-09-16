@@ -5,7 +5,7 @@ This project has the goal to design and develop a restaurant's point-of-sale (PO
 
 Contributors:
 
-Alexey Bobkov 
+Alexey Bobkov - Project Manager
 
 Vikram Kanthadai
 
