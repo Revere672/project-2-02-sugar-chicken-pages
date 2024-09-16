@@ -11,9 +11,8 @@ Vikram Kanthadai - Back End
 
 Aidan Briggs - Front end
 
-Luis Almanza
+Luis Almanza - Back End 1
 
 Reeve Baker
 
 Joshua George - Connector
-
