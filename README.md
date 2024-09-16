@@ -13,6 +13,6 @@ Aidan Briggs - Front end
 
 Luis Almanza - Back End 1
 
-Reeve Baker
+Reeve Baker - Frontend
 
 Joshua George - Connector
