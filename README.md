@@ -8,6 +8,6 @@ Alexey Bobkov
 Vikram Kanthadai
 Aidan Briggs
 Luis Almanza
-Reeve Baker
+Reeve Baker - Frontend
 Joshua George
 
