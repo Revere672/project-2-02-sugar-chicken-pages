@@ -6,7 +6,7 @@ This project has the goal to design and develop a restaurant's point-of-sale (PO
 Contributors:
 Alexey Bobkov 
 Vikram Kanthadai
-Aidan Briggs
+Aidan Briggs - Front end
 Luis Almanza
 Reeve Baker
 Joshua George
