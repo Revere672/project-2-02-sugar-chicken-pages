@@ -4,7 +4,7 @@ import datetime
 
 with open("order_items.csv", "w", newline="", encoding="utf-8") as item_file:
     item_writer = csv.writer(item_file)
-    item_field = ["Order_ID", "Item_Type", "Side_1", "Side_2", "Protein_1", "Protein_2", "Protein_3", "Misc_Item", "Item_Cost", "Item_Number"]
+    item_field = ["Order_ID", "Item_Number", "Item_Type", "Side_1", "Side_2", "Protein_1", "Protein_2", "Protein_3", "Misc_Item", "Item_Cost"]
     item_writer.writerow(item_field)
 
     options_reader = open("panda_orders.csv", "r")
