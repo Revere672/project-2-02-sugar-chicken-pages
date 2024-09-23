@@ -19,6 +19,15 @@ CREATE TABLE Order_History (
     Employee_ID INT NOT NULL REFERENCES Employees(Employee_ID)
 );
 
+CREATE TABLE Overarching_Items (
+    Item_Name VARCHAR(50) PRIMARY KEY,
+    Side_Count INT NOT NULL,
+    Protein_Count INT NOT NULL,
+    Has_Misc BOOLEAN NOT NULL,
+    Item_Cost NUMERIC(10, 2) NOT NULL,
+    Active BOOLEAN NOT NULL
+);
+
 CREATE TABLE Order_Items (
     Order_ID INT NOT NULL,
     Item_Number INT NOT NULL,
