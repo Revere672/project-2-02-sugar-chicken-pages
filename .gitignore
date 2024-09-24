@@ -1,3 +1,6 @@
 .env
 .idea
+.vscode
 build
+order_history.csv
+order_items.csv
