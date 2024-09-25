@@ -4,3 +4,5 @@
 build
 order_history.csv
 order_items.csv
+gradle.properties
+.pgpass
