@@ -30,7 +30,7 @@ CREATE TABLE Overarching_Items ( -- This table represents overarching itens bein
 
 CREATE TABLE Menu( -- This table represents individual items like fried rice, super greens. Normal size for the entrees is actually small, so if I order a bowl I will get 'Fried Rice S' menu key. If I order A la Carte medium fried rice I will get 'Fried Rice M'
     Menu_Name VARCHAR(50) PRIMARY KEY, -- Fried Rice S, Orange Chicken S, Drink M, etc.
-    Menu_ID VARCHAR(3) NOT NULL, -- Same as the GUI stuff, R2, R1, V4, etc.
+    Menu_ID VARCHAR(6) NOT NULL, -- Same as the GUI stuff, R2, R1, V4, etc.
     Extra_Cost NUMERIC(10, 2) NOT NULL,
     Active BOOLEAN NOT NULL
 );
@@ -67,6 +67,3 @@ CREATE TABLE Ingredients_Needed ( -- This is a junction table between Menu and I
     Quantity_Needed FLOAT NOT NULL,
     PRIMARY KEY (Menu_Name, Inventory_ID)
 );
-
-
-
