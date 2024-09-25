@@ -28,6 +28,13 @@ CREATE TABLE Overarching_Items ( -- This table represents overarching itens bein
     Active BOOLEAN NOT NULL
 );
 
+CREATE TABLE Menu( -- This table represents individual items like fried rice, super greens. Normal size for the entrees is actually small, so if I order a bowl I will get 'Fried Rice S' menu key. If I order A la Carte medium fried rice I will get 'Fried Rice M'
+    Menu_Name VARCHAR(50) PRIMARY KEY, -- Fried Rice S, Orange Chicken S, Drink M, etc.
+    Menu_ID VARCHAR(3) NOT NULL, -- Same as the GUI stuff, R2, R1, V4, etc.
+    Extra_Cost NUMERIC(10, 2) NOT NULL,
+    Active BOOLEAN NOT NULL
+);
+
 CREATE TABLE Order_Items ( -- This table represents the comprehensive list of orderes and all their items inside. It will carry an orderiD, an item sub-number, a dish that is in overarching items, and the various parts 
     Order_ID INT NOT NULL, 
     Item_Number INT NOT NULL,
@@ -42,13 +49,6 @@ CREATE TABLE Order_Items ( -- This table represents the comprehensive list of or
     PRIMARY KEY (Order_ID, Item_Number),
     CONSTRAINT fk_order
         FOREIGN KEY (Order_ID) REFERENCES Order_History(Order_ID)
-);
-
-CREATE TABLE Menu( -- This table represents individual items like fried rice, super greens. Normal size for the entrees is actually small, so if I order a bowl I will get 'Fried Rice S' menu key. If I order A la Carte medium fried rice I will get 'Fried Rice M'
-    Menu_Name VARCHAR(50) PRIMARY KEY, -- Fried Rice S, Orange Chicken S, Drink M, etc.
-    Menu_ID VARCHAR(3) NOT NULL, -- Same as the GUI stuff, R2, R1, V4, etc.
-    Extra_Cost NUMERIC(10, 2) NOT NULL,
-    Active BOOLEAN NOT NULL
 );
 
 CREATE TABLE Inventory( -- This table represents ingredients that are used for 
