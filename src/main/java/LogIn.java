@@ -17,6 +17,11 @@ public class LogIn {
     @FXML Button logInButton;
 
     @FXML
+    public void nextEntry(ActionEvent e) throws SQLException, ClassNotFoundException {
+        password.requestFocus();
+    }
+
+    @FXML
     public void logIn(ActionEvent e) throws SQLException, ClassNotFoundException {
         String scriptQry = "SELECT * FROM Passwords WHERE Employee_ID = '" + username.getText() + "' AND password = '" + password.getText() + "';";
         ResultSet rs = DBUtil.dbExecuteQuery(scriptQry);
