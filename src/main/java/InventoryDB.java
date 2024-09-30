@@ -64,7 +64,7 @@ public class InventoryDB {
     }
 
     public static void insertProduct(int inventory_ID, String product_name, String supplier, int cost, int quantity) throws SQLException, ClassNotFoundException {
-        String stmt = "INSERT INTO inventory (inventory_ID, product_name, supplier, cost, quantity) VALUES ('"+inventory_ID+"', '"+product_name+"', '"+supplier+"', '"+cost+"', '"+quantity+"')";
+        String stmt = "INSERT INTO inventory (inventory_ID, product_name, supplier, cost, quantity) VALUES ('"+inventory_ID+"', '"+product_name+"', '"+supplier+"', '"+cost+"', '"+quantity+"');";
 
         try {
             DBUtil.dbExecuteUpdate(stmt);

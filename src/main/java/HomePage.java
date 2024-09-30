@@ -1,9 +1,7 @@
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.sql.*;
 
