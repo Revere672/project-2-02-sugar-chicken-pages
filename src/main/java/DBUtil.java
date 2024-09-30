@@ -37,8 +37,8 @@ public class DBUtil {
         CachedRowSet crs = null;
 
         try {
-            stmt = conn.createStatement();
             System.out.println(queryStmt);
+            stmt = conn.createStatement();
             resultSet = stmt.executeQuery(queryStmt);
 
             crs = RowSetProvider.newFactory().createCachedRowSet();
@@ -54,7 +54,6 @@ public class DBUtil {
             if (stmt != null) {
                 stmt.close();
             }
-
         }
 
         return crs;
@@ -72,7 +71,6 @@ public class DBUtil {
             if (stmt != null) {
                 stmt.close();
             }
-
         }
     }
 }
