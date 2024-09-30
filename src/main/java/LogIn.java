@@ -37,6 +37,9 @@ public class LogIn {
         }
         else {
             System.out.println("Login Failed");
+            username.clear();
+            password.clear();
+            username.requestFocus();
         }
     }
 }
