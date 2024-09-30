@@ -1,7 +1,6 @@
 import DBUtil;
 import java.sql.*;
 import javafx.collections.ObservableList;
-import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
 
 public class InventoryDB {
@@ -28,7 +27,7 @@ public class InventoryDB {
             inventory.setInventoryID(rsInventory.getInt("inventory_ID"));
             inventory.setProductName(rsInventory.getString("product_name"));
             inventory.setSupplier(rsInventory.getString("supplier"));
-            inventory.setCost(rsInventory.getInt("cost"));
+            inventory.setCost(rsInventory.getDouble("cost"));
             inventory.setQuantity(rsInventory.getInt("quantity"));
         }
 
@@ -57,7 +56,7 @@ public class InventoryDB {
             inventory.setInventoryID(rsInventory.getInt("inventory_ID"));
             inventory.setProductName(rsInventory.getString("product_name"));
             inventory.setSupplier(rsInventory.getString("supplier"));
-            inventory.setCost(rsInventory.getInt("cost"));
+            inventory.setCost(rsInventory.getDouble("cost"));
             inventory.setQuantity(rsInventory.getInt("quantity"));
         }
 
