@@ -1,5 +1,3 @@
-package application;
-
 import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,9 +16,24 @@ public class LogIn {
     @FXML PasswordField password;
     @FXML Button logInButton;
 
-    public void logIn(ActionEvent e) {
-        String scriptQry = "SELECT * FROM Passwords WHERE Employee_ID = " + username.getText() + "AND password = " + password.getText() + ";";
+    @FXML
+    public void logIn(ActionEvent e) throws SQLException, ClassNotFoundException {
+        String scriptQry = "SELECT * FROM Passwords WHERE Employee_ID = '" + username.getText() + "' AND password = '" + password.getText() + "';";
         ResultSet rs = DBUtil.dbExecuteQuery(scriptQry);
-        System.out.println(rs.next());
+        if(rs.next()) {
+            if(rs.getInt(1) >= 200000) {
+                GUIRunner.isManager = true;
+                System.out.println("This user is a Manager");
+            }
+            else {
+                GUIRunner.isManager = false;
+                System.out.println("This user is a Cashier");
+
+            }
+            System.out.println("Login Successful");
+        }
+        else {
+            System.out.println("Login Failed");
+        }
     }
 }

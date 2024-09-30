@@ -54,7 +54,6 @@ public class DBUtil {
                 stmt.close();
             }
 
-            dbDisconnect();
         }
 
         return crs;
@@ -73,7 +72,6 @@ public class DBUtil {
                 stmt.close();
             }
 
-            dbDisconnect();
         }
     }
 }
