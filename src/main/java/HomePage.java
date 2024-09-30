@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import java.sql.*;
 
 public class HomePage extends Application {
 
@@ -16,7 +17,8 @@ public class HomePage extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        System.out.println((testingDBUtil.testing()));
         launch();
     }
 

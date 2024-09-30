@@ -3,6 +3,10 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
+dependencies {
+    implementation 'org.postgresql:postgresql:42.2.8'
+}
+
 repositories {
     mavenCentral()
 }
