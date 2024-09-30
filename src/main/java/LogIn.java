@@ -1,14 +1,11 @@
-import java.util.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.*;
-
-import java.sql.*;
-import javax.sql.rowset.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 public class LogIn {
 
@@ -36,6 +33,7 @@ public class LogIn {
 
             }
             System.out.println("Login Successful");
+            GUIRunner.changeScene("inventory");
         }
         else {
             System.out.println("Login Failed");
