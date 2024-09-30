@@ -6,3 +6,7 @@ order_history.csv
 order_items.csv
 gradle.properties
 .pgpass
+.gradle\8.8\executionHistory
+.gradle\8.8\fileHashes
+.gradle\buildOutputCleanup
+.gradle\nb-cache\project-2-02-sugar-chicken-130352565
