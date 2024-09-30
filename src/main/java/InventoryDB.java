@@ -49,7 +49,6 @@ public class InventoryDB {
 
     private static ObservableList<Inventory> getInventoryList(ResultSet rsInventory) throws SQLException, ClassNotFoundException {
         ObservableList<Inventory> inventoryList = FXCollections.observableArrayList();
-        System.out.println("InventoryList being created");
 
         while (rsInventory.next()) {
             Inventory inventory = new Inventory();
