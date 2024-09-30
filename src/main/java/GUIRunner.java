@@ -5,12 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.sql.*;
 
 public class GUIRunner extends Application {
+    public static boolean isManager;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/inventory.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
 
         stage.setScene(new Scene(root));
         stage.show();
