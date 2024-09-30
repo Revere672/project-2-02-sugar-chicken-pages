@@ -12,7 +12,7 @@ public class InventoryTable {
     @FXML
     private TextField product_search;
     @FXML
-    private TableView<Inventory> inventoryTable;
+    private TableView<Inventory> inventory_table;
     @FXML
     private TableColumn<Inventory, Integer>  inventory_ID_col;
     @FXML
@@ -22,7 +22,7 @@ public class InventoryTable {
     @FXML
     private TableColumn<Inventory, Double> cost_col;
     @FXML
-    private TableColumn<Inventory, Integer> quanity_col;
+    private TableColumn<Inventory, Double> quantity_col;
 
     @FXML
     private void searchInventory(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
@@ -54,7 +54,7 @@ public class InventoryTable {
         prod_name_col.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         supplier_col.setCellValueFactory(cellData -> cellData.getValue().supplierProperty());
         cost_col.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
-        quanity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
+        quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
     }
 
     @FXML
@@ -62,12 +62,12 @@ public class InventoryTable {
         if (inventory != null) {
             ObservableList<Inventory> inventoryData = FXCollections.observableArrayList();
             inventoryData.add(inventory);
-            inventoryTable.setItems(inventoryData);
+            inventory_table.setItems(inventoryData);
         }
     }
 
     @FXML
     private void populateInventories(ObservableList<Inventory> inventoryData) throws ClassNotFoundException {
-        inventoryTable.setItems(inventoryData);
+        inventory_table.setItems(inventoryData);
     }
 }

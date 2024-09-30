@@ -10,14 +10,14 @@ public class Inventory {
     private StringProperty product_name;
     private StringProperty supplier;
     private DoubleProperty cost;
-    private IntegerProperty quantity;
+    private DoubleProperty quantity;
 
     public Inventory() {
         this.inventory_ID = new SimpleIntegerProperty();
         this.product_name = new SimpleStringProperty();
         this.supplier = new SimpleStringProperty();
         this.cost = new SimpleDoubleProperty();
-        this.quantity = new SimpleIntegerProperty();
+        this.quantity = new SimpleDoubleProperty();
     }
 
     public int getInventoryID() {
@@ -68,15 +68,15 @@ public class Inventory {
         return cost;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity.get();
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity.set(quantity);
     }
 
-    public IntegerProperty quantityProperty() {
+    public DoubleProperty quantityProperty() {
         return quantity;
     }
 }

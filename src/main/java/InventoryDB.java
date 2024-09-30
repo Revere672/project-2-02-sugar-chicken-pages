@@ -1,4 +1,3 @@
-import DBUtil;
 import java.sql.*;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
@@ -6,7 +5,7 @@ import javafx.collections.FXCollections;
 public class InventoryDB {
     
     public static Inventory searchInventory(String product_name) throws SQLException, ClassNotFoundException {
-        String stmt = "SELECT * FROM inventory WHERE product_name="+product_name;
+        String stmt = "SELECT * FROM inventory WHERE product_name='"+product_name+"';";
 
         try {
             ResultSet rsInventory = DBUtil.dbExecuteQuery(stmt);
@@ -28,14 +27,14 @@ public class InventoryDB {
             inventory.setProductName(rsInventory.getString("product_name"));
             inventory.setSupplier(rsInventory.getString("supplier"));
             inventory.setCost(rsInventory.getDouble("cost"));
-            inventory.setQuantity(rsInventory.getInt("quantity"));
+            inventory.setQuantity(rsInventory.getDouble("quantity"));
         }
 
         return inventory;
     }
 
     public static ObservableList<Inventory> searchInventories() throws SQLException, ClassNotFoundException {
-        String stmt = "SELECT * FROM inventory";
+        String stmt = "SELECT * FROM inventory;";
 
         try {
             ResultSet rsInventory = DBUtil.dbExecuteQuery(stmt);
@@ -50,6 +49,7 @@ public class InventoryDB {
 
     private static ObservableList<Inventory> getInventoryList(ResultSet rsInventory) throws SQLException, ClassNotFoundException {
         ObservableList<Inventory> inventoryList = FXCollections.observableArrayList();
+        System.out.println("InventoryList being created");
 
         while (rsInventory.next()) {
             Inventory inventory = new Inventory();
@@ -57,7 +57,7 @@ public class InventoryDB {
             inventory.setProductName(rsInventory.getString("product_name"));
             inventory.setSupplier(rsInventory.getString("supplier"));
             inventory.setCost(rsInventory.getDouble("cost"));
-            inventory.setQuantity(rsInventory.getInt("quantity"));
+            inventory.setQuantity(rsInventory.getDouble("quantity"));
         }
 
         return inventoryList;
