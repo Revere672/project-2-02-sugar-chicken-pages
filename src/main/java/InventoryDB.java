@@ -4,15 +4,15 @@ import javafx.collections.FXCollections;
 
 public class InventoryDB {
     
-    public static Inventory searchInventory(String product_name) throws SQLException, ClassNotFoundException {
-        String stmt = "SELECT * FROM inventory WHERE product_name='"+product_name+"';";
+    public static ObservableList<Inventory> searchInventory(String product_name) throws SQLException, ClassNotFoundException {
+        String stmt = "SELECT * FROM inventory WHERE product_name LIKE '%"+product_name+"%';";
 
         try {
             ResultSet rsInventory = DBUtil.dbExecuteQuery(stmt);
 
-            Inventory inventory = getInventoryResult(rsInventory);
+            ObservableList<Inventory> inventory_list = getInventoryList(rsInventory);
 
-            return inventory;
+            return inventory_list;
         } catch (Exception e) {
             throw e;
         }
@@ -39,9 +39,9 @@ public class InventoryDB {
         try {
             ResultSet rsInventory = DBUtil.dbExecuteQuery(stmt);
 
-            ObservableList<Inventory> inventoryList = getInventoryList(rsInventory);
+            ObservableList<Inventory> inventory_list = getInventoryList(rsInventory);
 
-            return inventoryList;
+            return inventory_list;
         } catch (Exception e) {
             throw e;
         }
@@ -58,6 +58,7 @@ public class InventoryDB {
             inventory.setSupplier(rsInventory.getString("supplier"));
             inventory.setCost(rsInventory.getDouble("cost"));
             inventory.setQuantity(rsInventory.getDouble("quantity"));
+            inventoryList.add(inventory);
         }
 
         return inventoryList;

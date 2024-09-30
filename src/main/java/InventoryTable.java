@@ -27,9 +27,9 @@ public class InventoryTable {
     @FXML
     private void searchInventory(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         try {
-            Inventory inventory = InventoryDB.searchInventory(product_search.getText());
+            ObservableList<Inventory> inventoryData = InventoryDB.searchInventory(product_search.getText());
 
-            populateInventory(inventory);
+            populateInventories(inventoryData);
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -49,12 +49,13 @@ public class InventoryTable {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
         inventory_ID_col.setCellValueFactory(cellData -> cellData.getValue().inventoryIDProperty().asObject());
         prod_name_col.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         supplier_col.setCellValueFactory(cellData -> cellData.getValue().supplierProperty());
         cost_col.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
         quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
+        searchInventories(null);
     }
 
     @FXML
