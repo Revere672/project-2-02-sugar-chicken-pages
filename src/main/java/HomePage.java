@@ -18,7 +18,6 @@ public class HomePage extends Application {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        System.out.println((testingDBUtil.testing()));
         launch();
     }
 
