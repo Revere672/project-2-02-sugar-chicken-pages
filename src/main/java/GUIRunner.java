@@ -1,13 +1,12 @@
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
-import java.sql.*;
+import java.sql.SQLException;
 
-public class HomePage extends Application {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class GUIRunner extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -18,7 +17,8 @@ public class HomePage extends Application {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        System.out.println(testingDBUtil.testing());
+        DBUtil.dbConnect(args[0],args[1],args[1],args[2]);
+
         launch();
     }
 

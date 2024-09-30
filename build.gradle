@@ -3,6 +3,11 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
+        // https://mvnrepository.com/artifact/org.postgresql/postgresql
+dependencies {
+implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
+}
+
 repositories {
     mavenCentral()
 }
@@ -11,12 +16,107 @@ javafx {
     version = "22.0.1"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
+task buildDB(type: Exec){
+    workingDir "src/main"
+    environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
 
-task buildDB(type:Exec) {
-   workingDir '/src/main'
+    
+    commandLine 'powershell' , '/C' , 'py ./python/db_script.py'
+    doLast{
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+            commandLine 'powershell' , '/C' , 'psql -f ./resources/sql/insert_tables.sql'
+        }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+            commandLine 'powershell' , '/C','psql -c \'\\copy inventory FROM "./resources/csv/inventory.csv" CSV HEADER\''
+        }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'\\copy menu FROM "./resources/csv/menu.csv" CSV HEADER\''
+        }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'\\copy overarching_items FROM "./resources/csv/overarching_items.csv" CSV HEADER\''
+        }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'\\copy ingredients_needed FROM "./resources/csv/ingredients_needed.csv" CSV HEADER\''
+        }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'\\copy employees FROM "./resources/csv/employees.csv" CSV HEADER\''
+        }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'\\copy passwords FROM "./resources/csv/passwords.csv" CSV HEADER\''
+        }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'\\copy order_history FROM "./resources/csv/order_history.csv" CSV HEADER\''
+        }
+         exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'\\copy order_items FROM "./resources/csv/order_items.csv" CSV HEADER\''
+        }
+    }
+}
 
-   commandLine 'py', './python/db_script.py'
-   commandLine 'bash', './resources/sql/insert_script.bash'
-} 
 
-mainClassName = 'HomePage'
+task dropAll{
+    doLast{
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+            environment "PGUSER", "${PGUSER}"
+            environment "PGHOST", "${PGHOST}"
+            environment "PGDATABASE", "${PGDATABASE}"
+            commandLine 'powershell' , '/C','psql -c \'DROP TABLE passwords;DROP TABLE ingredients_needed;DROP TABLE order_items;DROP TABLE order_history;DROP TABLE employees;DROP TABLE overarching_items;DROP TABLE menu;DROP TABLE inventory;\''
+        }
+    }
+}
+
+run {
+workingDir "src/main/java"
+mainClassName = 'GUIRunner'
+args = ["${PGHOST}","${PGUSER}", "${PGPASSWORD}"]
+}

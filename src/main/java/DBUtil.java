@@ -2,16 +2,13 @@ import java.sql.*;
 import javax.sql.rowset.*;
 
 public class DBUtil {
-    private static String PGUSER = System.getenv("PGUSER");
-    private static String PGPASSWORD = System.getenv("PGPASSWORD");
-    private static String PGHOST = System.getenv("PGHOST");
-    private static String PGDATABASE = System.getenv("PGDATABASE");
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
     private static Connection conn = null;
-    private static final String connStr = "jdbc:postgresql://" + PGHOST + "/" + PGDATABASE;
 
-    public static void dbConnect() throws SQLException, ClassNotFoundException {
+    public static void dbConnect(String PGHOST,String PGDATABASE,String PGUSER,String PGPASSWORD)throws SQLException, ClassNotFoundException {
+        String connStr = "jdbc:postgresql://" + PGHOST + ":5432/" + PGDATABASE;
+        System.out.println(connStr);
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(connStr, PGUSER, PGPASSWORD);
@@ -40,7 +37,6 @@ public class DBUtil {
         CachedRowSet crs = null;
 
         try {
-            dbConnect();
             stmt = conn.createStatement();
             resultSet = stmt.executeQuery(queryStmt);
 
@@ -67,7 +63,6 @@ public class DBUtil {
     public static void dbExecuteUpdate(String updateStmt) throws SQLException, ClassNotFoundException {
         Statement stmt = null;
         try {
-            dbConnect();
             stmt = conn.createStatement();
             stmt.executeUpdate(updateStmt);
         } catch (Exception e) {
