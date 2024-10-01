@@ -27,9 +27,13 @@ public class InventoryTable {
     @FXML
     private void searchInventory(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         try {
-            Inventory inventory = InventoryDB.searchInventory(product_search.getText());
+            if (product_search.getText() == "" || product_search.getText() == null) {
+                searchInventories(null);
+            }
 
-            populateInventory(inventory);
+            ObservableList<Inventory> inventoryData = InventoryDB.searchInventory(product_search.getText());
+
+            populateInventories(inventoryData);
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -49,12 +53,14 @@ public class InventoryTable {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
         inventory_ID_col.setCellValueFactory(cellData -> cellData.getValue().inventoryIDProperty().asObject());
         prod_name_col.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         supplier_col.setCellValueFactory(cellData -> cellData.getValue().supplierProperty());
         cost_col.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
         quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
+        product_search.setText("");
+        searchInventories(null);
     }
 
     @FXML
@@ -69,5 +75,15 @@ public class InventoryTable {
     @FXML
     private void populateInventories(ObservableList<Inventory> inventoryData) throws ClassNotFoundException {
         inventory_table.setItems(inventoryData);
+    }
+
+    @FXML
+    private void addProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("inventory_add_product");
+    }
+
+    @FXML
+    private void editProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("inventory_edit_product");
     }
 }
