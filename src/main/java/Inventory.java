@@ -10,22 +10,14 @@ public class Inventory {
     private StringProperty product_name;
     private StringProperty supplier;
     private DoubleProperty cost;
-<<<<<<< HEAD
-    private IntegerProperty quantity;
-=======
     private DoubleProperty quantity;
->>>>>>> GUI-branch
 
     public Inventory() {
         this.inventory_ID = new SimpleIntegerProperty();
         this.product_name = new SimpleStringProperty();
         this.supplier = new SimpleStringProperty();
         this.cost = new SimpleDoubleProperty();
-<<<<<<< HEAD
-        this.quantity = new SimpleIntegerProperty();
-=======
         this.quantity = new SimpleDoubleProperty();
->>>>>>> GUI-branch
     }
 
     public int getInventoryID() {
@@ -76,17 +68,6 @@ public class Inventory {
         return cost;
     }
 
-<<<<<<< HEAD
-    public int getQuantity() {
-        return quantity.get();
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity.set(quantity);
-    }
-
-    public IntegerProperty quantityProperty() {
-=======
     public double getQuantity() {
         return quantity.get();
     }
@@ -96,7 +77,6 @@ public class Inventory {
     }
 
     public DoubleProperty quantityProperty() {
->>>>>>> GUI-branch
         return quantity;
     }
 }
