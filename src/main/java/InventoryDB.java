@@ -86,4 +86,29 @@ public class InventoryDB {
             throw e;
         }
     }
+
+    public static Inventory findProduct(String product_name) throws SQLException, ClassNotFoundException {
+        try {
+            String findStmt = "SELECT * FROM inventory WHERE product_name='"+product_name+"';";
+            ResultSet rs = DBUtil.dbExecuteQuery(findStmt);
+            return InventoryDB.getInventoryResult(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static Double getRestock(String product_name) throws SQLException, ClassNotFoundException {
+        try {
+            String findStmt = "SELECT * FROM inventory WHERE product_name='"+product_name+"';";
+            ResultSet rs = DBUtil.dbExecuteQuery(findStmt);
+            if (rs.next()) {
+                return rs.getDouble("restock_quantity");
+            }
+            return 0.0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }
