@@ -17,5 +17,7 @@ public class GUIBuilder {
         GUIRunner.scenes.put("employees", employees);
         Scene inventory_add_product = new Scene(FXMLLoader.load(getClass().getResource("/fxml/inventory_add_product.fxml")));
         GUIRunner.scenes.put("inventory_add_product", inventory_add_product);
+        Scene inventory_edit_product = new Scene(FXMLLoader.load(getClass().getResource("/fxml/inventory_edit_product.fxml")));
+        GUIRunner.scenes.put("inventory_edit_product", inventory_edit_product);
     }
 }

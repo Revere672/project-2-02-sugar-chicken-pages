@@ -81,4 +81,9 @@ public class InventoryTable {
     private void addProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("inventory_add_product");
     }
+
+    @FXML
+    private void editProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("inventory_edit_product");
+    }
 }
