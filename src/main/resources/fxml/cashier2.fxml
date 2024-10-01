@@ -169,7 +169,7 @@
          </font>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="203.0" layoutY="348.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Button fx:id="button_back" layoutX="216.0" layoutY="358.0" mnemonicParsing="false" onAction="#switch_to_casher1" text="Back">
+      <Button fx:id="button_back" layoutX="216.0" layoutY="358.0" mnemonicParsing="false" onAction="#switch_to_cashier1" text="Back">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>

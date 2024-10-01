@@ -25,10 +25,6 @@ public class GUIRunner extends Application {
         stage.show();
     }
 
-    public void loadScenes() throws IOException {
-
-    }
-
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
         DBUtil.dbConnect(args[0], args[1], args[1], args[2]);
         scenes = new HashMap<>();

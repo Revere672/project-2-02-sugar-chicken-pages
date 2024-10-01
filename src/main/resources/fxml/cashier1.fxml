@@ -30,17 +30,17 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="512.0" layoutY="158.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="434.0" layoutY="206.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="512.0" layoutY="206.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Button fx:id="button_cub_meal" layoutX="438.0" layoutY="100.0" mnemonicParsing="false" text="Cub Meal">
+      <Button fx:id="button_cub_meal" layoutX="438.0" layoutY="100.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="Cub Meal">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="button_carte" layoutX="515.0" layoutY="99.0" mnemonicParsing="false" text="A la Carte" textAlignment="CENTER">
+      <Button fx:id="button_carte" layoutX="515.0" layoutY="99.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="A la Carte" textAlignment="CENTER">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="button_big_plate" layoutX="353.0" layoutY="99.0" mnemonicParsing="false" text="Bigger Plate">
+      <Button fx:id="button_big_plate" layoutX="353.0" layoutY="99.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="Bigger Plate">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
@@ -50,7 +50,7 @@
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="button_plate" layoutX="294.0" layoutY="100.0" mnemonicParsing="false" text="Plate">
+      <Button fx:id="button_plate" layoutX="294.0" layoutY="100.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="Plate">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>

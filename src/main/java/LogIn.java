@@ -26,14 +26,15 @@ public class LogIn {
             if(rs.getInt(1) >= 200000) {
                 GUIRunner.isManager = true;
                 System.out.println("This user is a Manager");
+                GUIRunner.changeScene("inventory");
             }
             else {
                 GUIRunner.isManager = false;
                 System.out.println("This user is a Cashier");
+                GUIRunner.changeScene("cashier1");
 
             }
             System.out.println("Login Successful");
-            GUIRunner.changeScene("inventory");
         }
         else {
             System.out.println("Login Failed");
