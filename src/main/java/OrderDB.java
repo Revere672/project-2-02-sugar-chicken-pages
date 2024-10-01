@@ -32,8 +32,21 @@ public class OrderDB {
         return order;
     }
 
+    public static ObservableList<Order> searchOrders(int offset, int count) throws SQLException, ClassNotFoundException {
+        String stmt = "SELECT * FROM order_history ORDER BY order_ID DESC LIMIT " + count + " OFFSET " + offset + ";";
+
+        try {
+            ResultSet rsOrder = DBUtil.dbExecuteQuery(stmt);
+
+            ObservableList<Order> orderList = getOrderList(rsOrder);
+
+            return orderList;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
     public static ObservableList<Order> searchOrders() throws SQLException, ClassNotFoundException {
-        String stmt = "SELECT * FROM order_history LIMIT 1000;";
+        String stmt = "SELECT * FROM order_history ORDER BY order_ID DESC LIMIT 1000 OFFSET 0;";
 
         try {
             ResultSet rsOrder = DBUtil.dbExecuteQuery(stmt);
