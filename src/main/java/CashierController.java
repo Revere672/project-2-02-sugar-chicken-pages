@@ -1,20 +1,21 @@
 
 import java.io.IOException;
-import javafx.scene.Scene;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class Cashier {
+public class CashierController  {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
-    
+
     public void switch_to_cashier1(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier1.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -30,6 +31,11 @@ public class Cashier {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void sendToReceipt(ActionEvent event) throws IOException{
+        scene = ((Node)event.getSource()).getScene();
+        DisplayReceipt.updateRecipt(scene);
     }
 
     //Buttons for all of the serving size options
