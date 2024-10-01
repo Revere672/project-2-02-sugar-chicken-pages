@@ -10,3 +10,4 @@ gradle.properties
 .gradle\8.8\fileHashes
 .gradle\buildOutputCleanup
 .gradle\nb-cache\project-2-02-sugar-chicken-130352565
+bin
