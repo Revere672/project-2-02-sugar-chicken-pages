@@ -11,7 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
-public class InventoryAddProductController {
+public class InventoryEditProductController {
     @FXML
     private TextField product_search;
     @FXML
@@ -49,10 +49,10 @@ public class InventoryAddProductController {
             if (product_search.getText() == "" || product_search.getText() == null) {
                 searchInventories(null);
             }
-
-            ObservableList<Inventory> inventoryData = InventoryDB.searchInventory(product_search.getText());
-
-            populateInventories(inventoryData);
+            else {
+                ObservableList<Inventory> inventoryData = InventoryDB.searchInventory(product_search.getText());
+                populateInventories(inventoryData);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -84,6 +84,8 @@ public class InventoryAddProductController {
         cost_text.setText("");
         restock_text.setText("");
         failed_text.setText("");
+        product_drop_down.setValue(null);
+        product_drop_down.setItems(null);
         searchInventory(null);
     }
 
@@ -102,14 +104,30 @@ public class InventoryAddProductController {
     }
 
     @FXML
-    private void apply(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        if (product_name_text.getText() == "" || supplier_text.getText() == "" || cost_text.getText() == ""
-            || quantity_text.getText() == "" || restock_text.getText() == "") {
+    private void searchProduct(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
+        try {
+            ObservableList<Inventory> inventoryData;
+            if (product_search.getText() == "" || product_search.getText() == null) {
+                inventoryData = InventoryDB.searchInventories();
+            }
+            else {
+                inventoryData = InventoryDB.searchInventory(product_edit_search.getText());
+            }
 
+            product_drop_down.setItems(inventoryData);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @FXML
+    private void apply(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if (product_name_text.getText() == "" || supplier_text.getText() == "" || cost_text.getText() == "" || restock_text.getText() == "") {
             addFailed();
         }
         else {
-            InventoryDB.insertProduct(product_name_text.getText(), supplier_text.getText(), cost_text.getText(), quantity_text.getText(), restock_text.getText());
+            InventoryDB.editProduct(product_drop_down.getValue(), product_name_text.getText(), supplier_text.getText(), cost_text.getText(), restock_text.getText());
             product_name_text.setText(null);
             supplier_text.setText(null);
             cost_text.setText(null);
@@ -134,10 +152,10 @@ public class InventoryAddProductController {
         failed_text.setText("One or more entries are blank");
     }
 
-    @FXML
-    private void nameEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        supplier_text.requestFocus();
-    }
+    // @FXML
+    // private void nameEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    //     supplier_text.requestFocus();
+    // }
 
     @FXML
     private void supplierEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {

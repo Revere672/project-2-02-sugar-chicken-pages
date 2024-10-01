@@ -46,10 +46,10 @@ public class InventoryAddProductController {
             if (product_search.getText() == "" || product_search.getText() == null) {
                 searchInventories(null);
             }
-
-            ObservableList<Inventory> inventoryData = InventoryDB.searchInventory(product_search.getText());
-
-            populateInventories(inventoryData);
+            else {
+                ObservableList<Inventory> inventoryData = InventoryDB.searchInventory(product_search.getText());
+                populateInventories(inventoryData);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;

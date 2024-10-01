@@ -76,4 +76,14 @@ public class InventoryDB {
             throw e;
         }
     }
+
+    public static void editProduct(String orig_name, String product_name, String supplier, String cost, String restock_quantity) throws SQLException, ClassNotFoundException {
+        String stmt = "UPDATE inventory SET product_name='"+product_name+"', supplier='"+supplier+"', cost='"+cost+"', restock_quantity='"+restock_quantity+"' WHERE product_name='"+orig_name+"';";
+
+        try {
+            DBUtil.dbExecuteUpdate(stmt);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryEditProductController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="600.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" opacity="0.3" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
@@ -44,8 +44,8 @@
          <children>
             <ChoiceBox fx:id="product_drop_down" layoutX="104.0" layoutY="32.0" prefWidth="150.0" />
             <Text layoutX="14.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Product" />
-            <Button fx:id="apply_button" layoutX="290.0" layoutY="218.0" mnemonicParsing="false" text="Apply" />
-            <Button fx:id="cancel_button" layoutX="227.0" layoutY="218.0" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="apply_button" layoutX="290.0" layoutY="218.0" mnemonicParsing="false" onAction="#apply" text="Apply" />
+            <Button fx:id="cancel_button" layoutX="227.0" layoutY="218.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
             <TextField fx:id="product_name_text" layoutX="104.0" layoutY="66.0" />
             <TextField fx:id="supplier_text" layoutX="103.0" layoutY="100.0" />
             <TextField fx:id="cost_text" layoutX="104.0" layoutY="134.0" />
@@ -55,7 +55,7 @@
             <Text layoutX="40.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost" />
             <Text layoutX="6.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Quantity" />
             <TextArea fx:id="failed_text" layoutX="14.0" layoutY="211.0" prefHeight="40.0" prefWidth="203.0" />
-            <TextField fx:id="product_edit_search" layoutX="104.0" layoutY="7.0" promptText="Search" />
+            <TextField fx:id="product_edit_search" layoutX="104.0" layoutY="7.0" onAction="#searchProduct" promptText="Search" />
          </children>
       </Pane>
    </children>
