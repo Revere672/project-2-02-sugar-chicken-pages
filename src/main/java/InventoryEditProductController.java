@@ -17,7 +17,7 @@ public class InventoryEditProductController {
     @FXML
     private TextField product_edit_search;
     @FXML
-    private ChoiceBox product_drop_down;
+    private ChoiceBox<Inventory> product_drop_down;
     @FXML
     private TextField product_name_text;
     @FXML
@@ -127,7 +127,7 @@ public class InventoryEditProductController {
             addFailed();
         }
         else {
-            InventoryDB.editProduct(product_drop_down.getValue(), product_name_text.getText(), supplier_text.getText(), cost_text.getText(), restock_text.getText());
+            InventoryDB.editProduct(product_drop_down.getValue().getProductName(), product_name_text.getText(), supplier_text.getText(), cost_text.getText(), restock_text.getText());
             product_name_text.setText(null);
             supplier_text.setText(null);
             cost_text.setText(null);
@@ -164,16 +164,11 @@ public class InventoryEditProductController {
 
     @FXML
     private void costEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        quantity_text.requestFocus();
-    }
-
-    @FXML
-    private void quantityEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         restock_text.requestFocus();
     }
 
     @FXML
     private void restockEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        add_button.requestFocus();
+        apply_button.requestFocus();
     }
 }
