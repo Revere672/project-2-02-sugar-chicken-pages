@@ -21,21 +21,21 @@
       <Circle fill="WHITE" layoutX="44.0" layoutY="38.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
       <TableView fx:id="inventory_table" layoutX="15.0" layoutY="158.0" prefHeight="200.0" prefWidth="569.0">
         <columns>
-          <TableColumn fx:id="inventory_ID_col" prefWidth="86.66662311553955" text="Inventory ID" />
-          <TableColumn fx:id="prod_name_col" prefWidth="99.33338165283203" text="Product" />
-            <TableColumn fx:id="supplier_col" prefWidth="100.66661071777344" text="Supplier" />
-            <TableColumn fx:id="cost_col" prefWidth="81.3333740234375" text="Cost" />
-            <TableColumn fx:id="quantity_col" prefWidth="101.3333740234375" text="Quantity" />
-            <TableColumn fx:id="actions_col" prefWidth="104.00003051757812" text="Actions" />
+          <TableColumn fx:id="inventory_ID_col" prefWidth="112.66665077209473" text="Inventory ID" />
+          <TableColumn fx:id="prod_name_col" prefWidth="104.00003051757812" text="Product" />
+            <TableColumn fx:id="supplier_col" prefWidth="107.33326721191406" text="Supplier" />
+            <TableColumn fx:id="cost_col" prefWidth="94.0" text="Cost" />
+            <TableColumn fx:id="quantity_col" prefWidth="151.33334350585938" text="Quantity %" />
         </columns>
       </TableView>
-      <Button fx:id="add_product_button" layoutX="491.0" layoutY="85.0" mnemonicParsing="false" text="+ Add Product" />
+      <Button fx:id="add_product_button" layoutX="491.0" layoutY="85.0" mnemonicParsing="false" onAction="#addProduct" text="+ Add Product" />
       <Text fx:id="inventory_text" layoutX="15.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory">
          <font>
             <Font size="32.0" />
          </font>
       </Text>
-      <TextField fx:id="product_search" layoutX="15.0" layoutY="123.0" onAction="#searchInventory" promptText="Search" />
-      <Button fx:id="product_search_button" layoutX="173.0" layoutY="123.0" mnemonicParsing="false" onAction="#searchInventory" prefHeight="25.0" prefWidth="27.0" />
+      <TextField fx:id="product_search" layoutX="15.0" layoutY="123.0" onAction="#searchInventory" promptText="Enter Product Name" />
+      <Button fx:id="product_search_button" layoutX="173.0" layoutY="123.0" mnemonicParsing="false" onAction="#searchInventory" prefHeight="25.0" prefWidth="60.0" text="Search" />
+      <Button fx:id="product_edit_button" layoutX="240.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Edit" />
    </children>
 </AnchorPane>

@@ -27,7 +27,7 @@ public class InventoryDB {
             inventory.setProductName(rsInventory.getString("product_name"));
             inventory.setSupplier(rsInventory.getString("supplier"));
             inventory.setCost(rsInventory.getDouble("cost"));
-            inventory.setQuantity(rsInventory.getDouble("quantity"));
+            inventory.setQuantity(Math.round((rsInventory.getDouble("quantity") / rsInventory.getDouble("restock_quantity")) * 1000.0) / 10.0);
         }
 
         return inventory;
@@ -56,15 +56,19 @@ public class InventoryDB {
             inventory.setProductName(rsInventory.getString("product_name"));
             inventory.setSupplier(rsInventory.getString("supplier"));
             inventory.setCost(rsInventory.getDouble("cost"));
-            inventory.setQuantity(rsInventory.getDouble("quantity"));
+            inventory.setQuantity(Math.round((rsInventory.getDouble("quantity") / rsInventory.getDouble("restock_quantity")) * 100.0));
             inventoryList.add(inventory);
         }
 
         return inventoryList;
     }
 
-    public static void insertProduct(int inventory_ID, String product_name, String supplier, int cost, int quantity) throws SQLException, ClassNotFoundException {
-        String stmt = "INSERT INTO inventory (inventory_ID, product_name, supplier, cost, quantity) VALUES ('"+inventory_ID+"', '"+product_name+"', '"+supplier+"', '"+cost+"', '"+quantity+"');";
+    public static void insertProduct(String product_name, String supplier, String cost, String quantity, String restock_quantity) throws SQLException, ClassNotFoundException {
+        String idStmt = "SELECT * FROM inventory ORDER BY inventory_ID DESC LIMIT 1;";
+        ResultSet rs = DBUtil.dbExecuteQuery(idStmt);
+        Inventory item = getInventoryResult(rs);
+        int inventory_ID = item.getInventoryID() + 1;
+        String stmt = "INSERT INTO inventory (inventory_ID, product_name, supplier, cost, quantity, restock_quantity) VALUES ('"+inventory_ID+"', '"+product_name+"', '"+supplier+"', '"+Double.parseDouble(cost)+"', '"+Double.parseDouble(quantity)+"', '"+Double.parseDouble(restock_quantity)+"');";
 
         try {
             DBUtil.dbExecuteUpdate(stmt);

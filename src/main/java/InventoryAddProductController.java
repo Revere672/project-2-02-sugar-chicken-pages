@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -5,12 +7,26 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
 
-import java.sql.*;
-
-public class InventoryTable {
+public class InventoryAddProductController {
     @FXML
     private TextField product_search;
+    @FXML
+    private TextField product_name_text;
+    @FXML
+    private TextField supplier_text;
+    @FXML
+    private TextField cost_text;
+    @FXML
+    private TextField quantity_text;
+    @FXML
+    private TextField restock_text;
+    @FXML
+    private TextArea failed_text;
+    @FXML
+    private Button add_button;
     @FXML
     private TableView<Inventory> inventory_table;
     @FXML
@@ -54,13 +70,19 @@ public class InventoryTable {
 
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
+        product_name_text.requestFocus();
         inventory_ID_col.setCellValueFactory(cellData -> cellData.getValue().inventoryIDProperty().asObject());
         prod_name_col.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         supplier_col.setCellValueFactory(cellData -> cellData.getValue().supplierProperty());
         cost_col.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
         quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
-        product_search.setText("");
-        searchInventories(null);
+        product_name_text.setText("");
+        supplier_text.setText("");
+        cost_text.setText("");
+        quantity_text.setText("");
+        restock_text.setText("");
+        failed_text.setText("");
+        searchInventory(null);
     }
 
     @FXML
@@ -78,7 +100,62 @@ public class InventoryTable {
     }
 
     @FXML
-    private void addProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("inventory_add_product");
+    private void add(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if (product_name_text.getText() == "" || supplier_text.getText() == "" || cost_text.getText() == ""
+            || quantity_text.getText() == "" || restock_text.getText() == "") {
+
+            addFailed();
+        }
+        else {
+            InventoryDB.insertProduct(product_name_text.getText(), supplier_text.getText(), cost_text.getText(), quantity_text.getText(), restock_text.getText());
+            product_name_text.setText(null);
+            supplier_text.setText(null);
+            cost_text.setText(null);
+            quantity_text.setText(null);
+            restock_text.setText(null);
+            failed_text.setText(null);
+            GUIRunner.changeScene("inventory");
+        }
+    }
+
+    @FXML
+    private void cancel(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        product_name_text.setText(null);
+        supplier_text.setText(null);
+        cost_text.setText(null);
+        quantity_text.setText(null);
+        restock_text.setText(null);
+        failed_text.setText(null);
+        GUIRunner.changeScene("inventory");
+    }
+
+    @FXML
+    private void addFailed() {
+        failed_text.setText("One or more entries are blank");
+    }
+
+    @FXML
+    private void nameEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        supplier_text.requestFocus();
+    }
+
+    @FXML
+    private void supplierEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        cost_text.requestFocus();
+    }
+
+    @FXML
+    private void costEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        quantity_text.requestFocus();
+    }
+
+    @FXML
+    private void quantityEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        restock_text.requestFocus();
+    }
+
+    @FXML
+    private void restockEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        add_button.requestFocus();
     }
 }
