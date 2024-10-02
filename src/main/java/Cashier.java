@@ -1,5 +1,7 @@
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javafx.scene.Scene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,25 +16,17 @@ public class Cashier {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    
-    public void switch_to_cashier1(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier1.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
-    
-    public void switch_to_cashier2(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier2.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+    @FXML
+    private Button cashier;
+    @FXML
+    private Button inventory;
+    @FXML
+    private Button employees;
+    @FXML
+    private Button order_history;
 
-    //Buttons for all of the serving size options
+    // Buttons for all of the serving size options
     @FXML
     private Button button_bowl;
 
@@ -51,7 +45,7 @@ public class Cashier {
     @FXML
     private Button button_confirm;
 
-    //Buttons for all of the beverage options
+    // Buttons for all of the beverage options
     @FXML
     private Button button_water_cup;
 
@@ -70,7 +64,7 @@ public class Cashier {
     @FXML
     private Button button_milk;
 
-    //Buttons for all of the appetizer options
+    // Buttons for all of the appetizer options
     @FXML
     private Button button_chicken_egg_roll;
 
@@ -83,7 +77,7 @@ public class Cashier {
     @FXML
     private Button button_apple_pie_roll;
 
-    //Buttons for all of the side options
+    // Buttons for all of the side options
     @FXML
     private Button button_fried_rice;
 
@@ -96,7 +90,7 @@ public class Cashier {
     @FXML
     private Button button_super_greens;
 
-    //Buttons for all of the protein options
+    // Buttons for all of the protein options
     @FXML
     private Button button_bourbon_chicken;
 
@@ -135,4 +129,44 @@ public class Cashier {
 
     @FXML
     private Button button_sweet_fire_chicken;
+
+    public void updateButtonStates() {
+        System.out.println(GUIRunner.isManager);
+        boolean isManager = GUIRunner.isManager;
+        cashier.setDisable(!isManager);
+        inventory.setDisable(!isManager);
+        employees.setDisable(!isManager);
+        order_history.setDisable(!isManager);
+    }
+
+    public void switch_to_cashier1(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier1.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switch_to_cashier2(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier2.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("employees");
+    }
+
+    @FXML
+    private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("inventory");
+    }
+
+    @FXML
+    private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        // GUIRunner.changeScene("order_history");
+    }
 }

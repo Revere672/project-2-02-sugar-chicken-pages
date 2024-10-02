@@ -37,7 +37,6 @@ public class DBUtil {
         CachedRowSet crs = null;
 
         try {
-            System.out.println(queryStmt);
             stmt = conn.createStatement();
             resultSet = stmt.executeQuery(queryStmt);
 
