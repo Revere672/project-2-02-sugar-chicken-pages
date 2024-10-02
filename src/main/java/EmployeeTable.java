@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 
 import java.sql.*;
 
@@ -36,6 +38,32 @@ public class EmployeeTable {
     private TableColumn<Employee, Boolean> active_col;
 
     @FXML
+    private ChoiceBox<String> employee_dropdown;
+
+    @FXML
+    private ChoiceBox<String> status_dropdown;
+
+    @FXML
+    private TextField edit_email;
+
+    @FXML
+    private Text role_text;
+
+    @FXML
+    private Text login_text;
+
+    @FXML
+    private Text eid_text;
+
+    @FXML
+    private Button Apply;
+
+    @FXML
+    private Button Cancel;
+
+
+
+    @FXML
     private void searchEmployee(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {// searches when
                                                                                                       // search button
                                                                                                       // is hit
@@ -54,6 +82,13 @@ public class EmployeeTable {
         try {
             ObservableList<Employee> employeeData = EmployeeDB.searchEmployees();// get employee data
             populateEmployees(employeeData);// populate table
+            if(employee_dropdown != null){//if edit button is clicked, new scene
+                ObservableList<String> e_names = FXCollections.observableArrayList();
+                for(Employee e : employeeData){
+                    e_names.add(e.getEmployeeName());
+                }
+                employee_dropdown.setItems(e_names);
+            }
         } catch (SQLException error) {
             System.out.println("Error occurred while getting employees information from DB.\n" + error);
             throw error;
@@ -69,6 +104,12 @@ public class EmployeeTable {
         Last_login_col.setCellValueFactory(cellData -> cellData.getValue().EmployeeLoginProperty());
         active_col.setCellValueFactory(cellData -> cellData.getValue().EmployeeStatusProperty());
         searchEmployees(null);
+        if(status_dropdown != null){
+            ObservableList<String> status_list = FXCollections.observableArrayList();
+            status_list.add("Active");
+            status_list.add("Inactive");
+            status_dropdown.setItems(status_list);
+        }
     }
 
     @FXML
@@ -83,6 +124,52 @@ public class EmployeeTable {
     private void populateEmployees(ObservableList<Employee> employeeData) throws ClassNotFoundException {
         employee_table.setItems(employeeData);// set
     }
+
+    @FXML
+    private void editEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("employee_edit");
+    }
+
+    
+    @FXML
+    private void fill_employee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if(employee_dropdown.getValue() != null){//if user has chosen an employee
+            Employee e = EmployeeDB.find_edit_Employee(employee_dropdown.getValue());
+            edit_email.setText(e.getEmployeeEmail());
+            if(e.getEmployeeStatus()){
+                status_dropdown.setValue("Active");
+            }
+            else{
+                status_dropdown.setValue("Inactive");
+            }
+            role_text.setText(e.getEmployeeRole());
+            login_text.setText("" + e.getEmployeeLogin());
+            eid_text.setText("" + e.getEmployeeID());
+
+        }
+    }
+
+    @FXML
+    private void Cancel_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("employees");
+    }
+
+
+    @FXML
+    private void Apply_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        //edit_email.setText(e.getEmployeeEmail());
+        Boolean status = false;
+        if(status_dropdown.getValue() == "Active"){
+            status = true;
+        }
+        Employee e = EmployeeDB.find_edit_Employee(employee_dropdown.getValue());
+        EmployeeDB.updateEmployeeValues(e.getEmployeeID(), edit_email.getText(), status);
+        GUIRunner.changeScene("employees");
+    }
+    // @FXML
+    // private void edit_button_click (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    //     GUIRunner.changeScene("employee_edit");
+    // }
 
     // @FXML
     // private void updateEmployeeEmail (ActionEvent actionEvent) throws

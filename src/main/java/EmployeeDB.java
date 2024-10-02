@@ -22,11 +22,11 @@ public class EmployeeDB {
         if (result_e.next()) {
             e = new Employee();
             e.setEmployeeID(result_e.getInt("employee_ID"));
-            e.setEmployeeName(result_e.getString("emplyee_name"));
+            e.setEmployeeName(result_e.getString("employee_name"));
             e.setEmployeeEmail(result_e.getString("employee_email"));
             e.setEmployeeRole(result_e.getString("employee_role"));
             e.setEmployeeLogin(result_e.getDate("last_login"));
-            e.setEmployeeStatus(result_e.getBoolean("status"));
+            e.setEmployeeStatus(result_e.getBoolean("active"));
         }
         return e;
     }
@@ -60,15 +60,10 @@ public class EmployeeDB {
         return eList;//return the elist as an observable list
     }
 
-    public static void updateEmployeeEmail(String employee_ID, String employee_Email) throws SQLException, ClassNotFoundException {
+    public static void updateEmployeeValues(int employee_ID, String employee_Email, Boolean status) throws SQLException, ClassNotFoundException {
         //Create new string with update email
-        String new_q =
-                "BEGIN\n" +
-                        "   UPDATE Employees\n" +
-                        "      SET employee_email = '" + employee_Email + "'\n" +
-                        "    WHERE employee_ID = " + employee_ID + ";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+        String new_q ="UPDATE Employees SET employee_email = '" + employee_Email + "',active = " + status + " WHERE employee_ID = " + employee_ID + ";";
+        System.out.println(new_q);
         try {
             DBUtil.dbExecuteUpdate(new_q);//try to execute the update email function
         } catch (SQLException error) {
@@ -94,6 +89,19 @@ public class EmployeeDB {
         } catch (SQLException error) {
             System.out.print("Error occurred while DELETE Operation: " + error);
             throw error;
+        }
+    }
+
+    public static Employee find_edit_Employee(String name) throws SQLException, ClassNotFoundException {
+        String selected_Employee = "SELECT * FROM Employees WHERE Employee_name = '" + name + "';";
+
+        try {
+            ResultSet returned_Employee = DBUtil.dbExecuteQuery(selected_Employee);//Gets ResultSet of employee from table
+            //Return employee object
+            return EmployeeDB.getRequestedEmployee(returned_Employee);
+        } catch (SQLException error) {
+            System.out.println("While searching an employee with " + name + " name, an error occurred: " + error);
+            throw error;//return the error that id dne
         }
     }
 }
