@@ -1,8 +1,14 @@
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 public class GUIBuilder {
 
@@ -22,11 +28,5 @@ public class GUIBuilder {
 
         Scene employees = new Scene(FXMLLoader.load(getClass().getResource("/fxml/employees.fxml")));
         GUIRunner.scenes.put("employees", employees);
-        Scene inventory_add_product = new Scene(
-                FXMLLoader.load(getClass().getResource("/fxml/inventory_add_product.fxml")));
-        GUIRunner.scenes.put("inventory_add_product", inventory_add_product);
-        Scene inventory_edit_product = new Scene(
-                FXMLLoader.load(getClass().getResource("/fxml/inventory_edit_product.fxml")));
-        GUIRunner.scenes.put("inventory_edit_product", inventory_edit_product);
     }
 }
