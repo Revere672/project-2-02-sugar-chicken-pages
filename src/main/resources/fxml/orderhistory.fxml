@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OrderHistory">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
@@ -34,28 +34,25 @@
         </rowConstraints>
          <children>
             <Button fx:id="cashier" mnemonicParsing="false" onAction="#changeToCashier" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Cashier" textFill="WHITE" />
-            <Button fx:id="inventory" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Inventory" textFill="WHITE" GridPane.columnIndex="1" />
+            <Button fx:id="inventory" mnemonicParsing="false" onAction="#changeToInventory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Inventory" textFill="WHITE" GridPane.columnIndex="1" />
             <Button fx:id="employees" mnemonicParsing="false" onAction="#changeToEmployees" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Employees" textFill="WHITE" GridPane.columnIndex="2" />
-            <Button fx:id="order_history" mnemonicParsing="false" onAction="#changeToOrderHistory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Order History" textFill="WHITE" GridPane.columnIndex="3" />
+            <Button fx:id="order_history" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Order History" textFill="WHITE" GridPane.columnIndex="3" />
          </children>
       </GridPane>
-      <TableView fx:id="inventory_table" layoutX="16.0" layoutY="186.0" prefHeight="200.0" prefWidth="569.0">
+      <TableView fx:id="order_table" layoutX="15.0" layoutY="158.0" prefHeight="200.0" prefWidth="569.0">
         <columns>
-          <TableColumn fx:id="inventory_ID_col" prefWidth="112.66665077209473" text="Inventory ID" />
-          <TableColumn fx:id="prod_name_col" prefWidth="104.00003051757812" text="Product" />
-            <TableColumn fx:id="supplier_col" prefWidth="107.33326721191406" text="Supplier" />
-            <TableColumn fx:id="cost_col" prefWidth="94.0" text="Cost" />
-            <TableColumn fx:id="quantity_col" prefWidth="151.33334350585938" text="Quantity %" />
+          <TableColumn fx:id="order_ID_col" prefWidth="164.0" text="Order ID" />
+          <TableColumn fx:id="order_time_col" prefWidth="181.60003662109375" text="Order Time" />
+            <TableColumn fx:id="price_col" prefWidth="116.0" text="Total Price" />
+            <TableColumn fx:id="employee_ID_col" prefWidth="111.99993896484375" text="Employee ID" />
         </columns>
       </TableView>
-      <Button fx:id="add_product_button" layoutX="491.0" layoutY="148.0" mnemonicParsing="false" onAction="#addProduct" text="+ Add Product" />
-      <Text fx:id="inventory_text" layoutX="15.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory">
+      <Text fx:id="order_text" layoutX="14.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order History">
          <font>
             <Font size="32.0" />
          </font>
       </Text>
-      <TextField fx:id="product_search" layoutX="15.0" layoutY="148.0" onAction="#searchInventory" promptText="Enter Product Name" />
-      <Button fx:id="product_search_button" layoutX="173.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchInventory" prefHeight="25.0" prefWidth="60.0" text="Search" />
-      <Button fx:id="product_edit_button" layoutX="240.0" layoutY="148.0" mnemonicParsing="false" onAction="#editProduct" prefHeight="25.0" prefWidth="60.0" text="Edit" />
+      <TextField fx:id="order_search" layoutX="397.0" layoutY="108.0" promptText="Search" />
+      <Button fx:id="order_search_button" layoutX="549.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" />
    </children>
 </AnchorPane>
