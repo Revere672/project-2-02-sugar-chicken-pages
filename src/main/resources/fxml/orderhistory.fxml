@@ -39,12 +39,13 @@
             <Button fx:id="order_history" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Order History" textFill="WHITE" GridPane.columnIndex="3" />
          </children>
       </GridPane>
-      <TableView fx:id="order_table" layoutX="15.0" layoutY="158.0" prefHeight="200.0" prefWidth="569.0">
+      <TableView fx:id="order_table" layoutX="15.0" layoutY="158.0" prefHeight="200.0" prefWidth="570.0">
         <columns>
-          <TableColumn fx:id="order_ID_col" prefWidth="164.0" text="Order ID" />
-          <TableColumn fx:id="order_time_col" prefWidth="181.60003662109375" text="Order Time" />
-            <TableColumn fx:id="price_col" prefWidth="116.0" text="Total Price" />
-            <TableColumn fx:id="employee_ID_col" prefWidth="111.99993896484375" text="Employee ID" />
+          <TableColumn fx:id="order_ID_col" prefWidth="91.19995403289795" text="Order ID" />
+          <TableColumn fx:id="order_time_col" prefWidth="187.20005798339844" text="Order Time" />
+            <TableColumn fx:id="price_col" prefWidth="130.39996337890625" text="Total Price" />
+            <TableColumn fx:id="employee_ID_col" prefWidth="94.39996337890625" text="Employee ID" />
+            <TableColumn fx:id="view_button_col" prefWidth="69.60009765625" text="View" />
         </columns>
       </TableView>
       <Text fx:id="order_text" layoutX="14.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order History">

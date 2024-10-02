@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
+import javafx.scene.control.TableCell;
 //import javafx.scene.control.TextField;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
@@ -20,6 +20,12 @@ public class OrderHistory {
     @FXML
     private Button cashier;
     @FXML
+    private Button inventory;
+    @FXML
+    private Button employees;
+    @FXML
+    private Button order_history;
+    @FXML
     private TableView<Order> order_table;
     @FXML
     private TableColumn<Order, Integer>  order_ID_col;
@@ -29,6 +35,8 @@ public class OrderHistory {
     private TableColumn<Order, Double> price_col;
     @FXML
     private TableColumn<Order, Integer> employee_ID_col;
+    @FXML
+    private TableColumn<Order, Void> view_button_col;
     @FXML
     private DatePicker order_date_picker;
     @FXML
@@ -77,6 +85,27 @@ public class OrderHistory {
         order_time_col.setCellValueFactory(cellData -> cellData.getValue().orderTimeProperty());
         price_col.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
         employee_ID_col.setCellValueFactory(cellData -> cellData.getValue().employeeIDProperty().asObject());
+
+        view_button_col.setCellFactory(param -> new TableCell<Order, Void>() {
+            private final Button viewButton = new Button("🔍");
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item != null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(viewButton);
+                    viewButton.setOnAction(event -> {
+                        // Order order = getTableView().getItems().get(getIndex());
+                        // if (order != null) {
+                        //     System.out.println("Order ID: " + order.getOrderID());
+                        // }
+                    });
+                }
+            }
+        });
+
         loadOrders();
         addScrollListener();
     }
