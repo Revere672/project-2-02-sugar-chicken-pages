@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 public class GUIRunner extends Application {
 
     public static boolean isManager;
+    public static int currentUser;
     public static HashMap<String, Scene> scenes;
     public static Stage stage;
     public static GUIBuilder build;
@@ -32,7 +33,7 @@ public class GUIRunner extends Application {
         launch();
     }
 
-    public static void changeScene(String scene_Name) {
+    public static Scene changeScene(String scene_Name) {
         Scene newScene = scenes.get(scene_Name);
         stage.setScene(scenes.get(scene_Name));
         stage.show();
@@ -43,5 +44,6 @@ public class GUIRunner extends Application {
                 cashierController.updateButtonStates();
             }
         }
+        return newScene;
     }
 }

@@ -1,11 +1,11 @@
 menu_name,menu_ID,extra_cost,status
-Apple Pie Roll,600000,0.00,TRUE
+Apple Pie Roll,600000,2.00,TRUE
 Beijing Beef,600001,0.00,TRUE
 Black Pepper Chicken,600002,0.00,TRUE
 Black Pepper Sirloin Steak,600003,1.50,TRUE
 Bourbon Chicken,600004,0.00,TRUE
 Broccoli Beef,600005,0.00,TRUE
-Chicken Eggroll,600006,0.00,TRUE
+Chicken Eggroll,600006,2.00,TRUE
 Chicken Potsticker,600007,0.00,FALSE
 Chow Mein,600008,0.00,TRUE
 Fried Rice,600009,0.00,TRUE
@@ -20,11 +20,13 @@ Super Greens,600017,0.00,TRUE
 Sweet & Sour Chicken,600018,0.00,FALSE
 SweetFire Chicken,600019,0.00,TRUE
 Teriyaki Chicken,600020,0.00,TRUE
-Vegetable Spring Roll,600021,0.00,TRUE
-White Rice,600022,0.00,TRUE
-Drink,600022,0.00,TRUE
-20 oz lemon-lime gatorade,600022,0.00,TRUE
-20 oz glacier freeze gatorade,600022,0.00,TRUE
-20 oz fruit punch gatorade,600022,0.00,TRUE
-Rangoon,600023,0.00,TRUE
-null,0,0,FALSE
+Vegetable Spring Roll,600021,2.00,TRUE
+White Rice,600024,0.00,TRUE
+Drink,600025,2.30,TRUE
+20 oz lemon-lime gatorade,600022,2.70,TRUE
+20 oz glacier freeze gatorade,600022,2.70,TRUE
+20 oz fruit punch gatorade,600022,2.70,TRUE
+Cream Cheese Rangoon,600023,2.00,TRUE
+Gatorade,600022,2.70,TRUE
+null,0,0.00,FALSE
+Water Bottle,600026,2.30,TRUE

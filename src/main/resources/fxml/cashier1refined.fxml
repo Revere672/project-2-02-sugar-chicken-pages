@@ -5,9 +5,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
@@ -16,55 +13,50 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CashierController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
-      <Polygon fill="#384862" layoutX="510.0" layoutY="59.0" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -27.33331298828125, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ce123c" height="75.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="450.0" />
       <Polygon fill="#ce123c" layoutX="459.0" layoutY="60.0" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -27.33331298828125, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ce123c" height="75.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="450.0" />
       <Circle fill="WHITE" layoutX="44.0" layoutY="38.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="280.0" layoutY="91.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="356.0" layoutY="91.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="434.0" layoutY="91.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="513.0" layoutY="91.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="203.0" layoutY="158.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="282.0" layoutY="158.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="202.0" layoutY="206.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="285.0" layoutY="206.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="201.0" layoutY="253.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="285.0" layoutY="253.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="434.0" layoutY="158.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="512.0" layoutY="158.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="434.0" layoutY="206.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="512.0" layoutY="206.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <ToggleButton id="Cub Meal" fx:id="button_cub_meal" layoutX="438.0" layoutY="100.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Cub Meal">
+      <ToggleButton id="Cub Meal" fx:id="button_cub_meal" layoutX="434.0" layoutY="91.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="42.0" prefWidth="67.0" text="Cub Meal">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="A la carte" fx:id="button_carte" layoutX="515.0" layoutY="99.0" mnemonicParsing="false" onAction="#buttonPressedType" text="A la Carte" textAlignment="CENTER">
+      <ToggleButton id="A la carte" fx:id="button_carte" layoutX="513.0" layoutY="91.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="42.0" prefWidth="67.0" text="A la Carte" textAlignment="CENTER">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Bigger Plate" fx:id="button_big_plate" layoutX="353.0" layoutY="99.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Bigger Plate">
+      <ToggleButton id="Bigger Plate" fx:id="button_big_plate" layoutX="356.0" layoutY="91.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="42.0" prefWidth="67.0" text="Bigger Plate">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Bowl" fx:id="button_bowl" layoutX="216.0" layoutY="100.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Bowl">
+      <ToggleButton id="Bowl" fx:id="button_bowl" layoutX="203.0" layoutY="91.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="42.0" prefWidth="67.0" text="Bowl">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Plate" fx:id="button_plate" layoutX="294.0" layoutY="100.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Plate">
+      <ToggleButton id="Plate" fx:id="button_plate" layoutX="280.0" layoutY="91.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="42.0" prefWidth="67.0" text="Plate">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="button_water_cup" layoutX="204.0" layoutY="167.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Water Cup">
+      <ToggleButton fx:id="button_water_cup" layoutX="204.0" layoutY="167.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefWidth="67.0" text="Water Cup">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Drink" fx:id="button_fountain_drink" layoutX="276.0" layoutY="165.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="25.0" prefWidth="90.0" text="Fountain Drink">
+      <ToggleButton id="Drink" fx:id="button_fountain_drink" layoutX="276.0" layoutY="165.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="25.0" prefWidth="67.0" text="Fountain Drink">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
@@ -74,7 +66,7 @@
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Gatorade" fx:id="button_gatorade" layoutX="289.0" layoutY="215.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Gatorade">
+      <ToggleButton id="Gatorade" fx:id="button_gatorade" layoutX="289.0" layoutY="215.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefWidth="67.0" text="Gatorade">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
@@ -84,7 +76,12 @@
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Chicken Eggroll" fx:id="button_chicken_egg_roll" layoutX="442.0" layoutY="162.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="52.0" text="Chicken Egg Roll" textAlignment="CENTER" wrapText="true">
+      <ToggleButton fx:id="button_milk" layoutX="300.0" layoutY="262.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefWidth="67.0" text="Milk">
+         <font>
+            <Font name="Arial Narrow Bold" size="12.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton id="Chicken Egg Roll" fx:id="button_chicken_egg_roll" layoutX="442.0" layoutY="162.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="52.0" text="Chicken Egg Roll" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Arial Narrow Bold" size="10.0" />
          </font>
@@ -121,10 +118,9 @@
          </font>
       </ToggleButton>
       <Rectangle fx:id="background_confirm" arcHeight="5.0" arcWidth="5.0" fill="#b7ffcc" height="42.0" layoutX="494.0" layoutY="323.0" opacity="0.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Button id="AddToOrder" layoutX="467.0" layoutY="344.0" mnemonicParsing="false" onAction="#addToOrder" opacity="0.0" prefHeight="36.0" prefWidth="104.0" text="Add To Order" />
+      <Button id="AddToOrder" layoutX="467.0" layoutY="344.0" mnemonicParsing="false" onAction="#AddToOrder" opacity="0.0" prefHeight="36.0" prefWidth="104.0" text="Add To Order" />
       <TextField id="SubtotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="344.0" prefHeight="25.0" prefWidth="52.0" />
       <TextField id="TotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="369.0" prefHeight="25.0" prefWidth="52.0" />
-      <Button id="submit" layoutX="204.0" layoutY="351.0" mnemonicParsing="false" onAction="#FinishOrder" prefHeight="36.0" prefWidth="104.0" text="Finish Order" />
-      <Button id="undo" layoutX="210.0" layoutY="310.0" mnemonicParsing="false" onAction="#undo" prefHeight="26.0" prefWidth="90.0" text="Undo" />
+      <Button id="submit" layoutX="211.0" layoutY="342.0" mnemonicParsing="false" onAction="#FinishOrder" prefHeight="36.0" prefWidth="104.0" text="Finish Order" />
    </children>
 </AnchorPane>

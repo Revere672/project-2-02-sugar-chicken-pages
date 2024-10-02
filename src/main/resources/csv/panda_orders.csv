@@ -1,10 +1,10 @@
 item_type,side_1,side_2,protein_1,protein_2,protein_3,misc_item,item_cost
-Plate,Super Greens,Fried Rice,Teriyaki Chicken,Teriyaki Chicken,null,Rangoon,9.8
+Plate,Super Greens,Fried Rice,Teriyaki Chicken,Teriyaki Chicken,null,Cream Cheese Rangoon,9.8
 Bowl,White Rice,null,Kung Pao Chicken,null,null,Drink,8.3
 Bowl,Chow Mein,null,Bourbon Chicken,null,null,Drink,8.3
 other,null,null,null,null,null,Vegetable Spring Roll,2.2
-Bigger Plate,Chow Mein,Super Greens,Teriyaki Chicken,Beijing Beef,Beijing Beef,Rangoon,11.3
-Bigger Plate,Super Greens,Chow Mein,Orange Chicken,Beijing Beef,Broccoli Beef,Rangoon,11.3
+Bigger Plate,Chow Mein,Super Greens,Teriyaki Chicken,Beijing Beef,Beijing Beef,Cream Cheese Rangoon,11.3
+Bigger Plate,Super Greens,Chow Mein,Orange Chicken,Beijing Beef,Broccoli Beef,Cream Cheese Rangoon,11.3
 Bigger Plate,Super Greens,Chow Mein,Honey Walnut Shrimp,Teriyaki Chicken,Broccoli Beef,null,11.3
 other,null,null,null,null,null,Drink,2.2
 A la carte,null,null,Honey Walnut Shrimp,null,null,null,4.4
@@ -25,10 +25,10 @@ A la carte,null,null,Beijing Beef,null,null,null,4.4
 other,null,null,null,null,null,Vegetable Spring Roll,2.2
 Bigger Plate,Super Greens,Fried Rice,Orange Chicken,Black Pepper Chicken,Mushroom Chicken,Vegetable Spring Roll,11.3
 A la carte,null,null,Orange Chicken,null,null,null,4.4
-other,null,null,null,null,null,Rangoon,2.2
-Plate,White Rice,Fried Rice,Honey Walnut Shrimp,Black Pepper Chicken,null,Rangoon,9.8
+other,null,null,null,null,null,Cream Cheese Rangoon,2.2
+Plate,White Rice,Fried Rice,Honey Walnut Shrimp,Black Pepper Chicken,null,Cream Cheese Rangoon,9.8
 other,null,null,null,null,null,Chicken Eggroll,2.2
-Bigger Plate,Chow Mein,Chow Mein,Beijing Beef,Teriyaki Chicken,SweetFire Chicken,Rangoon,11.3
+Bigger Plate,Chow Mein,Chow Mein,Beijing Beef,Teriyaki Chicken,SweetFire Chicken,Cream Cheese Rangoon,11.3
 Plate,Chow Mein,Chow Mein,Bourbon Chicken,SweetFire Chicken,null,Drink,9.8
 other,null,null,null,null,null,null,2.2
 A la carte,null,null,Orange Chicken,null,null,null,4.4
@@ -46,14 +46,14 @@ Plate,Chow Mein,Super Greens,Orange Chicken,Black Pepper Sirloin Steak,null,Drin
 other,null,null,null,null,null,null,2.2
 Bigger Plate,White Rice,White Rice,Honey Walnut Shrimp,Black Pepper Sirloin Steak,Beijing Beef,Chicken Eggroll,11.3
 other,null,null,null,null,null,Vegetable Spring Roll,2.2
-Plate,Chow Mein,White Rice,Bourbon Chicken,Kung Pao Chicken,null,Rangoon,9.8
+Plate,Chow Mein,White Rice,Bourbon Chicken,Kung Pao Chicken,null,Cream Cheese Rangoon,9.8
 other,null,null,null,null,null,Chicken Eggroll,2.2
 A la carte,null,null,Bourbon Chicken,null,null,null,4.4
 Bowl,Chow Mein,null,Black Pepper Chicken,null,null,null,8.3
 Plate,Chow Mein,White Rice,Black Pepper Chicken,Black Pepper Chicken,null,null,9.8
 Plate,White Rice,Fried Rice,SweetFire Chicken,Mushroom Chicken,null,null,9.8
 A la carte,null,null,SweetFire Chicken,null,null,null,4.4
-other,null,null,null,null,null,Rangoon,2.2
+other,null,null,null,null,null,Cream Cheese Rangoon,2.2
 Plate,Chow Mein,Super Greens,Broccoli Beef,Black Pepper Sirloin Steak,null,null,9.8
 A la carte,null,null,Black Pepper Chicken,null,null,null,4.4
 other,null,null,null,null,null,Chicken Eggroll,2.2
@@ -70,7 +70,7 @@ Bigger Plate,Chow Mein,Fried Rice,Teriyaki Chicken,Black Pepper Chicken,Orange C
 Bowl,White Rice,null,Teriyaki Chicken,null,null,Drink,8.3
 other,null,null,null,null,null,Chicken Eggroll,2.2
 Plate,Super Greens,Fried Rice,Teriyaki Chicken,Beijing Beef,null,null,9.8
-Bigger Plate,White Rice,Super Greens,Broccoli Beef,Broccoli Beef,Black Pepper Chicken,Rangoon,11.3
+Bigger Plate,White Rice,Super Greens,Broccoli Beef,Broccoli Beef,Black Pepper Chicken,Cream Cheese Rangoon,11.3
 Bigger Plate,Fried Rice,White Rice,Beijing Beef,Black Pepper Chicken,Mushroom Chicken,null,11.3
 other,null,null,null,null,null,Vegetable Spring Roll,2.2
 Bowl,Fried Rice,null,Mushroom Chicken,null,null,null,8.3
@@ -87,14 +87,14 @@ Bigger Plate,Fried Rice,Chow Mein,Orange Chicken,Kung Pao Chicken,Black Pepper S
 Bigger Plate,Fried Rice,Chow Mein,Kung Pao Chicken,Black Pepper Chicken,Broccoli Beef,Vegetable Spring Roll,11.3
 other,null,null,null,null,null,Drink,2.2
 Bigger Plate,Fried Rice,Fried Rice,Black Pepper Sirloin Steak,Bourbon Chicken,Honey Walnut Shrimp,Chicken Eggroll,11.3
-Plate,White Rice,Fried Rice,Honey Walnut Shrimp,Black Pepper Chicken,null,Rangoon,9.8
+Plate,White Rice,Fried Rice,Honey Walnut Shrimp,Black Pepper Chicken,null,Cream Cheese Rangoon,9.8
 A la carte,null,null,Broccoli Beef,null,null,null,4.4
 other,null,null,null,null,null,Vegetable Spring Roll,2.2
 other,null,null,null,null,null,Chicken Eggroll,2.2
-Bowl,Fried Rice,null,Beijing Beef,null,null,Rangoon,8.3
+Bowl,Fried Rice,null,Beijing Beef,null,null,Cream Cheese Rangoon,8.3
 A la carte,null,null,Black Pepper Chicken,null,null,null,4.4
 Bigger Plate,Fried Rice,Fried Rice,Orange Chicken,Teriyaki Chicken,Orange Chicken,Chicken Eggroll,11.3
 Plate,Fried Rice,Fried Rice,Teriyaki Chicken,Teriyaki Chicken,null,null,9.8
-Plate,Chow Mein,Fried Rice,Bourbon Chicken,Orange Chicken,null,Rangoon,9.8
-Plate,White Rice,Super Greens,Honey Walnut Shrimp,Honey Walnut Shrimp,null,Rangoon,9.8
-Bigger Plate,Fried Rice,Super Greens,Beijing Beef,Black Pepper Sirloin Steak,Mushroom Chicken,Rangoon,11.3
+Plate,Chow Mein,Fried Rice,Bourbon Chicken,Orange Chicken,null,Cream Cheese Rangoon,9.8
+Plate,White Rice,Super Greens,Honey Walnut Shrimp,Honey Walnut Shrimp,null,Cream Cheese Rangoon,9.8
+Bigger Plate,Fried Rice,Super Greens,Beijing Beef,Black Pepper Sirloin Steak,Mushroom Chicken,Cream Cheese Rangoon,11.3
