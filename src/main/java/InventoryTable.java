@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableCell;
 
 import java.sql.*;
 
@@ -31,10 +31,6 @@ public class InventoryTable {
     @FXML
     private TextField product_search;
     @FXML
-    private TextField product_edit_search;
-    @FXML
-    private ChoiceBox<String> product_drop_down;
-    @FXML
     private TextField product_name_text;
     @FXML
     private TextField supplier_text;
@@ -44,6 +40,8 @@ public class InventoryTable {
     private TextField restock_text;
     @FXML
     private TextArea failed_text;
+    @FXML
+    private TextArea failed_text1;
     @FXML
     private Button apply_button;
     @FXML
@@ -70,16 +68,16 @@ public class InventoryTable {
     private TableColumn<Inventory, Double> cost_col;
     @FXML
     private TableColumn<Inventory, Double> quantity_col;
+    @FXML
+    private TableColumn<Inventory, Void> action_col;
+
+    private int product_ID;
 
     @FXML
     private void searchInventory(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         try {
             if (product_search.getText() == "" || product_search.getText() == null) {
                 searchInventories(null);
-            }
-
-            if (product_edit_search != null) {
-                product_edit_search.setText(product_search.getText());
             }
 
             ObservableList<Inventory> inventoryData = InventoryDB.searchInventory(product_search.getText());
@@ -108,18 +106,51 @@ public class InventoryTable {
         edit_pane.setVisible(false);
         add_pane.setVisible(false);
         setBackground(false);
+
         inventory_ID_col.setCellValueFactory(cellData -> cellData.getValue().inventoryIDProperty().asObject());
         prod_name_col.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         supplier_col.setCellValueFactory(cellData -> cellData.getValue().supplierProperty());
         cost_col.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
         quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
+        action_col.setCellFactory(param -> new TableCell<Inventory, Void>() {
+            private final Button editButton = new Button("\u270E");
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item != null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(editButton);
+                    editButton.setOnAction(event -> {
+                        try {
+                            Inventory product = getTableView().getItems().get(getIndex());
+                            if (product != null) {
+                                product_ID = product.getInventoryID();
+                                fillProduct(null);
+                                editProduct(null);
+                            }
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
+            }
+        });
+
         product_search.setText("");
         searchInventories(null);
-        product_name_text.setText("");
-        supplier_text.setText("");
-        cost_text.setText("");
-        restock_text.setText("");
-        failed_text.setText("");
+        product_name_text.setText(null);
+        supplier_text.setText(null);
+        cost_text.setText(null);
+        restock_text.setText(null);
+        failed_text.setText(null);
+        product_name_text1.setText(null);
+        supplier_text1.setText(null);
+        cost_text1.setText(null);
+        quantity_text1.setText(null);
+        restock_text1.setText(null);
+        failed_text1.setText(null);
     }
 
     @FXML
@@ -160,47 +191,45 @@ public class InventoryTable {
     private void addProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(true);
         add_pane.setVisible(true);
+        product_name_text1.requestFocus();
     }
 
     @FXML
     private void editProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        product_edit_search.setText(product_search.getText());
-        searchProduct(null);
         setBackground(true);
         edit_pane.setVisible(true);
+        product_name_text.requestFocus();
     }
 
-    @FXML
-    private void searchProduct(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
-        try {
-            ObservableList<Inventory> inventoryData;
-            if (product_edit_search.getText() == "" || product_edit_search.getText() == null) {
-                inventoryData = InventoryDB.searchInventories();
-            }
-            else {
-                inventoryData = InventoryDB.searchInventory(product_edit_search.getText());
-            }
+    // @FXML
+    // private void searchProduct(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
+    //     try {
+    //         ObservableList<Inventory> inventoryData;
+    //         if (product_edit_search.getText() == "" || product_edit_search.getText() == null) {
+    //             inventoryData = InventoryDB.searchInventories();
+    //         }
+    //         else {
+    //             inventoryData = InventoryDB.searchInventory(product_edit_search.getText());
+    //         }
 
-            ObservableList<String> productData = FXCollections.observableArrayList();
-            for (Inventory item: inventoryData) {
-                productData.add(item.getProductName());
-            }
-            product_drop_down.setItems(productData);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
+    //         ObservableList<String> productData = FXCollections.observableArrayList();
+    //         for (Inventory item: inventoryData) {
+    //             productData.add(item.getProductName());
+    //         }
+    //         product_drop_down.setItems(productData);
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         throw e;
+    //     }
+    // }
 
     @FXML void fillProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            if (product_drop_down.getValue() != null) {
-                Inventory item = InventoryDB.findProduct(product_drop_down.getValue());
-                product_name_text.setText(item.getProductName());
-                supplier_text.setText(item.getSupplier());
-                cost_text.setText(""+item.getCost());
-                restock_text.setText(""+InventoryDB.getRestock(product_drop_down.getValue()));
-            }
+            Inventory item = InventoryDB.findProduct(product_ID);
+            product_name_text.setText(item.getProductName());
+            supplier_text.setText(item.getSupplier());
+            cost_text.setText(""+item.getCost());
+            restock_text.setText(""+InventoryDB.getRestock(product_ID));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -210,7 +239,9 @@ public class InventoryTable {
     @FXML
     private void add(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if (product_name_text1.getText() == "" || supplier_text1.getText() == "" || cost_text1.getText() == ""
-            || quantity_text1.getText() == "" || restock_text1.getText() == "") {
+            || quantity_text1.getText() == "" || restock_text1.getText() == ""
+            || product_name_text1.getText() == null || supplier_text1.getText() == null || cost_text1.getText() == null
+            || quantity_text1.getText() == null || restock_text1.getText() == null) {
 
             addFailed();
         }
@@ -221,6 +252,7 @@ public class InventoryTable {
             cost_text1.setText(null);
             quantity_text1.setText(null);
             restock_text1.setText(null);
+            failed_text1.setText(null);
             failed_text.setText(null);
             setBackground(false);
             add_pane.setVisible(false);
@@ -235,12 +267,13 @@ public class InventoryTable {
             addFailed();
         }
         else {
-            InventoryDB.editProduct(product_drop_down.getValue(), product_name_text.getText(), supplier_text.getText(), cost_text.getText(), restock_text.getText());
+            InventoryDB.editProduct(product_ID, product_name_text.getText(), supplier_text.getText(), cost_text.getText(), restock_text.getText());
             product_name_text.setText(null);
             supplier_text.setText(null);
             cost_text.setText(null);
             restock_text.setText(null);
             failed_text.setText(null);
+            failed_text1.setText(null);
             setBackground(false);
             edit_pane.setVisible(false);
             searchInventory(null);
@@ -259,7 +292,7 @@ public class InventoryTable {
         cost_text1.setText(null);
         quantity_text1.setText(null);
         restock_text1.setText(null);
-        failed_text.setText(null);
+        failed_text1.setText(null);
         setBackground(false);
         edit_pane.setVisible(false);
         add_pane.setVisible(false);
@@ -269,6 +302,7 @@ public class InventoryTable {
     @FXML
     private void addFailed() {
         failed_text.setText("One or more entries are blank");
+        failed_text1.setText("One or more entries are blank");
     }
 
     @FXML
