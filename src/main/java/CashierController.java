@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -26,22 +25,16 @@ public class CashierController implements Initializable {
     public static Entry workingEntry;
 
     public void switch_to_cashier1(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier1.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        scene = ((Node)event.getSource()).getScene();
+        scene = GUIRunner.changeScene("cashier1");
         DisplayReceipt.updateRecipt(scene);
-        stage.setScene(scene);
-        stage.show();
     }
 
     
     public void switch_to_cashier2(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier2.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        scene = ((Node)event.getSource()).getScene();
+        scene = GUIRunner.changeScene("cashier2");
         DisplayReceipt.updateRecipt(scene);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void addToOrder(ActionEvent event) throws IOException{
@@ -70,6 +63,10 @@ public class CashierController implements Initializable {
    }
 
     public void FinishOrder(ActionEvent event) throws IOException, SQLException, ClassNotFoundException{
+        ResultSet rs=DBUtil.dbExecuteQuery("SELECT MAX(order_id) FROM order_history;");
+        rs.next();
+        DisplayReceipt.orderId = rs.getInt(1)+1;
+        
         DBUtil.dbExecuteUpdate("INSERT INTO Order_History VALUES ("+DisplayReceipt.orderId+",\'"+DisplayReceipt.dateFormat.format(new Date())+"\',"+(DisplayReceipt.subtotal*1.0875)+","+GUIRunner.currentUser+")");
 
         
@@ -78,15 +75,14 @@ public class CashierController implements Initializable {
         
         for(Entry e:DisplayReceipt.entries){
             System.out.println(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum));
+            DisplayReceipt.updateIngredients(e);
             DBUtil.dbExecuteUpdate(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum++));
         }
         
         DisplayReceipt.entries.clear();
         workingEntry=null;
 
-        ResultSet rs=DBUtil.dbExecuteQuery("SELECT MAX(order_id) FROM order_history;");
-        rs.next();
-        DisplayReceipt.orderId = rs.getInt(1)+1;
+        DisplayReceipt.orderId++;
 
         DisplayReceipt.updateRecipt(((Node)event.getSource()).getScene());
     }
@@ -119,6 +115,7 @@ public class CashierController implements Initializable {
 
         scene=((Node)event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
+        DisplayReceipt.updateRecipt(scene);
     }
 
     public void buttonPressedProtein(ActionEvent event){
@@ -132,15 +129,18 @@ public class CashierController implements Initializable {
 
         scene=((Node)event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
+        DisplayReceipt.updateRecipt(scene);
     }
 
     public void buttonPressedType(ActionEvent event) throws IOException{
         String buttonPressed = ((Node)event.getSource()).getId();
         workingEntry=new Entry(new String[]{buttonPressed},DisplayReceipt.overarchingCosts.get(buttonPressed));
+        DisplayReceipt.addEntry(workingEntry);
         switch_to_cashier2(event);
     }
 
     public void cancelCashier2(ActionEvent event) throws IOException{
+        DisplayReceipt.removeEntry(workingEntry);
         deSelectAll();
         switch_to_cashier1(event);
     }

@@ -33,9 +33,11 @@ public class GUIRunner extends Application {
         launch();
     }
 
-    public static void changeScene(String scene_Name) {
-        stage.setScene(scenes.get(scene_Name));
+    public static Scene changeScene(String scene_Name) {
+        Scene newScene = scenes.get(scene_Name);
+        stage.setScene(newScene);
         stage.show();
+        return newScene;
     }
 }
 

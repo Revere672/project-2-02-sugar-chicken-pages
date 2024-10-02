@@ -19,6 +19,7 @@ public class DisplayReceipt {
     public static ArrayList<String> extraCostName;
     public static ArrayList<Double> extraCostPrice;
     public static HashMap<String,Double> overarchingCosts;
+    public static HashMap<String,Integer> numberOfSides;
     public static final DecimalFormat df = new DecimalFormat("$0.00");
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -44,7 +45,18 @@ public class DisplayReceipt {
             overarchingCosts.put(overarchResultSet.getString(1),overarchResultSet.getDouble(2));
         }
 
+        ResultSet sidesResultSet=DBUtil.dbExecuteQuery("SELECT item_name,Side_Count FROM overarching_items");
+        numberOfSides=new HashMap<>();
+        while(sidesResultSet.next()){
+            numberOfSides.put(sidesResultSet.getString(1),sidesResultSet.getInt(2));
+        }
+
         loaded=true;
+    }
+
+    public static void removeEntry(Entry entry) {
+        DisplayReceipt.entries.remove(entry);
+        subtotal-=entry.price;
     }
 
     public static ArrayList<Entry> getEntries() {
@@ -80,6 +92,49 @@ public class DisplayReceipt {
         priceArea.setText(priceText);
         sub.setText(df.format(subtotal));
         total.setText(df.format(subtotal*1.0875));
+    }
+
+    public static void updateIngredients(Entry entry) throws SQLException, ClassNotFoundException{
+        boolean half=entry.isHalfSide();
+        if(entry.side1!=null){
+            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.side1+"'");
+            loopEntry(rs, half);
+        }
+        if(entry.side2!=null){
+            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.side2+"'");
+            loopEntry(rs, half);
+        }
+        if(entry.protien1!=null){
+            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.protien1+"'");
+            loopEntry(rs, half);
+        }
+        if(entry.protien2!=null){
+            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.protien2+"'");
+            loopEntry(rs, half);
+        }
+        if(entry.protien3!=null){
+            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.protien3+"'");
+            loopEntry(rs, half);
+        }
+        if(entry.miscItem!=null){
+            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.miscItem+"'");
+            loopEntry(rs, half);
+        }
+    }
+    
+    public static void loopEntry(ResultSet rs,boolean half) throws SQLException, ClassNotFoundException{
+        while(rs.next()){
+            if(half){
+                reduceInventory(rs.getDouble(2)*.5, rs.getInt(1));
+            }
+            else{
+                reduceInventory(rs.getDouble(2), rs.getInt(1));
+            }
+        }
+    }
+
+    public static void reduceInventory(double amount,int id) throws SQLException, ClassNotFoundException{
+        DBUtil.dbExecuteUpdate("UPDATE inventory SET Quantity = Quantity - "+amount+" WHERE inventory_id = "+id);
     }
 
 }

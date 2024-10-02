@@ -16,6 +16,14 @@ public class Entry {
             this.price=price;
         }
 
+        public boolean isHalfSide(){
+            int sides=DisplayReceipt.numberOfSides.get(orderType);
+            if(sides==1&&side2!=null){
+                return true;
+            }
+            return false;
+        }
+
         public Entry(String[] strs,double price){
             /*creates an entry from an array of strings in order [orderType,side1,protien1,protien2,side2,protien3,miscItem] this is because that is the most common way to order items. */
             orderType=strs[0];
@@ -30,7 +38,9 @@ public class Entry {
 
         public boolean addSide(String side){
             if(DisplayReceipt.extraCostName.contains(side)){
-                price+=DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(side));
+                int index=DisplayReceipt.extraCostName.indexOf(side);
+                price+=DisplayReceipt.extraCostPrice.get(index);
+                DisplayReceipt.subtotal+=DisplayReceipt.extraCostPrice.get(index);
             }
             if(side1==null){
                 side1=side;
@@ -45,7 +55,9 @@ public class Entry {
 
         public boolean removeSide(String side){
             if(DisplayReceipt.extraCostName.contains(side)){
-                price-=DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(side));
+                int index=DisplayReceipt.extraCostName.indexOf(side);
+                price-=DisplayReceipt.extraCostPrice.get(index);
+                DisplayReceipt.subtotal-=DisplayReceipt.extraCostPrice.get(index);
             }
             if(side1.equals(side)){
                 side1=null;
@@ -60,7 +72,9 @@ public class Entry {
 
         public boolean addProtein(String protein){
             if(DisplayReceipt.extraCostName.contains(protein)){
-                price+=DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(protein));
+                int index=DisplayReceipt.extraCostName.indexOf(protein);
+                price+=DisplayReceipt.extraCostPrice.get(index);
+                DisplayReceipt.subtotal+=DisplayReceipt.extraCostPrice.get(index);
             }
             if(protien1==null){
                 protien1=protein;
@@ -79,7 +93,9 @@ public class Entry {
 
         public boolean removeProtein(String protein){
             if(DisplayReceipt.extraCostName.contains(protein)){
-                price-=DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(protein));
+                int index=DisplayReceipt.extraCostName.indexOf(protein);
+                price-=DisplayReceipt.extraCostPrice.get(index);
+                DisplayReceipt.subtotal-=DisplayReceipt.extraCostPrice.get(index);
             }
             if(protien1.equals(protein)){
                 protien1=null;

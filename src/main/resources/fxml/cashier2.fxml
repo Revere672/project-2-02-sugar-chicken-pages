@@ -169,7 +169,7 @@
       <TextField id="SubtotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="344.0" prefHeight="25.0" prefWidth="52.0" />
       <TextField id="TotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="369.0" prefHeight="25.0" prefWidth="52.0" />
       <Button id="NoProteinButton" layoutX="196.0" layoutY="357.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="No Protein" />
-      <Button id="AddToOrder" layoutX="495.0" layoutY="357.0" mnemonicParsing="false" onAction="#addToOrder" opacity="0.0" prefHeight="30.0" prefWidth="87.0" text="Add To Order">
+      <Button id="AddToOrder" layoutX="495.0" layoutY="357.0" mnemonicParsing="false" onAction="#switch_to_cashier1" opacity="0.0" prefHeight="30.0" prefWidth="87.0" text="Done">
          <font>
             <Font size="11.0" />
          </font>
