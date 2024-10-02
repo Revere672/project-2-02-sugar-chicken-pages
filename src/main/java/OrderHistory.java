@@ -74,7 +74,7 @@ public class OrderHistory {
                 isDateLoaded = false;
             }
         } catch (SQLException e) {
-            System.out.println("Error occurred while searching orders by date.\n" + e);
+            System.out.println("Searching by date had an error.\n" + e);
             throw e;
         }
     }
@@ -97,10 +97,26 @@ public class OrderHistory {
                 } else {
                     setGraphic(viewButton);
                     viewButton.setOnAction(event -> {
-                        // Order order = getTableView().getItems().get(getIndex());
-                        // if (order != null) {
-                        //     System.out.println("Order ID: " + order.getOrderID());
-                        // }
+                        Order order = getTableView().getItems().get(getIndex());
+                        if (order != null) {
+                            try {
+                                int orderID = order.getOrderID();
+                                ObservableList<Entry> orderItems = OrderDB.searchOrderItems(orderID);
+                                int count = 1;
+                                for(Entry entry : orderItems) {
+                                    // Handle items here for display elements
+                                    // Change formatted string to not print null values
+                                    // Do NOT pull from items for prices - we can change pricing so current pricing is not relevant!
+                                    // Just show items in menu
+                                    System.out.println("----------ITEM " + count + "----------");
+                                    System.out.println(entry.formatedString());
+                                    count++;
+                                }
+                            }
+                            catch (SQLException | ClassNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                     });
                 }
             }

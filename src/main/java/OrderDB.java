@@ -33,6 +33,7 @@ public class OrderDB {
         return order;
     }
 
+
     public static ObservableList<Order> searchOrders(int offset, int count) throws SQLException, ClassNotFoundException {
         String stmt = "SELECT * FROM order_history ORDER BY order_ID DESC LIMIT " + count + " OFFSET " + offset + ";";
 
@@ -45,6 +46,45 @@ public class OrderDB {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public static ObservableList<Entry> searchOrderItems(int orderID) throws SQLException, ClassNotFoundException {
+        String stmt = "SELECT * FROM order_items WHERE order_id = " + orderID +  ";";
+
+        try {
+            ResultSet rsOrder = DBUtil.dbExecuteQuery(stmt);
+
+            ObservableList<Entry> entryList = getEntryList(rsOrder);
+
+            return entryList;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private static ObservableList<Entry> getEntryList(ResultSet rsOrder) throws SQLException, ClassNotFoundException {
+        ObservableList<Entry> entryList = FXCollections.observableArrayList();
+        System.out.println("OrderList being created");
+
+        while (rsOrder.next()) {
+            // int orderID = rsOrder.getInt("order_ID");
+            // int itemNumber = rsOrder.getInt("Item_Number");
+            String itemName = rsOrder.getString("Item_Name");
+            String side1 = rsOrder.getString("Side_1");
+            String side2 = rsOrder.getString("Side_2");
+            String protein1 = rsOrder.getString("Protein_1");
+            String protein2 = rsOrder.getString("Protein_2");
+            String protein3 = rsOrder.getString("Protein_3");
+            String miscItem = rsOrder.getString("Misc_Item");
+            double itemCost = rsOrder.getDouble("Item_Cost");
+
+            String[] arrStr = {itemName, side1, side2, protein1, protein2, protein3, miscItem};
+
+            Entry order = new Entry(arrStr, itemCost);
+            entryList.add(order);
+        }
+
+        return entryList;
     }
 
     public static ObservableList<Order> searchOrdersByDate(LocalDate d) throws SQLException, ClassNotFoundException {
