@@ -10,12 +10,19 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 //import javafx.scene.control.TextField;
 import java.time.LocalDateTime;
+import javafx.scene.control.Button;
 
 import java.sql.*;
 
 public class OrderHistory {
     // @FXML
     // private TextField order_search;
+    @FXML
+    private Button cashier;
+    @FXML
+    private Button inventory;
+    @FXML
+    private Button employees;
     @FXML
     private TableView<Order> order_table;
     @FXML
@@ -120,6 +127,21 @@ public class OrderHistory {
         } finally {
             isLoading = false; // Reset loading flag
         }
+    }
+
+    @FXML
+    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("cashier1");
+    }
+
+    @FXML
+    private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("employees");
+    }
+
+    @FXML
+    private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("inventory");
     }
 
 }

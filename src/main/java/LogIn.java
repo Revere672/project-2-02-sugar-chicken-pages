@@ -29,7 +29,6 @@ public class LogIn {
         if (rs.next()) {
             if (rs.getInt(1) >= 200000) {
                 GUIRunner.isManager = true;
-                System.out.println(GUIRunner.isManager);
                 System.out.println("This user is a Manager");
                 GUIRunner.changeScene("inventory");
             } else {
