@@ -108,6 +108,6 @@ public class InventoryTable {
 
     @FXML
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        // GUIRunner.changeScene("order_history");
+        GUIRunner.changeScene("order_history");
     }
 }
