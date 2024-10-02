@@ -1,16 +1,20 @@
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class CashierController  {
+public class CashierController implements Initializable {
 
     private Stage stage;
     private Scene scene;
@@ -20,6 +24,7 @@ public class CashierController  {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier1.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        DisplayReceipt.updateRecipt(scene);
         stage.setScene(scene);
         stage.show();
     }
@@ -29,6 +34,7 @@ public class CashierController  {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier2.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        DisplayReceipt.updateRecipt(scene);
         stage.setScene(scene);
         stage.show();
     }
@@ -36,6 +42,14 @@ public class CashierController  {
     public void sendToReceipt(ActionEvent event) throws IOException{
         scene = ((Node)event.getSource()).getScene();
         DisplayReceipt.updateRecipt(scene);
+    }
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            DisplayReceipt.load();
+        } catch (SQLException | ClassNotFoundException ex) {
+        }
     }
 
     //Buttons for all of the serving size options
@@ -141,4 +155,5 @@ public class CashierController  {
 
     @FXML
     private Button button_sweet_fire_chicken;
+
 }
