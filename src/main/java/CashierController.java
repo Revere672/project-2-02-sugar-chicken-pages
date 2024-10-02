@@ -1,7 +1,10 @@
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -11,7 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
 public class CashierController implements Initializable {
@@ -19,6 +22,8 @@ public class CashierController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    public static ArrayList<ToggleButton> selected=new ArrayList<>();
+    public static Entry workingEntry;
 
     public void switch_to_cashier1(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/cashier1.fxml"));
@@ -39,9 +44,51 @@ public class CashierController implements Initializable {
         stage.show();
     }
 
-    public void sendToReceipt(ActionEvent event) throws IOException{
+    public void addToOrder(ActionEvent event) throws IOException{
+        DisplayReceipt.addEntry(workingEntry);
+
         scene = ((Node)event.getSource()).getScene();
         DisplayReceipt.updateRecipt(scene);
+        ((Node)event.getSource()).setOpacity(0);
+        deSelectAll();
+        switch_to_cashier1(event);
+    }
+
+    public void deSelectAll(){
+        for(ToggleButton t : selected){
+            t.setSelected(false);
+        }
+        selected.clear();
+   }
+
+   public void deSelect(String s){
+        for(ToggleButton t : selected){
+            if(t.getId().equals(s)){
+            t.setSelected(false);
+            }
+        }
+   }
+
+    public void FinishOrder(ActionEvent event) throws IOException, SQLException, ClassNotFoundException{
+        DBUtil.dbExecuteUpdate("INSERT INTO Order_History VALUES ("+DisplayReceipt.orderId+",\'"+DisplayReceipt.dateFormat.format(new Date())+"\',"+(DisplayReceipt.subtotal*1.0875)+","+GUIRunner.currentUser+")");
+
+        
+        String itemSQL="INSERT INTO Order_Items VALUES ";
+        int orderNum=1;
+        
+        for(Entry e:DisplayReceipt.entries){
+            System.out.println(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum));
+            DBUtil.dbExecuteUpdate(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum++));
+        }
+        
+        DisplayReceipt.entries.clear();
+        workingEntry=null;
+
+        ResultSet rs=DBUtil.dbExecuteQuery("SELECT MAX(order_id) FROM order_history;");
+        rs.next();
+        DisplayReceipt.orderId = rs.getInt(1)+1;
+
+        DisplayReceipt.updateRecipt(((Node)event.getSource()).getScene());
     }
     
     @Override
@@ -51,109 +98,155 @@ public class CashierController implements Initializable {
         } catch (SQLException | ClassNotFoundException ex) {
         }
     }
+    
+    public void buttonPressedOther(ActionEvent event){
+        String buttonPressed = ((Node)event.getSource()).getId();
+        int index=DisplayReceipt.extraCostName.indexOf(buttonPressed);
+        workingEntry=new Entry("other",buttonPressed,DisplayReceipt.extraCostPrice.get(index));
+        scene=((Node)event.getSource()).getScene();
+        scene.lookup("#AddToOrder").setOpacity(1);
+        selected.add((ToggleButton)event.getSource());
+    }
+
+    public void buttonPressedSide(ActionEvent event){
+        String buttonPressed = ((Node)event.getSource()).getId();
+        selected.add((ToggleButton)event.getSource());
+        
+        if(!workingEntry.addSide(buttonPressed)){
+            workingEntry.removeSide(buttonPressed);
+            deSelect(buttonPressed);
+        }
+
+        scene=((Node)event.getSource()).getScene();
+        scene.lookup("#AddToOrder").setOpacity(1);
+    }
+
+    public void buttonPressedProtein(ActionEvent event){
+        String buttonPressed = ((Node)event.getSource()).getId();
+        selected.add((ToggleButton)event.getSource());
+        
+        if(!workingEntry.addProtein(buttonPressed)){
+            workingEntry.removeProtein(buttonPressed);
+            deSelect(buttonPressed);
+        }
+
+        scene=((Node)event.getSource()).getScene();
+        scene.lookup("#AddToOrder").setOpacity(1);
+    }
+
+    public void buttonPressedType(ActionEvent event) throws IOException{
+        String buttonPressed = ((Node)event.getSource()).getId();
+        workingEntry=new Entry(new String[]{buttonPressed},DisplayReceipt.overarchingCosts.get(buttonPressed));
+        switch_to_cashier2(event);
+    }
+
+    public void cancelCashier2(ActionEvent event) throws IOException{
+        deSelectAll();
+        switch_to_cashier1(event);
+    }
 
     //Buttons for all of the serving size options
     @FXML
-    private Button button_bowl;
+    private ToggleButton button_bowl;
 
     @FXML
-    private Button button_plate;
+    private ToggleButton button_plate;
 
     @FXML
-    private Button button_big_plate;
+    private ToggleButton button_big_plate;
 
     @FXML
-    private Button button_cub_meal;
+    private ToggleButton button_cub_meal;
 
     @FXML
-    private Button button_carte;
+    private ToggleButton button_carte;
 
     @FXML
-    private Button button_confirm;
+    private ToggleButton button_confirm;
 
     //Buttons for all of the beverage options
     @FXML
-    private Button button_water_cup;
+    private ToggleButton button_water_cup;
 
     @FXML
-    private Button button_fountain_drink;
+    private ToggleButton button_fountain_drink;
 
     @FXML
-    private Button button_water_bottle;
+    private ToggleButton button_water_bottle;
 
     @FXML
-    private Button button_gatorade;
+    private ToggleButton button_gatorade;
 
     @FXML
-    private Button button_juice;
+    private ToggleButton button_juice;
 
     @FXML
-    private Button button_milk;
+    private ToggleButton button_milk;
 
     //Buttons for all of the appetizer options
     @FXML
-    private Button button_chicken_egg_roll;
+    private ToggleButton button_chicken_egg_roll;
 
     @FXML
-    private Button button_veggie_spring_roll;
+    private ToggleButton button_veggie_spring_roll;
 
     @FXML
-    private Button button_rangoon;
+    private ToggleButton button_rangoon;
 
     @FXML
-    private Button button_apple_pie_roll;
+    private ToggleButton button_apple_pie_roll;
 
     //Buttons for all of the side options
     @FXML
-    private Button button_fried_rice;
+    private ToggleButton button_fried_rice;
 
     @FXML
-    private Button button_white_rice;
+    private ToggleButton button_white_rice;
 
     @FXML
-    private Button button_chow_mein;
+    private ToggleButton button_chow_mein;
 
     @FXML
-    private Button button_super_greens;
+    private ToggleButton button_super_greens;
 
     //Buttons for all of the protein options
     @FXML
-    private Button button_bourbon_chicken;
+    private ToggleButton button_bourbon_chicken;
 
     @FXML
-    private Button button_orange_chicken;
+    private ToggleButton button_orange_chicken;
 
     @FXML
-    private Button button_teriyaki_chicken;
+    private ToggleButton button_teriyaki_chicken;
 
     @FXML
-    private Button button_angus_steak;
+    private ToggleButton button_angus_steak;
 
     @FXML
-    private Button button_kung_pao_chicken;
+    private ToggleButton button_kung_pao_chicken;
 
     @FXML
-    private Button button_honey_sesame_chicken;
+    private ToggleButton button_honey_sesame_chicken;
 
     @FXML
-    private Button button_honey_walnut_shrimp;
+    private ToggleButton button_honey_walnut_shrimp;
 
     @FXML
-    private Button button_beijing_beef;
+    private ToggleButton button_beijing_beef;
 
     @FXML
-    private Button button_mushroom_chicken;
+    private ToggleButton button_mushroom_chicken;
 
     @FXML
-    private Button button_string_bean_chicken;
+    private ToggleButton button_string_bean_chicken;
 
     @FXML
-    private Button button_broccoli_beef;
+    private ToggleButton button_broccoli_beef;
 
     @FXML
-    private Button button_black_pepper_chicken;
+    private ToggleButton button_black_pepper_chicken;
 
     @FXML
-    private Button button_sweet_fire_chicken;
+    private ToggleButton button_sweet_fire_chicken;
 
 }

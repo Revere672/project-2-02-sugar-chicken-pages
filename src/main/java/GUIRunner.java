@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 public class GUIRunner extends Application {
 
     public static boolean isManager;
+    public static int currentUser;
     public static HashMap<String, Scene> scenes;
     public static Stage stage;
     public static GUIBuilder build;

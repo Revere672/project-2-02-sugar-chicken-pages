@@ -23,6 +23,7 @@ public class LogIn {
         String scriptQry = "SELECT * FROM Passwords WHERE Employee_ID = '" + username.getText() + "' AND password = '" + password.getText() + "';";
         ResultSet rs = DBUtil.dbExecuteQuery(scriptQry);
         if(rs.next()) {
+            GUIRunner.currentUser=rs.getInt(1);
             if(rs.getInt(1) >= 200000) {
                 GUIRunner.isManager = true;
                 System.out.println("This user is a Manager");

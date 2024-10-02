@@ -28,6 +28,74 @@ public class Entry {
             this.price=price;
         }
 
+        public boolean addSide(String side){
+            if(DisplayReceipt.extraCostName.contains(side)){
+                price+=DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(side));
+            }
+            if(side1==null){
+                side1=side;
+                return true;
+            }
+            if(side2==null){
+                side2=side;
+                return true;
+            }
+            return false;
+        }
+
+        public boolean removeSide(String side){
+            if(DisplayReceipt.extraCostName.contains(side)){
+                price-=DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(side));
+            }
+            if(side1.equals(side)){
+                side1=null;
+                return true;
+            }
+            if(side2.equals(side)){
+                side2=null;
+                return true;
+            }
+            return false;
+        }
+
+        public boolean addProtein(String protein){
+            if(DisplayReceipt.extraCostName.contains(protein)){
+                price+=DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(protein));
+            }
+            if(protien1==null){
+                protien1=protein;
+                return true;
+            }
+            if(protien2==null){
+                protien2=protein;
+                return true;
+            }
+            if(protien3==null){
+                protien3=protein;
+                return true;
+            }
+            return false;
+        }
+
+        public boolean removeProtein(String protein){
+            if(DisplayReceipt.extraCostName.contains(protein)){
+                price-=DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(protein));
+            }
+            if(protien1.equals(protein)){
+                protien1=null;
+                return true;
+            }
+            if(protien2.equals(protein)){
+                protien2=null;
+                return true;
+            }
+            if(protien3.equals(protein)){
+                protien3=null;
+                return true;
+            }
+            return false;
+        }
+
         public String getPrice() {
             String text=DisplayReceipt.df.format(price) +"\n";
             if(orderType.equals("other")){
@@ -71,6 +139,10 @@ public class Entry {
                 else text+="+$0.00\n";
             }
             return text;
+        }
+
+        public String updateInfo(int orderId,int orderNum){
+            return "("+orderId+","+orderNum+",'"+orderType+"','"+side1+"','"+side2+"','"+protien1+"','"+protien2+"','"+protien3+"','"+miscItem+"',"+price+")";
         }
 
         public String formatedString(){
