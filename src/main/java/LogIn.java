@@ -9,9 +9,12 @@ import javafx.scene.control.TextField;
 
 public class LogIn {
 
-    @FXML TextField username;
-    @FXML PasswordField password;
-    @FXML Button logInButton;
+    @FXML
+    TextField username;
+    @FXML
+    PasswordField password;
+    @FXML
+    Button logInButton;
 
     @FXML
     public void nextEntry(ActionEvent e) throws SQLException, ClassNotFoundException {
@@ -20,23 +23,23 @@ public class LogIn {
 
     @FXML
     public void logIn(ActionEvent e) throws SQLException, ClassNotFoundException {
-        String scriptQry = "SELECT * FROM Passwords WHERE Employee_ID = '" + username.getText() + "' AND password = '" + password.getText() + "';";
+        String scriptQry = "SELECT * FROM Passwords WHERE Employee_ID = '" + username.getText() + "' AND password = '"
+                + password.getText() + "';";
         ResultSet rs = DBUtil.dbExecuteQuery(scriptQry);
-        if(rs.next()) {
-            if(rs.getInt(1) >= 200000) {
+        if (rs.next()) {
+            if (rs.getInt(1) >= 200000) {
                 GUIRunner.isManager = true;
+                System.out.println(GUIRunner.isManager);
                 System.out.println("This user is a Manager");
                 GUIRunner.changeScene("inventory");
-            }
-            else {
+            } else {
                 GUIRunner.isManager = false;
                 System.out.println("This user is a Cashier");
                 GUIRunner.changeScene("cashier1");
 
             }
             System.out.println("Login Successful");
-        }
-        else {
+        } else {
             System.out.println("Login Failed");
             username.clear();
             password.clear();

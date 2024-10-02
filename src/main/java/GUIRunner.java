@@ -28,13 +28,21 @@ public class GUIRunner extends Application {
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
         DBUtil.dbConnect(args[0], args[1], args[1], args[2]);
         scenes = new HashMap<>();
-        build=new GUIBuilder(args);
+        build = new GUIBuilder(args);
         launch();
     }
 
     public static void changeScene(String scene_Name) {
+        Scene newScene = scenes.get(scene_Name);
         stage.setScene(scenes.get(scene_Name));
         stage.show();
+
+        if (scene_Name.equals("cashier1") || scene_Name.equals("cashier2")) {
+            Cashier cashierController = (Cashier) newScene.getUserData();
+            if (cashierController != null) {
+                System.out.println(GUIRunner.isManager);
+                cashierController.updateButtonStates();
+            }
+        }
     }
 }
-
