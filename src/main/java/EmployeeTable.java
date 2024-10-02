@@ -8,10 +8,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.sql.*;
 
 public class EmployeeTable {
+    @FXML
+    private Pane edit_pane;
+
+    @FXML
+    private AnchorPane background_edit;
+    
     @FXML
     private Button cashier;
     @FXML
@@ -97,6 +105,8 @@ public class EmployeeTable {
 
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
+        edit_pane.setVisible(false);
+        setBackground(false);
         employee_id_col.setCellValueFactory(cellData -> cellData.getValue().EmployeeIDProperty().asObject());
         name_col.setCellValueFactory(cellData -> cellData.getValue().EmployeeNameProperty());
         email_col.setCellValueFactory(cellData -> cellData.getValue().EmployeeEmailProperty());
@@ -109,6 +119,26 @@ public class EmployeeTable {
             status_list.add("Active");
             status_list.add("Inactive");
             status_dropdown.setItems(status_list);
+        }
+    }
+
+    @FXML
+    private void setBackground(Boolean value) {
+        if (value) {
+            background_edit.getChildren().forEach(node -> {
+                if (!(node.equals(edit_pane))) {
+                    node.setOpacity(0.3);
+                    node.setDisable(true);
+                }
+            });
+        }
+        else {
+            background_edit.getChildren().forEach(node -> {
+                if (!(node.equals(edit_pane))) {
+                    node.setOpacity(1);
+                    node.setDisable(false);
+                }
+            });
         }
     }
 
@@ -127,7 +157,9 @@ public class EmployeeTable {
 
     @FXML
     private void editEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("employee_edit");
+        setBackground(true);
+        edit_pane.setVisible(true);
+        //GUIRunner.changeScene("employee_edit");
     }
 
     
@@ -151,7 +183,10 @@ public class EmployeeTable {
 
     @FXML
     private void Cancel_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("employees");
+        setBackground(false);
+        edit_pane.setVisible(false);
+        searchEmployees(null);
+        //GUIRunner.changeScene("employees");
     }
 
 
@@ -164,7 +199,10 @@ public class EmployeeTable {
         }
         Employee e = EmployeeDB.find_edit_Employee(employee_dropdown.getValue());
         EmployeeDB.updateEmployeeValues(e.getEmployeeID(), edit_email.getText(), status);
-        GUIRunner.changeScene("employees");
+        setBackground(false);
+        edit_pane.setVisible(false);
+        searchEmployees(null);
+        //GUIRunner.changeScene("employees");
     }
     // @FXML
     // private void edit_button_click (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
