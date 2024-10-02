@@ -43,6 +43,7 @@ public class CashierController implements Initializable {
         scene = ((Node)event.getSource()).getScene();
         DisplayReceipt.updateRecipt(scene);
         ((Node)event.getSource()).setOpacity(0);
+        ((Node)event.getSource()).setDisable(true);
         deSelectAll();
         switch_to_cashier1(event);
     }
@@ -60,6 +61,15 @@ public class CashierController implements Initializable {
             t.setSelected(false);
             }
         }
+   }
+
+   public void undo(ActionEvent event){
+        if(DisplayReceipt.getEntries().isEmpty()){
+            return;
+        }
+        DisplayReceipt.getEntries().remove(DisplayReceipt.getEntries().size()-1);
+        scene=((Node)event.getSource()).getScene();
+        DisplayReceipt.updateRecipt(scene);
    }
 
     public void FinishOrder(ActionEvent event) throws IOException, SQLException, ClassNotFoundException{
@@ -101,6 +111,7 @@ public class CashierController implements Initializable {
         workingEntry=new Entry("other",buttonPressed,DisplayReceipt.extraCostPrice.get(index));
         scene=((Node)event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
+        scene.lookup("#AddToOrder").setDisable(false);
         selected.add((ToggleButton)event.getSource());
     }
 
@@ -115,6 +126,7 @@ public class CashierController implements Initializable {
 
         scene=((Node)event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
+        scene.lookup("#AddToOrder").setDisable(false);
         DisplayReceipt.updateRecipt(scene);
     }
 
@@ -129,6 +141,7 @@ public class CashierController implements Initializable {
 
         scene=((Node)event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
+        scene.lookup("#AddToOrder").setDisable(false);
         DisplayReceipt.updateRecipt(scene);
     }
 
