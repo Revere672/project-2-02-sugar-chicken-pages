@@ -1,16 +1,16 @@
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
 //import javafx.scene.control.TextField;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 
 import java.sql.*;
 
@@ -19,10 +19,6 @@ public class OrderHistory {
     // private TextField order_search;
     @FXML
     private Button cashier;
-    @FXML
-    private Button inventory;
-    @FXML
-    private Button employees;
     @FXML
     private TableView<Order> order_table;
     @FXML
@@ -33,30 +29,44 @@ public class OrderHistory {
     private TableColumn<Order, Double> price_col;
     @FXML
     private TableColumn<Order, Integer> employee_ID_col;
+    @FXML
+    private DatePicker order_date_picker;
+    @FXML
+    private Button order_date_search_button;
 
     private int currentOffset = 0;
     private boolean isLoading = false;
+    private boolean isDateLoaded = false;
     private int load_count = 1000;
 
-    // @FXML
-    // private void searchOrders(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
-    //     try {
-    //         OrderHistory order_history = OrderDB.searchOrders(order_search.getText());
 
-    //         populateInventory(inventory);
+    // @FXML
+    // private void searchOrders(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    //     try {
+    //         ObservableList<Order> orderData = OrderDB.searchOrders();
+    //         populateOrders(orderData);
     //     } catch (SQLException e) {
-    //         e.printStackTrace();
+    //         System.out.println("Error occurred while getting orders information from DB.\n" + e);
     //         throw e;
     //     }
     // }
 
     @FXML
-    private void searchOrders(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    private void searchOrdersByDate(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
-            ObservableList<Order> orderData = OrderDB.searchOrders();
-            populateOrders(orderData);
+            LocalDate selectedDate = order_date_picker.getValue();
+            if (selectedDate != null) {
+                ObservableList<Order> orderData = OrderDB.searchOrdersByDate(selectedDate);
+                populateOrders_replace(orderData);
+                isDateLoaded = true;
+            }
+            else {
+                ObservableList<Order> orderData = OrderDB.searchOrders();
+                populateOrders_replace(orderData);
+                isDateLoaded = false;
+            }
         } catch (SQLException e) {
-            System.out.println("Error occurred while getting orders information from DB.\n" + e);
+            System.out.println("Error occurred while searching orders by date.\n" + e);
             throw e;
         }
     }
@@ -76,7 +86,7 @@ public class OrderHistory {
             ScrollBar verticalScrollbar = getVerticalScrollBar(order_table);
             if (verticalScrollbar != null) {
                 verticalScrollbar.valueProperty().addListener((obs, oldVal, newVal) -> {
-                    if (newVal.doubleValue() == verticalScrollbar.getMax() && !isLoading) {
+                    if (newVal.doubleValue() == verticalScrollbar.getMax() && !isLoading && !isDateLoaded) {
                         loadOrders();
                     }
                 });
@@ -114,6 +124,14 @@ public class OrderHistory {
         } else {
             order_table.getItems().addAll(orderData);
         }
+    }
+
+    @FXML
+    private void populateOrders_replace(ObservableList<Order> orderData) {
+        if (order_table.getItems() != null) {
+            order_table.getItems().clear();  // Clear the existing items in the table
+        }
+        order_table.setItems(orderData);  // Set the new order data
     }
 
     private void loadOrders() {

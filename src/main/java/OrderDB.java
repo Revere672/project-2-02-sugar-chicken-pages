@@ -1,6 +1,7 @@
 import java.sql.*;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
+import java.time.LocalDate;
 
 public class OrderDB {
     
@@ -45,6 +46,26 @@ public class OrderDB {
             throw e;
         }
     }
+
+    public static ObservableList<Order> searchOrdersByDate(LocalDate d) throws SQLException, ClassNotFoundException {
+        int year = d.getYear();
+        int month = d.getMonthValue();
+        int day = d.getDayOfMonth();
+
+
+        String stmt = "SELECT * FROM order_history WHERE EXTRACT(YEAR from order_time) = " + year + " AND EXTRACT(MONTH from order_time) = " + month + " AND EXTRACT(DAY from order_time) = " + day + " ORDER BY order_ID DESC;";
+
+        try {
+            ResultSet rsOrder = DBUtil.dbExecuteQuery(stmt);
+
+            ObservableList<Order> orderList = getOrderList(rsOrder);
+
+            return orderList;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     public static ObservableList<Order> searchOrders() throws SQLException, ClassNotFoundException {
         String stmt = "SELECT * FROM order_history ORDER BY order_ID DESC LIMIT 1000 OFFSET 0;";
 
