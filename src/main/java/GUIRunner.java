@@ -39,7 +39,7 @@ public class GUIRunner extends Application {
         stage.show();
 
         if (scene_Name.equals("cashier1") || scene_Name.equals("cashier2")) {
-            Cashier cashierController = (Cashier) newScene.getUserData();
+            CashierController cashierController = (CashierController) newScene.getUserData();
             if (cashierController != null) {
                 cashierController.updateButtonStates();
             }

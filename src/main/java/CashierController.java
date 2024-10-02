@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
@@ -96,6 +97,15 @@ public class CashierController implements Initializable {
 
         DisplayReceipt.updateRecipt(((Node)event.getSource()).getScene());
     }
+
+    public void updateButtonStates() {
+        System.out.println(GUIRunner.isManager);
+        boolean isManager = GUIRunner.isManager;
+        cashier.setDisable(!isManager);
+        inventory.setDisable(!isManager);
+        employees.setDisable(!isManager);
+        order_history.setDisable(!isManager);
+    }
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -157,6 +167,28 @@ public class CashierController implements Initializable {
         deSelectAll();
         switch_to_cashier1(event);
     }
+
+    @FXML
+    private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("employees");
+    }
+    @FXML
+    private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("inventory");
+    }
+    @FXML
+    private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+         GUIRunner.changeScene("order_history");
+    }
+
+    @FXML
+    private Button cashier;
+    @FXML
+    private Button inventory;
+    @FXML
+    private Button employees;
+    @FXML
+    private Button order_history;
 
     //Buttons for all of the serving size options
     @FXML
