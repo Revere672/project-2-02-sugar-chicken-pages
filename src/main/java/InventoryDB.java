@@ -87,6 +87,16 @@ public class InventoryDB {
         }
     }
 
+    public static void updateRestock(int product_ID, double quantity) throws SQLException, ClassNotFoundException {
+        String stmt = "UPDATE inventory SET quantity='"+quantity+"' WHERE inventory_id='"+product_ID+"';";
+
+        try {
+            DBUtil.dbExecuteUpdate(stmt);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     public static Inventory findProduct(int product_ID) throws SQLException, ClassNotFoundException {
         try {
             String findStmt = "SELECT * FROM inventory WHERE inventory_id='"+product_ID+"';";
@@ -98,12 +108,26 @@ public class InventoryDB {
         }
     }
 
-    public static Double getRestock(int product_ID) throws SQLException, ClassNotFoundException {
+    public static double getRestock(int product_ID) throws SQLException, ClassNotFoundException {
         try {
             String findStmt = "SELECT * FROM inventory WHERE inventory_id='"+product_ID+"';";
             ResultSet rs = DBUtil.dbExecuteQuery(findStmt);
             if (rs.next()) {
                 return rs.getDouble("restock_quantity");
+            }
+            return 0.0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static double getQuantity(int product_ID) throws SQLException, ClassNotFoundException {
+        try {
+            String findStmt = "SELECT * FROM inventory WHERE inventory_id='"+product_ID+"';";
+            ResultSet rs = DBUtil.dbExecuteQuery(findStmt);
+            if (rs.next()) {
+                return rs.getDouble("quantity");
             }
             return 0.0;
         } catch (Exception e) {

@@ -47,7 +47,7 @@
           <TableColumn fx:id="prod_name_col" prefWidth="93.99994659423828" text="Product" />
             <TableColumn fx:id="supplier_col" prefWidth="95.33335876464844" text="Supplier" />
             <TableColumn fx:id="cost_col" prefWidth="86.0" text="Cost" />
-            <TableColumn fx:id="quantity_col" minWidth="9.999969482421875" prefWidth="98.66659545898438" text="Quantity" />
+            <TableColumn fx:id="quantity_col" minWidth="9.999969482421875" prefWidth="98.66659545898438" text=" Quantity %" />
             <TableColumn fx:id="action_col" prefWidth="104.00005086263025" text="Actions" />
         </columns>
       </TableView>
@@ -89,6 +89,23 @@
             <Text layoutX="39.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost" />
             <Text layoutX="5.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Quantity" />
             <TextArea fx:id="failed_text" editable="false" layoutX="76.0" layoutY="159.0" prefHeight="40.0" prefWidth="203.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="update_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+         <children>
+            <Text layoutX="157.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product" />
+            <Button fx:id="update_button" layoutX="185.0" layoutY="218.0" mnemonicParsing="false" onAction="#update" text="Update" />
+            <Button fx:id="cancel_button2" layoutX="118.0" layoutY="218.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+            <TextField fx:id="product_name_text2" editable="false" layoutX="103.0" layoutY="31.0" />
+            <TextField fx:id="restock_text2" editable="false" layoutX="190.0" layoutY="86.0" />
+            <Text layoutX="44.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Quantity" />
+            <Text layoutX="203.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recommended Restock" />
+            <TextField fx:id="quantity_text2" editable="false" layoutX="13.0" layoutY="86.0" />
+            <TextField fx:id="update2" layoutX="133.0" layoutY="125.0" prefHeight="25.0" prefWidth="89.0" />
+            <Text layoutX="30.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Quantity" />
+            <Button fx:id="decrement_button" layoutX="228.0" layoutY="125.0" mnemonicParsing="false" onAction="#decrement" prefHeight="25.0" prefWidth="24.0" text="-" />
+            <Button fx:id="increment_button" layoutX="265.0" layoutY="125.0" mnemonicParsing="false" onAction="#increment" text="+" />
+            <TextArea fx:id="failed_text2" editable="false" layoutX="111.0" layoutY="166.0" prefHeight="16.0" prefWidth="133.0" />
          </children>
       </Pane>
    </children>

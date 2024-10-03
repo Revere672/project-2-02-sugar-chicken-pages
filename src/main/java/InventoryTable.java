@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
+import javafx.scene.layout.HBox;
 
 import java.sql.*;
 
@@ -20,6 +21,8 @@ public class InventoryTable {
     private Pane edit_pane;
     @FXML
     private Pane add_pane;
+    @FXML
+    private Pane update_pane;
     @FXML
     private Button cashier;
     @FXML
@@ -43,6 +46,8 @@ public class InventoryTable {
     @FXML
     private TextArea failed_text1;
     @FXML
+    private TextArea failed_text2;
+    @FXML
     private Button apply_button;
     @FXML
     private TextField product_name_text1;
@@ -56,6 +61,20 @@ public class InventoryTable {
     private TextField restock_text1;
     @FXML
     private Button add_button;
+    @FXML
+    private TextField product_name_text2;
+    @FXML
+    private TextField quantity_text2;
+    @FXML
+    private TextField restock_text2;
+    @FXML
+    private TextField update2;
+    @FXML
+    private Button decrement_button;
+    @FXML
+    private Button increment_button;
+    @FXML
+    private Button update_button;
     @FXML
     private TableView<Inventory> inventory_table;
     @FXML
@@ -105,6 +124,7 @@ public class InventoryTable {
     private void initialize() throws SQLException, ClassNotFoundException {
         edit_pane.setVisible(false);
         add_pane.setVisible(false);
+        update_pane.setVisible(false);
         setBackground(false);
 
         inventory_ID_col.setCellValueFactory(cellData -> cellData.getValue().inventoryIDProperty().asObject());
@@ -114,6 +134,9 @@ public class InventoryTable {
         quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
         action_col.setCellFactory(param -> new TableCell<Inventory, Void>() {
             private final Button editButton = new Button("\u270E");
+            private final Button restockButton = new Button("\uF4CB");
+
+            HBox box = new HBox(editButton, restockButton);
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -121,7 +144,7 @@ public class InventoryTable {
                 if (empty || item != null) {
                     setGraphic(null);
                 } else {
-                    setGraphic(editButton);
+                    setGraphic(box);
                     editButton.setOnAction(event -> {
                         try {
                             Inventory product = getTableView().getItems().get(getIndex());
@@ -129,6 +152,19 @@ public class InventoryTable {
                                 product_ID = product.getInventoryID();
                                 fillProduct(null);
                                 editProduct(null);
+                            }
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                    restockButton.setOnAction(event -> {
+                        try {
+                            Inventory product = getTableView().getItems().get(getIndex());
+                            if (product != null) {
+                                product_ID = product.getInventoryID();
+                                fillUpdate(null);
+                                updateProduct(null);
                             }
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -151,13 +187,18 @@ public class InventoryTable {
         quantity_text1.setText(null);
         restock_text1.setText(null);
         failed_text1.setText(null);
+        product_name_text2.setText(null);
+        quantity_text2.setText(null);
+        restock_text2.setText(null);
+        update2.setText(null);
+        failed_text2.setText(null);
     }
 
     @FXML
     private void setBackground(Boolean value) {
         if (value) {
             main_inventory.getChildren().forEach(node -> {
-                if (!(node.equals(edit_pane) || node.equals(add_pane))) {
+                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane))) {
                     node.setOpacity(0.3);
                     node.setDisable(true);
                 }
@@ -165,7 +206,7 @@ public class InventoryTable {
         }
         else {
             main_inventory.getChildren().forEach(node -> {
-                if (!(node.equals(edit_pane) || node.equals(add_pane))) {
+                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane))) {
                     node.setOpacity(1);
                     node.setDisable(false);
                 }
@@ -201,6 +242,13 @@ public class InventoryTable {
         product_name_text.requestFocus();
     }
 
+    @FXML
+    private void updateProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        setBackground(true);
+        update_pane.setVisible(true);
+        update2.requestFocus();
+    }
+
     // @FXML
     // private void searchProduct(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
     //     try {
@@ -223,13 +271,27 @@ public class InventoryTable {
     //     }
     // }
 
-    @FXML void fillProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    @FXML 
+    private void fillProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
             Inventory item = InventoryDB.findProduct(product_ID);
             product_name_text.setText(item.getProductName());
             supplier_text.setText(item.getSupplier());
             cost_text.setText(""+item.getCost());
             restock_text.setText(""+InventoryDB.getRestock(product_ID));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @FXML 
+    private void fillUpdate(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        try {
+            Inventory item = InventoryDB.findProduct(product_ID);
+            product_name_text2.setText(item.getProductName());
+            quantity_text2.setText(""+InventoryDB.getQuantity(product_ID));
+            restock_text2.setText(""+InventoryDB.getRestock(product_ID));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -281,6 +343,24 @@ public class InventoryTable {
     }
 
     @FXML
+    private void update(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if (Double.parseDouble(quantity_text2.getText()) < 0) {
+            updateFailed();
+        }
+        else {
+            InventoryDB.updateRestock(product_ID, Double.parseDouble(quantity_text2.getText()));
+            product_name_text2.setText(null);
+            quantity_text2.setText(null);
+            restock_text2.setText(null);
+            update2.setText(null);
+            failed_text2.setText(null);
+            setBackground(false);
+            update_pane.setVisible(false);
+            searchInventory(null);
+        }
+    }
+
+    @FXML
     private void cancel(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         product_name_text.setText(null);
         supplier_text.setText(null);
@@ -293,9 +373,15 @@ public class InventoryTable {
         quantity_text1.setText(null);
         restock_text1.setText(null);
         failed_text1.setText(null);
+        product_name_text2.setText(null);
+        quantity_text2.setText(null);
+        restock_text2.setText(null);
+        update2.setText(null);
+        failed_text2.setText(null);
         setBackground(false);
         edit_pane.setVisible(false);
         add_pane.setVisible(false);
+        update_pane.setVisible(false);
         searchInventory(null);
     }
 
@@ -303,6 +389,48 @@ public class InventoryTable {
     private void addFailed() {
         failed_text.setText("One or more entries are blank");
         failed_text1.setText("One or more entries are blank");
+    }
+
+    @FXML
+    private void updateFailed() {
+        failed_text2.setText("Quantity cannot be negative");
+    }
+
+    @FXML
+    private void changeQuantityFailed() {
+        failed_text2.setText("Cannot increment/decrement by a negative");
+    }
+
+    @FXML
+    private void increment(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        double amount  = 0.0;
+        if (update2.getText() != "" && update2.getText() != null) {
+            amount = Double.parseDouble(update2.getText());
+        }
+        
+        if (amount < 0) {
+            changeQuantityFailed();
+        }
+        else {
+            amount += Double.parseDouble(quantity_text2.getText());
+            quantity_text2.setText(""+amount);
+        }
+    }
+
+    @FXML
+    private void decrement(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        double amount  = 0.0;
+        if (update2.getText() != "" && update2.getText() != null) {
+            amount = Double.parseDouble(update2.getText());
+        }
+        
+        if (amount < 0) {
+            changeQuantityFailed();
+        }
+        else {
+            amount = Double.parseDouble(quantity_text2.getText()) - amount;
+            quantity_text2.setText(""+amount);
+        }
     }
 
     @FXML
