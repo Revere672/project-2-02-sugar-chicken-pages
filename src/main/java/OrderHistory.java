@@ -5,18 +5,24 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TableCell;
 //import javafx.scene.control.TextField;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.Pane;
 
 import java.sql.*;
 
 public class OrderHistory {
     // @FXML
     // private TextField order_search;
+    @FXML
+    private AnchorPane main_order_history;
     @FXML
     private Button cashier;
     @FXML
@@ -40,7 +46,15 @@ public class OrderHistory {
     @FXML
     private DatePicker order_date_picker;
     @FXML
+    private Pane order_items_pane;
+    @FXML
     private Button order_date_search_button;
+    @FXML
+    private TextField order_id_field;
+    @FXML
+    private TextArea order_items_scrollable;
+
+    private int orderID;
 
     private int currentOffset = 0;
     private boolean isLoading = false;
@@ -81,6 +95,9 @@ public class OrderHistory {
 
     @FXML
     private void initialize() {
+        order_items_pane.setVisible(false);
+        setBackground(false);
+
         order_ID_col.setCellValueFactory(cellData -> cellData.getValue().orderIDProperty().asObject());
         order_time_col.setCellValueFactory(cellData -> cellData.getValue().orderTimeProperty());
         price_col.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
@@ -100,20 +117,11 @@ public class OrderHistory {
                         Order order = getTableView().getItems().get(getIndex());
                         if (order != null) {
                             try {
-                                int orderID = order.getOrderID();
-                                ObservableList<Entry> orderItems = OrderDB.searchOrderItems(orderID);
-                                int count = 1;
-                                for(Entry entry : orderItems) {
-                                    // Handle items here for display elements
-                                    // Change formatted string to not print null values
-                                    // Do NOT pull from items for prices - we can change pricing so current pricing is not relevant!
-                                    // Just show items in menu
-                                    System.out.println("----------ITEM " + count + "----------");
-                                    System.out.println(entry.formatedString());
-                                    count++;
-                                }
+                                orderID = order.getOrderID();
+                                fillHistory(null);
                             }
                             catch (SQLException | ClassNotFoundException e) {
+                                e.printStackTrace();
                                 throw new RuntimeException(e);
                             }
                         }
@@ -151,7 +159,67 @@ public class OrderHistory {
         return null;
     }
 
-    
+    private void setBackground(Boolean value) {
+        if (value) {
+            main_order_history.getChildren().forEach(node -> {
+                if (!(node.equals(order_items_pane))) {
+                    node.setOpacity(0.3);
+                    node.setDisable(true);
+                }
+            });
+        }
+        else {
+            main_order_history.getChildren().forEach(node -> {
+                if (!(node.equals(order_items_pane))) {
+                    node.setOpacity(1);
+                    node.setDisable(false);
+                }
+            });
+        }
+    }
+
+    private void fillHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        try {
+            ObservableList<Entry> orderItems = OrderDB.searchOrderItems(orderID);
+            int count = 1;
+            // Output Order # first
+            order_id_field.setText(orderID + "");
+            String output = "";
+            for(Entry entry : orderItems) {
+                // Handle items here for display elements
+                // Change formatted string to not print null values
+                // Do NOT pull from items for prices - we can change pricing so current pricing is not relevant!
+                // Just show items in menu
+                output += "----------ITEM " + count + "----------\n";
+                output += entry.orderType + "\n";
+                if(entry.side1 != "null" && !entry.side1.equals("null")) output += "\t" + entry.side1 + "\n";
+                if(entry.side2 != "null" && !entry.side2.equals("null")) output += "\t" + entry.side2 + "\n";
+                if(entry.protien1 != "null" && !entry.protien1.equals("null")) output += "\t" + entry.protien1 + "\n";
+                if(entry.protien2 != "null" && !entry.protien2.equals("null")) output += "\t" + entry.protien2 + "\n";
+                if(entry.protien3 != "null" && !entry.protien3.equals("null")) output += "\t" + entry.protien3 + "\n";
+                if(entry.miscItem != "null" && !entry.miscItem.equals("null")) output += "\t" + entry.miscItem + "\n";
+
+                //System.out.println(entry.miscItem == "null" || entry.miscItem.equals("null"));
+
+                output += "\n";
+                //output += entry.formatedString();
+                count++;
+            }
+            order_items_scrollable.setText(output);
+            setBackground(true);
+            order_items_pane.setVisible(true);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw e;
+        }
+    }
+
+    @FXML
+    private void close_pane(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        order_id_field.setText(null);
+        order_items_scrollable.setText(null);
+        setBackground(false);
+        order_items_pane.setVisible(false);
+    }
 
     @FXML
     private void populateOrders(Order order) throws ClassNotFoundException {
