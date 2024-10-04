@@ -51,27 +51,27 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="206.0" layoutY="300.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="204.0" layoutY="209.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="206.0" layoutY="256.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <ToggleButton fx:id="button_cub_meal" layoutX="438.0" layoutY="115.0" mnemonicParsing="false" text="Cub Meal">
+      <ToggleButton id="Cub Meal" fx:id="button_cub_meal" layoutX="438.0" layoutY="115.0" mnemonicParsing="false" text="Cub Meal">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="button_carte" layoutX="515.0" layoutY="115.0" mnemonicParsing="false" text="A la Carte" textAlignment="CENTER">
+      <ToggleButton id="A la Carte" fx:id="button_carte" layoutX="515.0" layoutY="115.0" mnemonicParsing="false" text="A la Carte" textAlignment="CENTER">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="button_big_plate" layoutX="353.0" layoutY="115.0" mnemonicParsing="false" text="Bigger Plate">
+      <ToggleButton id="Bigger Plate" fx:id="button_big_plate" layoutX="353.0" layoutY="115.0" mnemonicParsing="false" text="Bigger Plate">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="button_plate" layoutX="294.0" layoutY="115.0" mnemonicParsing="false" text="Plate">
+      <ToggleButton id="Plate" fx:id="button_plate" layoutX="294.0" layoutY="115.0" mnemonicParsing="false" text="Plate">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="button_bowl" layoutX="216.0" layoutY="115.0" mnemonicParsing="false" text="Bowl">
+      <ToggleButton id="Bowl" fx:id="button_bowl" layoutX="216.0" layoutY="115.0" mnemonicParsing="false" text="Bowl">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
@@ -130,7 +130,7 @@
             <Font name="Arial Narrow Bold" size="10.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Sweet Fire Chicken" fx:id="button_sweet_fire_chicken" layoutX="286.0" layoutY="161.0" mnemonicParsing="false" onAction="#buttonPressedProtein" prefHeight="33.0" prefWidth="52.0" text="Sweet Fire Chicken" textAlignment="CENTER" wrapText="true">
+      <ToggleButton id="SweetFire Chicken" fx:id="button_sweet_fire_chicken" layoutX="286.0" layoutY="161.0" mnemonicParsing="false" onAction="#buttonPressedProtein" prefHeight="33.0" prefWidth="52.0" text="Sweet Fire Chicken" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Arial Narrow Bold" size="9.0" />
          </font>
@@ -175,7 +175,7 @@
       <TextField id="SubtotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="344.0" prefHeight="25.0" prefWidth="52.0" />
       <TextField id="TotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="369.0" prefHeight="25.0" prefWidth="52.0" />
       <Button id="NoProteinButton" layoutX="196.0" layoutY="357.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="No Protein" />
-      <Button id="AddToOrder" layoutX="495.0" layoutY="357.0" mnemonicParsing="false" onAction="#switch_to_cashier1" opacity="0.0" prefHeight="30.0" prefWidth="87.0" text="Done">
+      <Button id="AddToOrder" layoutX="495.0" layoutY="357.0" mnemonicParsing="false" onAction="#done" opacity="0.0" prefHeight="30.0" prefWidth="87.0" text="Done">
          <font>
             <Font size="11.0" />
          </font>

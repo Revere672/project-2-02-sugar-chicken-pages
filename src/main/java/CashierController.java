@@ -26,16 +26,15 @@ public class CashierController implements Initializable {
     public static Entry workingEntry;
 
     public void switch_to_cashier1(ActionEvent event) throws IOException{
-        scene = ((Node)event.getSource()).getScene();
         scene = GUIRunner.changeScene("cashier1");
         DisplayReceipt.updateRecipt(scene);
     }
 
     
-    public void switch_to_cashier2(ActionEvent event) throws IOException{
-        scene = ((Node)event.getSource()).getScene();
+    public Scene switch_to_cashier2(ActionEvent event) throws IOException{
         scene = GUIRunner.changeScene("cashier2");
         DisplayReceipt.updateRecipt(scene);
+        return scene;
     }
 
     public void addToOrder(ActionEvent event) throws IOException{
@@ -47,10 +46,20 @@ public class CashierController implements Initializable {
         ((Node)event.getSource()).setDisable(true);
         deSelectAll();
         switch_to_cashier1(event);
+        workingEntry=null;
+    }
+
+    public void done(ActionEvent event) throws IOException{
+        deSelectAll();
+        ((Node)event.getSource()).setOpacity(0);
+        ((Node)event.getSource()).setDisable(true);
+        workingEntry=null;
+        switch_to_cashier1(event);
     }
 
     public void deSelectAll(){
         for(ToggleButton t : selected){
+            System.out.println(t.getId());
             t.setSelected(false);
         }
         selected.clear();
@@ -159,7 +168,11 @@ public class CashierController implements Initializable {
         String buttonPressed = ((Node)event.getSource()).getId();
         workingEntry=new Entry(new String[]{buttonPressed},DisplayReceipt.overarchingCosts.get(buttonPressed));
         DisplayReceipt.addEntry(workingEntry);
-        switch_to_cashier2(event);
+        ToggleButton pressed=((ToggleButton)event.getSource());
+        pressed.setSelected(false);
+        scene=switch_to_cashier2(event);
+        ((ToggleButton)scene.lookup("#"+pressed.getId())).setSelected(true);
+        selected.add(((ToggleButton)scene.lookup("#"+pressed.getId())));
     }
 
     public void cancelCashier2(ActionEvent event) throws IOException{
