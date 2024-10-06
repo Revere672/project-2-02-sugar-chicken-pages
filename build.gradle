@@ -149,6 +149,5 @@ task dropAll{
 
 
 run {
-    workingDir "src/main/java"
     args = ["${PGHOST}","${PGUSER}", "${PGPASSWORD}"]
 }
