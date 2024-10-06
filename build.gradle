@@ -1,13 +1,43 @@
-
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
+
+application {
+  // Define the main class for the application.
+  mainClass = 'MainEntry'
+}
+
+
+tasks.jar {
+    enabled = false
+}
+
+
+mainClassName = 'MainEntry'
+
+shadowJar {
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    from {
+        project.configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) };
+    }
+}
+
 
         // https://mvnrepository.com/artifact/org.postgresql/postgresql
 dependencies {
-implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '22.0.1'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '22.0.1'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '22.0.1'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '22.0.1'
+    implementation group: 'org.openjfx', name: 'javafx-web', version: '22.0.1'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
 }
+
 
 repositories {
     mavenCentral()
@@ -15,8 +45,9 @@ repositories {
 
 javafx {
     version = "22.0.1"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', "javafx.graphics", "javafx.web"]
 }
+
 task buildDB(type: Exec){
     workingDir "src/main"
     environment "PGPASSWORD", "${PGPASSWORD}"
@@ -116,8 +147,8 @@ task dropAll{
     }
 }
 
+
 run {
-workingDir "src/main/java"
-mainClassName = 'GUIRunner'
-args = ["${PGHOST}","${PGUSER}", "${PGPASSWORD}"]
+    workingDir "src/main/java"
+    args = ["${PGHOST}","${PGUSER}", "${PGPASSWORD}"]
 }
