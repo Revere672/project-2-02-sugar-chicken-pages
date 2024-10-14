@@ -9,6 +9,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import javafx.fxml.FXMLLoader;
+
+import java.io.IOException;
 
 public class AnalysisController {
     private Scene scene;    
@@ -154,6 +159,14 @@ public class AnalysisController {
    }
 
     @FXML
+    private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
+        Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
+        System.out.println("Logged Out");
+        GUIRunner.stage.setScene(login);
+        GUIRunner.stage.show();
+    }
+
+    @FXML
     private Button cashier;
     @FXML
     private Button analysis;
@@ -163,4 +176,6 @@ public class AnalysisController {
     private Button employees;
     @FXML
     private Button order_history;
+    @FXML
+    private Button log_out_button;
 }

@@ -9,10 +9,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+
+import java.io.IOException;
 
 public class OrderHistory {
     // @FXML
     // private TextField order_search;
+    @FXML
+    private Button log_out_button;
     @FXML
     private Button cashier;
     @FXML
@@ -142,4 +150,11 @@ public class OrderHistory {
         GUIRunner.changeScene("analysis");
    }
 
+    @FXML
+    private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
+        Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
+        System.out.println("Logged Out");
+        GUIRunner.stage.setScene(login);
+        GUIRunner.stage.show();
+    }
 }
