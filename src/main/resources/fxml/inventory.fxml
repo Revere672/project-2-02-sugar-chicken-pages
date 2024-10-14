@@ -45,10 +45,11 @@
         <columns>
           <TableColumn fx:id="inventory_ID_col" prefWidth="89.33331108093262" text="Inventory ID" />
           <TableColumn fx:id="prod_name_col" prefWidth="93.99994659423828" text="Product" />
-            <TableColumn fx:id="supplier_col" prefWidth="95.33335876464844" text="Supplier" />
-            <TableColumn fx:id="cost_col" prefWidth="86.0" text="Cost" />
-            <TableColumn fx:id="quantity_col" minWidth="9.999969482421875" prefWidth="98.66659545898438" text=" Quantity %" />
-            <TableColumn fx:id="action_col" prefWidth="104.00005086263025" text="Actions" />
+            <TableColumn fx:id="supplier_col" prefWidth="85.33335876464844" text="Supplier" />
+            <TableColumn fx:id="cost_col" prefWidth="59.3333740234375" text="Cost" />
+            <TableColumn fx:id="quantity_col" minWidth="9.999969482421875" prefWidth="78.6666259765625" text=" Quantity %" />
+            <TableColumn fx:id="quantity_col_label" minWidth="9.999969482421875" prefWidth="80.66668701171875" text=" Quantity" />
+            <TableColumn fx:id="action_col" prefWidth="78.66667683919275" text="Actions" />
         </columns>
       </TableView>
       <Button fx:id="add_product_button" layoutX="491.0" layoutY="148.0" mnemonicParsing="false" onAction="#addProduct" opacity="0.3" text="+ Add Product" />
@@ -91,7 +92,7 @@
             <TextArea fx:id="failed_text" editable="false" layoutX="76.0" layoutY="159.0" prefHeight="40.0" prefWidth="203.0" />
          </children>
       </Pane>
-      <Pane fx:id="update_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+      <Pane fx:id="update_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Text layoutX="157.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product" />
             <Button fx:id="update_button" layoutX="185.0" layoutY="218.0" mnemonicParsing="false" onAction="#update" text="Update" />

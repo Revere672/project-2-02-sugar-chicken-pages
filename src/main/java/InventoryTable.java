@@ -88,6 +88,8 @@ public class InventoryTable {
     @FXML
     private TableColumn<Inventory, Double> quantity_col;
     @FXML
+    private TableColumn<Inventory, Void> quantity_col_label;
+    @FXML
     private TableColumn<Inventory, Void> action_col;
 
     private int product_ID;
@@ -132,6 +134,25 @@ public class InventoryTable {
         supplier_col.setCellValueFactory(cellData -> cellData.getValue().supplierProperty());
         cost_col.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
         quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
+        quantity_col_label.setCellFactory(param -> new TableCell<Inventory, Void>() {
+            private final TextField text = new TextField();
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item != null) {
+                    setGraphic(null);
+                } else {
+                    text.setEditable(false);
+                    Inventory product = getTableView().getItems().get(getIndex());
+                    if (product.getQuantity() < 80) {
+                        text.setText("Low");
+                        text.setStyle("-fx-background-color: rgb(120,50,4);");
+                    }
+                    setGraphic(text);
+                }
+            }
+        });
         action_col.setCellFactory(param -> new TableCell<Inventory, Void>() {
             private final Button editButton = new Button("\u270E");
             private final Button restockButton = new Button("\uF4CB");
