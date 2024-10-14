@@ -67,3 +67,7 @@ CREATE TABLE Ingredients_Needed ( -- This is a junction table between Menu and I
     Quantity_Needed FLOAT NOT NULL,
     PRIMARY KEY (Menu_Name, Inventory_ID)
 );
+
+CREATE TABLE Z_Report(
+    Last_Report TIMESTAMP NOT NULL
+);
