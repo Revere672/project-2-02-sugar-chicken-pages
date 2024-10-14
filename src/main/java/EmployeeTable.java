@@ -10,12 +10,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import java.sql.Date;
 
 import java.sql.*;
 
 public class EmployeeTable {
     @FXML
     private Pane edit_pane;
+
+    @FXML
+    private Pane add_pane;
 
     @FXML
     private AnchorPane background_edit;
@@ -69,6 +73,33 @@ public class EmployeeTable {
     @FXML
     private Button Cancel;
 
+    @FXML
+    private Button add_button;
+
+    @FXML
+    private Button cancel_button2;
+
+    @FXML
+    private Button Add_appear_button;
+
+    @FXML
+    private TextField add_employee;
+
+    @FXML
+    private TextField add_email;
+
+    // @FXML
+    // private TextField add_status;
+
+    @FXML
+    private TextField add_role;
+
+    // @FXML
+    // private TextField add_lastlogin;
+
+    @FXML
+    private TextField add_id;
+
 
 
     @FXML
@@ -106,6 +137,7 @@ public class EmployeeTable {
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
         edit_pane.setVisible(false);
+        add_pane.setVisible(false);
         setBackground(false);
         employee_id_col.setCellValueFactory(cellData -> cellData.getValue().EmployeeIDProperty().asObject());
         name_col.setCellValueFactory(cellData -> cellData.getValue().EmployeeNameProperty());
@@ -187,6 +219,43 @@ public class EmployeeTable {
         edit_pane.setVisible(false);
         searchEmployees(null);
         //GUIRunner.changeScene("employees");
+    }
+
+    @FXML
+    private void Cancel_button2(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        setBackground(false);
+        add_pane.setVisible(false);
+        searchEmployees(null);
+        //GUIRunner.changeScene("employees");
+    }
+
+
+    @FXML
+    private void Add_appear_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        setBackground(false);
+        add_pane.setVisible(true);
+        //product_name_text1.requestFocus();
+    }
+
+    @FXML
+    private void Add_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if (add_employee.getText() == "" || add_email.getText() == "" || add_role.getText() == "" || add_id.getText() == null /*|| add_lastlogin.getText() == "" || add_status.getText() == ""*/){
+                //addFailed();
+            }
+        else{
+            //Date new_login = new Date();
+            
+            EmployeeDB.insertEmployee(Integer.parseInt(add_id.getText()), add_employee.getText(), add_email.getText(),add_role.getText(), Date.valueOf("1971-01-01"), true);
+            add_employee.setText(null);
+            add_email.setText(null);
+            //add_status.setText(null);
+            add_role.setText(null);
+            //add_lastlogin.setText(null);
+            add_id.setText(null);
+            setBackground(false);
+            add_pane.setVisible(false);
+            searchEmployees(null);
+        }
     }
 
 

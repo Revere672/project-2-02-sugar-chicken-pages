@@ -76,13 +76,7 @@ public class EmployeeDB {
 
     public static void insertEmployee(int Employee_ID,String name, String email, String role, Date login , Boolean status) throws SQLException, ClassNotFoundException {
         //create a new querey that inserts a new employee with given attributes
-        String new_q =
-                "BEGIN\n" +
-                        "INSERT INTO Employees\n" +
-                        "(employee_ID, employee_name, employee_email, employee_role, last_login, status)\n" +
-                        "VALUES\n" +
-                        "('"+Employee_ID+"' ,'"+name+"','"+email+"','"+role+"' ,'"+login+"' ,'"+status+"');\n" +
-                        "END;";
+        String new_q = "INSERT INTO Employees (employee_ID, employee_name, employee_email, employee_role, last_login, active) VALUES ('"+Employee_ID+"' ,'"+name+"','"+email+"','"+role+"' ,'"+login+"' ,'"+status+"');";
         //Execute DELETE operation
         try {
             DBUtil.dbExecuteUpdate(new_q);
