@@ -60,6 +60,7 @@
          </font>
       </Text>
       <DatePicker fx:id="order_date_picker" layoutX="409.0" layoutY="116.0" onAction="#searchOrdersByDate" promptText="Select date" />
+      <Button fx:id="refresh_button" layoutX="376.0" layoutY="116.0" mnemonicParsing="false" onAction="#refresh" text="↻" />
       <Pane fx:id="order_items_pane" layoutX="175.0" layoutY="50.0" prefHeight="319.0" prefWidth="250.0" style="-fx-background-color: rgb(180,180,180);">
          <children>
             <TextArea fx:id="order_items_scrollable" editable="false" layoutX="25.0" layoutY="50.0" prefHeight="231.0" prefWidth="200.0" />
@@ -72,6 +73,5 @@
             <Button fx:id="exit_view" layoutX="108.0" layoutY="287.0" mnemonicParsing="false" onAction="#close_pane" text="Exit" />
          </children>
       </Pane>
-      <Button fx:id="refresh_button" layoutX="376.0" layoutY="116.0" mnemonicParsing="false" onAction="#refresh" text="↻" />
    </children>
 </AnchorPane>
