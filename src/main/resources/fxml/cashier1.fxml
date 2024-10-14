@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cashier">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CashierController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
@@ -22,10 +23,11 @@
       <Circle fill="WHITE" layoutX="44.0" layoutY="38.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
       <GridPane alignment="CENTER" layoutY="72.0" prefHeight="30.0" prefWidth="600.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="107.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="121.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="137.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="121.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="114.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -35,8 +37,10 @@
             <Button fx:id="inventory" mnemonicParsing="false" onAction="#changeToInventory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Inventory" textFill="WHITE" GridPane.columnIndex="1" />
             <Button fx:id="employees" mnemonicParsing="false" onAction="#changeToEmployees" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Employees" textFill="WHITE" GridPane.columnIndex="2" />
             <Button fx:id="order_history" mnemonicParsing="false" onAction="#changeToOrderHistory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Order History" textFill="WHITE" GridPane.columnIndex="3" />
+            <Button fx:id="analysis" mnemonicParsing="false" onAction="#changeToAnalysis" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Anaylsis" textFill="WHITE" GridPane.columnIndex="4" />
          </children>
       </GridPane>
+      <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="206.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="283.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="359.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
@@ -47,106 +51,101 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="205.0" layoutY="227.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="288.0" layoutY="227.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="204.0" layoutY="274.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="288.0" layoutY="274.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="437.0" layoutY="179.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="515.0" layoutY="179.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="437.0" layoutY="227.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="515.0" layoutY="227.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Button fx:id="button_cub_meal" layoutX="441.0" layoutY="121.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="Cub Meal">
+      <ToggleButton id="Cub Meal" fx:id="button_cub_meal" layoutX="442.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Cub Meal">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_carte" layoutX="518.0" layoutY="120.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="A la Carte" textAlignment="CENTER">
+      </ToggleButton>
+      <ToggleButton id="A la carte" fx:id="button_carte" layoutX="518.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="A la Carte" textAlignment="CENTER">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_big_plate" layoutX="356.0" layoutY="120.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="Bigger Plate">
+      </ToggleButton>
+      <ToggleButton id="Bigger Plate" fx:id="button_big_plate" layoutX="356.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Bigger Plate">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_bowl" layoutX="219.0" layoutY="121.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="Bowl">
+      </ToggleButton>
+      <ToggleButton id="Bowl" fx:id="button_bowl" layoutX="220.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Bowl">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_plate" layoutX="297.0" layoutY="121.0" mnemonicParsing="false" onAction="#switch_to_cashier2" text="Plate">
+      </ToggleButton>
+      <ToggleButton id="Plate" fx:id="button_plate" layoutX="297.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Plate">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_water_cup" layoutX="207.0" layoutY="188.0" mnemonicParsing="false" text="Water Cup">
+      </ToggleButton>
+      <ToggleButton fx:id="button_water_cup" layoutX="207.0" layoutY="188.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Water Cup">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_fountain_drink" layoutX="279.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Fountain Drink">
+      </ToggleButton>
+      <ToggleButton id="Drink" fx:id="button_fountain_drink" layoutX="277.0" layoutY="187.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="25.0" prefWidth="90.0" text="Fountain Drink">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_water_bottle" layoutX="202.0" layoutY="236.0" mnemonicParsing="false" text="Water Bottle">
+      </ToggleButton>
+      <ToggleButton id="Water Bottle" fx:id="button_water_bottle" layoutX="203.0" layoutY="236.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Water Bottle">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_gatorade" layoutX="292.0" layoutY="236.0" mnemonicParsing="false" text="Gatorade">
+      </ToggleButton>
+      <ToggleButton id="Gatorade" fx:id="button_gatorade" layoutX="292.0" layoutY="236.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Gatorade">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_juice" layoutX="218.0" layoutY="283.0" mnemonicParsing="false" text="Juice">
+      </ToggleButton>
+      <ToggleButton id="Juice" fx:id="button_juice" layoutX="217.0" layoutY="283.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Juice">
          <font>
             <Font name="Arial Narrow Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="button_milk" layoutX="303.0" layoutY="283.0" mnemonicParsing="false" text="Milk">
-         <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="button_chicken_egg_roll" layoutX="445.0" layoutY="183.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="52.0" text="Chicken Egg Roll" textAlignment="CENTER" wrapText="true">
+      </ToggleButton>
+      <ToggleButton id="Chicken Eggroll" fx:id="button_chicken_egg_roll" layoutX="445.0" layoutY="183.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="52.0" text="Chicken Egg Roll" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Arial Narrow Bold" size="10.0" />
          </font>
-      </Button>
-      <ScrollPane layoutX="14.0" layoutY="106.0" prefHeight="242.0" prefWidth="175.0">
-         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="345.0" prefWidth="161.0" />
-         </content>
-      </ScrollPane>
-      <TextField layoutX="14.0" layoutY="350.0" prefHeight="25.0" prefWidth="175.0" text="Subtotal:">
+      </ToggleButton>
+    <AnchorPane id="ReciptWindow" layoutX="20.0" layoutY="91.0" minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="162.0">
+         <children>
+            <TextArea id="ReceiptText" editable="false" layoutX="-1.0" layoutY="13.0" prefHeight="233.0" prefWidth="118.0" />
+            <TextArea id="PriceArea" editable="false" focusTraversable="false" layoutX="117.0" layoutY="13.0" prefHeight="233.0" prefWidth="52.0" />
+         </children>
+      </AnchorPane>
+      <TextField id="subtotal" editable="false" layoutX="14.0" layoutY="344.0" prefHeight="25.0" prefWidth="125.0" text="Subtotal:">
          <font>
             <Font size="10.0" />
          </font>
       </TextField>
-      <TextField layoutX="14.0" layoutY="374.0" prefHeight="25.0" prefWidth="175.0" text="Total:">
+      <TextField id="total" editable="false" layoutX="14.0" layoutY="369.0" prefHeight="25.0" prefWidth="125.0" text="Total:">
          <font>
             <Font size="10.0" />
          </font>
       </TextField>
-      <Button fx:id="button_veggie_spring_roll" layoutX="519.0" layoutY="182.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="59.0" text="Veggie Spring Roll" textAlignment="CENTER" wrapText="true">
+      <ToggleButton id="Veggie Spring Roll" fx:id="button_veggie_spring_roll" layoutX="520.0" layoutY="183.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="59.0" text="Veggie Spring Roll" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Arial Narrow Bold" size="10.0" />
          </font>
-      </Button>
-      <Button fx:id="button_rangoon" layoutX="434.0" layoutY="232.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="74.0" text="Cream Cheese Rangoon" textAlignment="CENTER" wrapText="true">
+      </ToggleButton>
+      <ToggleButton id="Cream Cheese Rangoon" fx:id="button_rangoon" layoutX="433.0" layoutY="231.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="74.0" text="Cream Cheese Rangoon" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Arial Narrow Bold" size="10.0" />
          </font>
-      </Button>
-      <Button fx:id="button_apple_pie_roll" layoutX="513.0" layoutY="232.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="74.0" text="Apple Pie Roll" textAlignment="CENTER" wrapText="true">
+      </ToggleButton>
+      <ToggleButton id="Apple Pie Roll" fx:id="button_apple_pie_roll" layoutX="511.0" layoutY="231.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="74.0" text="Apple Pie Roll" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Arial Narrow Bold" size="10.0" />
          </font>
-      </Button>
+      </ToggleButton>
       <Rectangle fx:id="background_confirm" arcHeight="5.0" arcWidth="5.0" fill="#b7ffcc" height="42.0" layoutX="494.0" layoutY="323.0" opacity="0.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Button fx:id="button_confirm" layoutX="497.0" layoutY="332.0" mnemonicParsing="false" opacity="0.0" text="CONFIRM">
-         <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
-         </font>
-      </Button>
+      <Button id="AddToOrder" layoutX="467.0" layoutY="344.0" mnemonicParsing="false" onAction="#addToOrder" opacity="0.0" prefHeight="36.0" prefWidth="104.0" text="Add To Order" />
+      <TextField id="SubtotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="344.0" prefHeight="25.0" prefWidth="52.0" />
+      <TextField id="TotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="369.0" prefHeight="25.0" prefWidth="52.0" />
+      <Button id="submit" layoutX="198.0" layoutY="358.0" mnemonicParsing="false" onAction="#FinishOrder" prefHeight="30.0" prefWidth="104.0" text="Finish Order" />
+      <Button id="undo" layoutX="205.0" layoutY="326.0" mnemonicParsing="false" onAction="#undo" prefHeight="26.0" prefWidth="90.0" text="Undo" />
    </children>
 </AnchorPane>

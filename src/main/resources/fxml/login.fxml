@@ -20,7 +20,7 @@
       <Circle fill="WHITE" layoutX="44.0" layoutY="38.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
       <TextField fx:id="username" layoutX="49.0" layoutY="174.0" onAction="#nextEntry" prefHeight="52.0" prefWidth="201.0" promptText="Employee ID:" />
       <PasswordField fx:id="password" layoutX="350.0" layoutY="174.0" onAction="#logIn" prefHeight="52.0" prefWidth="201.0" promptText="Password:" />
-      <Button fx:id="logInButton" layoutX="260.0" layoutY="300.0" mnemonicParsing="false" onAction="#logIn" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log in" />
+      <Button fx:id="log_in_button" layoutX="260.0" layoutY="300.0" mnemonicParsing="false" onAction="#logIn" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log in" />
       <Label layoutX="116.0" layoutY="13.0" prefHeight="33.0" prefWidth="219.0" text="Login Menu">
          <font>
             <Font name="System Bold" size="35.0" />

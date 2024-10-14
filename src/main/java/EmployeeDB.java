@@ -1,6 +1,9 @@
-import java.sql.*;
-import javafx.collections.ObservableList;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 public class EmployeeDB {
     
     public static ObservableList<Employee> find_Employee(String name) throws SQLException, ClassNotFoundException {

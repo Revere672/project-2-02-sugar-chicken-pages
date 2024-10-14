@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="main_order_history" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OrderHistory">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
+      <Polygon fill="#384862" layoutX="510.0" layoutY="59.0" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -10.0, -70.39999389648438" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ce123c" height="75.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="450.0" />
+      <Polygon fill="#ce123c" layoutX="459.0" layoutY="60.0" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -10.0, -84.19999694824219" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="WHITE" layoutX="44.0" layoutY="38.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+      <GridPane alignment="CENTER" layoutY="72.0" prefHeight="30.0" prefWidth="600.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="107.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="121.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="137.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="121.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="114.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="cashier" mnemonicParsing="false" onAction="#changeToCashier" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Cashier" textFill="WHITE" />
+            <Button fx:id="inventory" mnemonicParsing="false" onAction="#changeToInventory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Inventory" textFill="WHITE" GridPane.columnIndex="1" />
+            <Button fx:id="employees" mnemonicParsing="false" onAction="#changeToEmployees" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Employees" textFill="WHITE" GridPane.columnIndex="2" />
+            <Button fx:id="order_history" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Order History" textFill="WHITE" GridPane.columnIndex="3" />
+            <Button fx:id="analysis" mnemonicParsing="false" onAction="#changeToAnalysis" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Anaylsis" textFill="WHITE" GridPane.columnIndex="4" />
+         </children>
+      </GridPane>
+      <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
+      <TableView fx:id="order_table" layoutX="15.0" layoutY="158.0" prefHeight="200.0" prefWidth="569.0">
+        <columns>
+          <TableColumn fx:id="order_ID_col" prefWidth="91.19995403289795" text="Order ID" />
+          <TableColumn fx:id="order_time_col" prefWidth="187.20005798339844" text="Order Time" />
+            <TableColumn fx:id="price_col" prefWidth="130.39996337890625" text="Total Price" />
+            <TableColumn fx:id="employee_ID_col" prefWidth="94.39996337890625" text="Employee ID" />
+            <TableColumn fx:id="view_button_col" prefWidth="69.60009765625" text="View" />
+        </columns>
+      </TableView>
+      <Text fx:id="order_text" layoutX="109.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order History">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Text>
+      <DatePicker fx:id="order_date_picker" layoutX="409.0" layoutY="116.0" onAction="#searchOrdersByDate" promptText="Select date" />
+      <Button fx:id="refresh_button" layoutX="376.0" layoutY="116.0" mnemonicParsing="false" onAction="#refresh" text="↻" />
+      <Pane fx:id="order_items_pane" layoutX="175.0" layoutY="50.0" prefHeight="319.0" prefWidth="250.0" style="-fx-background-color: rgb(180,180,180);">
+         <children>
+            <TextArea fx:id="order_items_scrollable" editable="false" layoutX="25.0" layoutY="50.0" prefHeight="231.0" prefWidth="200.0" />
+            <Text layoutX="25.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order #:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="order_id_field" editable="false" layoutX="108.0" layoutY="13.0" prefHeight="25.0" prefWidth="117.0" />
+            <Button fx:id="exit_view" layoutX="108.0" layoutY="287.0" mnemonicParsing="false" onAction="#close_pane" text="Exit" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

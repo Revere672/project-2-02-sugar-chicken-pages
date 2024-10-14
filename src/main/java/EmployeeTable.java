@@ -1,19 +1,28 @@
+import java.sql.Date;
+import java.sql.SQLException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import javafx.scene.text.Text;
-import javafx.scene.control.Button;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-import java.sql.*;
+import java.io.IOException;
 
 public class EmployeeTable {
+    @FXML
+    private Button log_out_button;
     @FXML
     private Pane edit_pane;
 
@@ -234,14 +243,24 @@ public class EmployeeTable {
     private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("cashier1");
     }
-
     @FXML
     private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("inventory");
     }
-
     @FXML
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        // GUIRunner.changeScene("order_history");
+         GUIRunner.changeScene("order_history");
+    }
+    @FXML
+    private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("analysis");
+   }
+
+    @FXML
+    private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
+        Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
+        System.out.println("Logged Out");
+        GUIRunner.stage.setScene(login);
+        GUIRunner.stage.show();
     }
 }

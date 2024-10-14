@@ -3,10 +3,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
@@ -14,48 +16,100 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
+<AnchorPane fx:id="main_inventory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
-      <Polygon fill="#384862" layoutX="510.0" layoutY="59.0" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -27.33331298828125, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ce123c" height="75.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="450.0" />
-      <Polygon fill="#ce123c" layoutX="459.0" layoutY="60.0" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -27.33331298828125, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
-      <Circle fill="WHITE" layoutX="44.0" layoutY="38.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" opacity="0.3" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
+      <Polygon fill="#384862" layoutX="510.0" layoutY="59.0" opacity="0.3" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -10.0, -59.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ce123c" height="75.0" opacity="0.3" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="450.0" />
+      <Polygon fill="#ce123c" layoutX="459.0" layoutY="60.0" opacity="0.3" points="53.33331298828125, -60.0, -9.0, 15.0, -9.0, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="WHITE" layoutX="44.0" layoutY="38.0" opacity="0.3" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
       <GridPane alignment="CENTER" layoutY="72.0" prefHeight="30.0" prefWidth="600.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="107.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="121.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="137.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="121.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="114.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Button fx:id="cashier" mnemonicParsing="false" onAction="#changeToCashier" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Cashier" textFill="WHITE" />
-            <Button fx:id="inventory" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Inventory" textFill="WHITE" GridPane.columnIndex="1" />
+            <Button fx:id="inventory" mnemonicParsing="false" onAction="#changeToInventory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Inventory" textFill="WHITE" GridPane.columnIndex="1" />
             <Button fx:id="employees" mnemonicParsing="false" onAction="#changeToEmployees" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Employees" textFill="WHITE" GridPane.columnIndex="2" />
             <Button fx:id="order_history" mnemonicParsing="false" onAction="#changeToOrderHistory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Order History" textFill="WHITE" GridPane.columnIndex="3" />
+            <Button fx:id="analysis" mnemonicParsing="false" onAction="#changeToAnalysis" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Anaylsis" textFill="WHITE" GridPane.columnIndex="4" />
          </children>
       </GridPane>
-      <TableView fx:id="inventory_table" layoutX="16.0" layoutY="186.0" prefHeight="200.0" prefWidth="569.0">
+      <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
+      <TableView fx:id="inventory_table" layoutX="16.0" layoutY="186.0" opacity="0.3" prefHeight="200.0" prefWidth="569.0">
         <columns>
-          <TableColumn fx:id="inventory_ID_col" prefWidth="112.66665077209473" text="Inventory ID" />
-          <TableColumn fx:id="prod_name_col" prefWidth="104.00003051757812" text="Product" />
-            <TableColumn fx:id="supplier_col" prefWidth="107.33326721191406" text="Supplier" />
-            <TableColumn fx:id="cost_col" prefWidth="94.0" text="Cost" />
-            <TableColumn fx:id="quantity_col" prefWidth="151.33334350585938" text="Quantity %" />
+          <TableColumn fx:id="inventory_ID_col" prefWidth="89.33331108093262" text="Inventory ID" />
+          <TableColumn fx:id="prod_name_col" prefWidth="93.99994659423828" text="Product" />
+            <TableColumn fx:id="supplier_col" prefWidth="105.33329772949219" text="Supplier" />
+            <TableColumn fx:id="cost_col" prefWidth="74.0" text="Cost" />
+            <TableColumn fx:id="quantity_col" minWidth="9.999969482421875" prefWidth="111.33331298828125" text=" Quantity %" />
+            <TableColumn fx:id="action_col" prefWidth="94.66665649414062" text="Actions" />
         </columns>
       </TableView>
-      <Button fx:id="add_product_button" layoutX="491.0" layoutY="148.0" mnemonicParsing="false" onAction="#addProduct" text="+ Add Product" />
-      <Text fx:id="inventory_text" layoutX="15.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory">
+      <Button fx:id="add_product_button" layoutX="491.0" layoutY="148.0" mnemonicParsing="false" onAction="#addProduct" opacity="0.3" text="+ Add Product" />
+      <Text fx:id="inventory_text" layoutX="98.0" layoutY="49.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory">
          <font>
             <Font size="32.0" />
          </font>
       </Text>
-      <TextField fx:id="product_search" layoutX="15.0" layoutY="148.0" onAction="#searchInventory" promptText="Enter Product Name" />
-      <Button fx:id="product_search_button" layoutX="173.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchInventory" prefHeight="25.0" prefWidth="60.0" text="Search" />
-      <Button fx:id="product_edit_button" layoutX="240.0" layoutY="148.0" mnemonicParsing="false" onAction="#editProduct" prefHeight="25.0" prefWidth="60.0" text="Edit" />
+      <TextField fx:id="product_search" layoutX="15.0" layoutY="148.0" onAction="#searchInventory" opacity="0.3" promptText="Enter Product Name" />
+      <Button fx:id="product_search_button" layoutX="173.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchInventory" opacity="0.3" prefHeight="25.0" prefWidth="60.0" text="Search" />
+      <Pane fx:id="add_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
+         <children>
+            <Button fx:id="add_button" layoutX="290.0" layoutY="218.0" mnemonicParsing="false" onAction="#add" text="Add" />
+            <Button fx:id="cancel_button1" layoutX="227.0" layoutY="218.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+            <TextField fx:id="product_name_text1" layoutX="103.0" layoutY="21.0" onAction="#nameAddEnter" />
+            <TextField fx:id="supplier_text1" layoutX="103.0" layoutY="55.0" onAction="#supplierAddEnter" />
+            <TextField fx:id="cost_text1" layoutX="103.0" layoutY="89.0" onAction="#costAddEnter" />
+            <TextField fx:id="restock_text1" layoutX="103.0" layoutY="157.0" onAction="#restockAddEnter" />
+            <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product Name" />
+            <Text layoutX="30.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supplier" />
+            <Text layoutX="40.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost" />
+            <Text layoutX="7.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Quantity" />
+            <Text layoutX="29.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity" />
+            <TextField fx:id="quantity_text1" layoutX="103.0" layoutY="123.0" onAction="#quantityAddEnter" />
+            <TextArea fx:id="failed_text1" layoutX="12.0" layoutY="203.0" prefHeight="40.0" prefWidth="203.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="edit_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
+         <children>
+            <Text layoutX="31.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product" />
+            <Button fx:id="apply_button" layoutX="185.0" layoutY="218.0" mnemonicParsing="false" onAction="#apply" text="Apply" />
+            <Button fx:id="cancel_button" layoutX="118.0" layoutY="218.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+            <TextField fx:id="product_name_text" layoutX="103.0" layoutY="14.0" onAction="#nameEditEnter" />
+            <TextField fx:id="supplier_text" layoutX="103.0" layoutY="50.0" onAction="#supplierEditEnter" />
+            <TextField fx:id="cost_text" layoutX="103.0" layoutY="86.0" onAction="#costEditEnter" />
+            <TextField fx:id="restock_text" layoutX="103.0" layoutY="122.0" onAction="#restockEditEnter" />
+            <Text layoutX="30.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supplier" />
+            <Text layoutX="39.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost" />
+            <Text layoutX="5.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Quantity" />
+            <TextArea fx:id="failed_text" editable="false" layoutX="76.0" layoutY="159.0" prefHeight="40.0" prefWidth="203.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="update_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
+         <children>
+            <Text layoutX="157.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product" />
+            <Button fx:id="update_button" layoutX="185.0" layoutY="218.0" mnemonicParsing="false" onAction="#update" text="Update" />
+            <Button fx:id="cancel_button2" layoutX="118.0" layoutY="218.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+            <TextField fx:id="product_name_text2" editable="false" layoutX="103.0" layoutY="31.0" />
+            <TextField fx:id="restock_text2" editable="false" layoutX="190.0" layoutY="86.0" />
+            <Text layoutX="44.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Quantity" />
+            <Text layoutX="203.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recommended Restock" />
+            <TextField fx:id="quantity_text2" editable="false" layoutX="13.0" layoutY="86.0" />
+            <TextField fx:id="update2" layoutX="133.0" layoutY="125.0" prefHeight="25.0" prefWidth="89.0" />
+            <Text layoutX="30.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Quantity" />
+            <Button fx:id="decrement_button" layoutX="228.0" layoutY="125.0" mnemonicParsing="false" onAction="#decrement" prefHeight="25.0" prefWidth="24.0" text="-" />
+            <Button fx:id="increment_button" layoutX="265.0" layoutY="125.0" mnemonicParsing="false" onAction="#increment" text="+" />
+            <TextArea fx:id="failed_text2" editable="false" layoutX="111.0" layoutY="166.0" prefHeight="16.0" prefWidth="133.0" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
