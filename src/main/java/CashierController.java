@@ -11,31 +11,31 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
+import javafx.fxml.FXMLLoader;
+
+import java.io.IOException;
+
 public class CashierController implements Initializable {
 
-    private Stage stage;
     private Scene scene;
-    private Parent root;
     public static ArrayList<ToggleButton> selected=new ArrayList<>();
     public static Entry workingEntry;
 
     public void switch_to_cashier1(ActionEvent event) throws IOException{
-        scene = ((Node)event.getSource()).getScene();
         scene = GUIRunner.changeScene("cashier1");
         DisplayReceipt.updateRecipt(scene);
     }
 
     
-    public void switch_to_cashier2(ActionEvent event) throws IOException{
-        scene = ((Node)event.getSource()).getScene();
+    public Scene switch_to_cashier2(ActionEvent event) throws IOException{
         scene = GUIRunner.changeScene("cashier2");
         DisplayReceipt.updateRecipt(scene);
+        return scene;
     }
 
     public void addToOrder(ActionEvent event) throws IOException{
@@ -47,10 +47,20 @@ public class CashierController implements Initializable {
         ((Node)event.getSource()).setDisable(true);
         deSelectAll();
         switch_to_cashier1(event);
+        workingEntry=null;
+    }
+
+    public void done(ActionEvent event) throws IOException{
+        deSelectAll();
+        ((Node)event.getSource()).setOpacity(0);
+        ((Node)event.getSource()).setDisable(true);
+        workingEntry=null;
+        switch_to_cashier1(event);
     }
 
     public void deSelectAll(){
         for(ToggleButton t : selected){
+            System.out.println(t.getId());
             t.setSelected(false);
         }
         selected.clear();
@@ -105,6 +115,7 @@ public class CashierController implements Initializable {
         inventory.setDisable(!isManager);
         employees.setDisable(!isManager);
         order_history.setDisable(!isManager);
+        analysis.setDisable(!isManager);
     }
     
     @Override
@@ -159,7 +170,11 @@ public class CashierController implements Initializable {
         String buttonPressed = ((Node)event.getSource()).getId();
         workingEntry=new Entry(new String[]{buttonPressed},DisplayReceipt.overarchingCosts.get(buttonPressed));
         DisplayReceipt.addEntry(workingEntry);
-        switch_to_cashier2(event);
+        ToggleButton pressed=((ToggleButton)event.getSource());
+        pressed.setSelected(false);
+        scene=switch_to_cashier2(event);
+        ((ToggleButton)scene.lookup("#"+pressed.getId())).setSelected(true);
+        selected.add(((ToggleButton)scene.lookup("#"+pressed.getId())));
     }
 
     public void cancelCashier2(ActionEvent event) throws IOException{
@@ -180,7 +195,21 @@ public class CashierController implements Initializable {
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
          GUIRunner.changeScene("order_history");
     }
+    @FXML
+    private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("analysis");
+   }
 
+   @FXML
+    private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
+        Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
+        System.out.println("Logged Out");
+        GUIRunner.stage.setScene(login);
+        GUIRunner.stage.show();
+    }
+
+    @FXML
+    private Button log_out_button;
     @FXML
     private Button cashier;
     @FXML
@@ -189,6 +218,8 @@ public class CashierController implements Initializable {
     private Button employees;
     @FXML
     private Button order_history;
+    @FXML
+    private Button analysis;
 
     //Buttons for all of the serving size options
     @FXML

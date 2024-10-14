@@ -1,7 +1,7 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'com.github.johnrengelman.shadow' version '7.1.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 application {
@@ -14,13 +14,15 @@ tasks.jar {
     enabled = false
 }
 
-
 mainClassName = 'MainEntry'
 
 shadowJar {
     mergeServiceFiles()
     manifest {
         attributes 'Main-Class': mainClassName
+    }
+    from('.') {
+        include 'gradle.properties'         
     }
     from {
         project.configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) };
@@ -30,12 +32,11 @@ shadowJar {
 
         // https://mvnrepository.com/artifact/org.postgresql/postgresql
 dependencies {
-    implementation group: 'org.openjfx', name: 'javafx-controls', version: '22.0.1'
-    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '22.0.1'
-    implementation group: 'org.openjfx', name: 'javafx-base', version: '22.0.1'
-    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '22.0.1'
-    implementation group: 'org.openjfx', name: 'javafx-web', version: '22.0.1'
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
+implementation  group: 'org.openjfx', name: 'javafx', version: '11'
+implementation  group: 'org.openjfx', name: 'javafx-controls', version: '12'
+implementation  group: 'org.openjfx', name: 'javafx-fxml', version: '12'
+implementation  group: 'org.openjfx', name: 'javafx-base', version: '12'
+implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
 }
 
 
@@ -130,6 +131,14 @@ task buildDB(type: Exec){
     environment "PGDATABASE", "${PGDATABASE}"
     commandLine 'powershell' , '/C','psql -c \'\\copy order_items FROM "./resources/csv/order_items.csv" CSV HEADER\''
         }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'WITH time AS (SELECT CURRENT_TIMESTAMP AS time) INSERT INTO Z_Report (Last_Report) SELECT time.time FROM time;\''
+        }
     }
 }
 
@@ -142,7 +151,7 @@ task dropAll{
             environment "PGUSER", "${PGUSER}"
             environment "PGHOST", "${PGHOST}"
             environment "PGDATABASE", "${PGDATABASE}"
-            commandLine 'powershell' , '/C','psql -c \'DROP TABLE passwords;DROP TABLE ingredients_needed;DROP TABLE order_items;DROP TABLE order_history;DROP TABLE employees;DROP TABLE overarching_items;DROP TABLE menu;DROP TABLE inventory;\''
+            commandLine 'powershell' , '/C','psql -c \'DROP TABLE passwords;DROP TABLE ingredients_needed;DROP TABLE order_items;DROP TABLE order_history;DROP TABLE employees;DROP TABLE overarching_items;DROP TABLE menu;DROP TABLE inventory;DROP TABLE z_report;\''
         }
     }
 }

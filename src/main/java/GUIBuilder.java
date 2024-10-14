@@ -40,5 +40,9 @@ public class GUIBuilder {
         Scene inventory_edit_product = new Scene(
                 FXMLLoader.load(getClass().getResource("/fxml/inventory_edit_product.fxml")));
         GUIRunner.scenes.put("inventory_edit_product", inventory_edit_product);
+
+        Scene analysis = new Scene(
+                FXMLLoader.load(getClass().getResource("/fxml/analysis.fxml")));
+        GUIRunner.scenes.put("analysis", analysis);
     }
 }
