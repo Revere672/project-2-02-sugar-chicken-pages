@@ -71,5 +71,6 @@
             <Button fx:id="exit_view" layoutX="108.0" layoutY="287.0" mnemonicParsing="false" onAction="#close_pane" text="Exit" />
          </children>
       </Pane>
+      <Button fx:id="refresh_button" layoutX="376.0" layoutY="116.0" mnemonicParsing="false" onAction="#refresh" text="↻" />
    </children>
 </AnchorPane>

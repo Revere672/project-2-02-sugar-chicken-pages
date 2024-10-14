@@ -261,6 +261,19 @@ public class OrderHistory {
     }
 
     @FXML
+    private void refresh(ActionEvent action) {
+        order_table.getItems().clear();
+        currentOffset = 0;
+        order_date_picker.setValue(null);
+        loadOrders();
+
+        ScrollBar verticalScrollbar = getVerticalScrollBar(order_table);
+        if (verticalScrollbar != null) {
+            verticalScrollbar.setValue(0);
+        }
+    }
+
+    @FXML
     private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("employees");
     }
