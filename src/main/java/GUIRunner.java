@@ -33,7 +33,7 @@ public class GUIRunner extends Application {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
         Properties properties = new Properties();
-        try (InputStream input = new FileInputStream("gradle.properties")) {
+        try (InputStream input = GUIRunner.class.getResourceAsStream("/gradle.properties")) {
             properties.load(input);
         }
 
