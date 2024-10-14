@@ -45,11 +45,10 @@
         <columns>
           <TableColumn fx:id="inventory_ID_col" prefWidth="89.33331108093262" text="Inventory ID" />
           <TableColumn fx:id="prod_name_col" prefWidth="93.99994659423828" text="Product" />
-            <TableColumn fx:id="supplier_col" prefWidth="85.33335876464844" text="Supplier" />
-            <TableColumn fx:id="cost_col" prefWidth="59.3333740234375" text="Cost" />
-            <TableColumn fx:id="quantity_col" minWidth="9.999969482421875" prefWidth="78.6666259765625" text=" Quantity %" />
-            <TableColumn fx:id="quantity_col_label" minWidth="9.999969482421875" prefWidth="80.66668701171875" text=" Quantity" />
-            <TableColumn fx:id="action_col" prefWidth="78.66667683919275" text="Actions" />
+            <TableColumn fx:id="supplier_col" prefWidth="105.33329772949219" text="Supplier" />
+            <TableColumn fx:id="cost_col" prefWidth="74.0" text="Cost" />
+            <TableColumn fx:id="quantity_col" minWidth="9.999969482421875" prefWidth="111.33331298828125" text=" Quantity %" />
+            <TableColumn fx:id="action_col" prefWidth="94.66665649414062" text="Actions" />
         </columns>
       </TableView>
       <Button fx:id="add_product_button" layoutX="491.0" layoutY="148.0" mnemonicParsing="false" onAction="#addProduct" opacity="0.3" text="+ Add Product" />

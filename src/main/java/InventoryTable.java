@@ -2,6 +2,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TableColumn;
@@ -12,6 +13,8 @@ import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+//import javafx.scene.layout.Priority;
 
 import java.sql.*;
 
@@ -87,9 +90,9 @@ public class InventoryTable {
     @FXML
     private TableColumn<Inventory, Double> cost_col;
     @FXML
-    private TableColumn<Inventory, Double> quantity_col;
-    @FXML
-    private TableColumn<Inventory, Void> quantity_col_label;
+    private TableColumn<Inventory, Void> quantity_col;
+    // @FXML
+    // private TableColumn<Inventory, Void> quantity_col_label;
     @FXML
     private TableColumn<Inventory, Void> action_col;
 
@@ -134,12 +137,16 @@ public class InventoryTable {
         prod_name_col.setCellValueFactory(cellData -> cellData.getValue().productNameProperty());
         supplier_col.setCellValueFactory(cellData -> cellData.getValue().supplierProperty());
         cost_col.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
-        quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
-        quantity_col_label.setCellFactory(param -> new TableCell<Inventory, Void>() {
+        //quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
+        quantity_col.setCellFactory(param -> new TableCell<Inventory, Void>() {
             private final Text text = new Text();
             private final TextField textLabel = new TextField();
-            
-            HBox box = new HBox(text, textLabel);
+
+            VBox textBox = new VBox(text);
+            VBox labelBox = new VBox(textLabel);
+
+            HBox box = new HBox(textBox, labelBox);
+            //HBox.setHgrow(text, Priority.ALWAYS);
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -147,12 +154,29 @@ public class InventoryTable {
                 if (empty || item != null) {
                     setGraphic(null);
                 } else {
+                    box.setPrefWidth(quantity_col.getPrefWidth());
+                    textBox.setPrefWidth(box.getPrefWidth()/2);
+                    labelBox.setPrefWidth(box.getPrefWidth()/2 + 20);
                     textLabel.setEditable(false);
+                    textLabel.setPrefWidth(60);
+                    textLabel.setAlignment(Pos.CENTER);
+                    //textLabel.setStyle(textLabel.getStyle() + "-fx-padding: ;");
                     Inventory product = getTableView().getItems().get(getIndex());
                     text.setText(""+product.getQuantity());
                     if (product.getQuantity() < 80) {
+                        //System.out.println(product.getQuantity());
                         textLabel.setText("Low");
-                        textLabel.setStyle("-fx-background-color: rgb(120,50,4);");
+                        textLabel.setStyle(textLabel.getStyle() + "-fx-background-color: rgb(255,31,31);");
+                    }
+                    else if (product.getQuantity() < 120) {
+                        //System.out.println(product.getQuantity());
+                        textLabel.setText("Medium");
+                        textLabel.setStyle(textLabel.getStyle() + "-fx-background-color: rgb(0,219,7);");
+                    }
+                    else {
+                        //System.out.println(product.getQuantity());
+                        textLabel.setText("High");
+                        textLabel.setStyle(textLabel.getStyle() + "-fx-background-color: rgb(255,166,0);");
                     }
                     setGraphic(box);
                 }
