@@ -114,6 +114,7 @@ public class CashierController implements Initializable {
         inventory.setDisable(!isManager);
         employees.setDisable(!isManager);
         order_history.setDisable(!isManager);
+        analysis.setDisable(!isManager);
     }
     
     @Override
@@ -193,7 +194,10 @@ public class CashierController implements Initializable {
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
          GUIRunner.changeScene("order_history");
     }
-
+    @FXML
+    private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("analysis");
+   }
     @FXML
     private Button cashier;
     @FXML
@@ -202,6 +206,8 @@ public class CashierController implements Initializable {
     private Button employees;
     @FXML
     private Button order_history;
+    @FXML
+    private Button analysis;
 
     //Buttons for all of the serving size options
     @FXML

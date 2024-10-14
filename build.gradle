@@ -123,6 +123,14 @@ task buildDB(type: Exec){
     environment "PGDATABASE", "${PGDATABASE}"
     commandLine 'powershell' , '/C','psql -c \'\\copy order_items FROM "./resources/csv/order_items.csv" CSV HEADER\''
         }
+        exec{
+            workingDir "src/main"
+            environment "PGPASSWORD", "${PGPASSWORD}"
+    environment "PGUSER", "${PGUSER}"
+    environment "PGHOST", "${PGHOST}"
+    environment "PGDATABASE", "${PGDATABASE}"
+    commandLine 'powershell' , '/C','psql -c \'WITH time AS (SELECT CURRENT_TIMESTAMP AS time) INSERT INTO Z_Report (Last_Report) SELECT time.time FROM time;\''
+        }
     }
 }
 
@@ -135,7 +143,7 @@ task dropAll{
             environment "PGUSER", "${PGUSER}"
             environment "PGHOST", "${PGHOST}"
             environment "PGDATABASE", "${PGDATABASE}"
-            commandLine 'powershell' , '/C','psql -c \'DROP TABLE passwords;DROP TABLE ingredients_needed;DROP TABLE order_items;DROP TABLE order_history;DROP TABLE employees;DROP TABLE overarching_items;DROP TABLE menu;DROP TABLE inventory;\''
+            commandLine 'powershell' , '/C','psql -c \'DROP TABLE passwords;DROP TABLE ingredients_needed;DROP TABLE order_items;DROP TABLE order_history;DROP TABLE employees;DROP TABLE overarching_items;DROP TABLE menu;DROP TABLE inventory;DROP TABLE z_report;\''
         }
     }
 }
