@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="main_inventory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
+<AnchorPane fx:id="main_inventory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="600.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" opacity="0.3" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
@@ -61,6 +61,7 @@
          </font>
       </Text>
       <TextField fx:id="product_search" layoutX="15.0" layoutY="148.0" onAction="#searchInventory" opacity="0.3" promptText="Enter Product Name" />
+      <Button fx:id="restock_report_button" layoutX="491.0" layoutY="114.0" mnemonicParsing="false" onAction="#restockReport" opacity="0.3" text="Restock Report" />
       <Button fx:id="product_search_button" layoutX="173.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchInventory" opacity="0.3" prefHeight="25.0" prefWidth="60.0" text="Search" />
       <Pane fx:id="add_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
@@ -109,6 +110,17 @@
             <Button fx:id="decrement_button" layoutX="228.0" layoutY="125.0" mnemonicParsing="false" onAction="#decrement" prefHeight="25.0" prefWidth="24.0" text="-" />
             <Button fx:id="increment_button" layoutX="265.0" layoutY="125.0" mnemonicParsing="false" onAction="#increment" text="+" />
             <TextArea fx:id="failed_text2" editable="false" layoutX="111.0" layoutY="166.0" prefHeight="16.0" prefWidth="133.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="restock_pane" layoutX="123.0" layoutY="66.0" prefHeight="298.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+         <children>
+            <Text layoutX="111.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Report">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="restock_report_scrollable" editable="false" layoutX="23.0" layoutY="42.0" prefHeight="210.0" prefWidth="309.0" />
+            <Button fx:id="cancel_button3" layoutX="294.0" layoutY="263.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
          </children>
       </Pane>
    </children>
