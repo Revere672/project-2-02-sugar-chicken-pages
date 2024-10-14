@@ -146,7 +146,6 @@ public class InventoryTable {
             VBox labelBox = new VBox(textLabel);
 
             HBox box = new HBox(textBox, labelBox);
-            //HBox.setHgrow(text, Priority.ALWAYS);
 
             @Override
             protected void updateItem(Void item, boolean empty) {
