@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.layout.HBox;
@@ -135,7 +136,10 @@ public class InventoryTable {
         cost_col.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
         quantity_col.setCellValueFactory(cellData -> cellData.getValue().quantityProperty().asObject());
         quantity_col_label.setCellFactory(param -> new TableCell<Inventory, Void>() {
-            private final TextField text = new TextField();
+            private final Text text = new Text();
+            private final TextField textLabel = new TextField();
+            
+            HBox box = new HBox(text, textLabel);
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -143,13 +147,14 @@ public class InventoryTable {
                 if (empty || item != null) {
                     setGraphic(null);
                 } else {
-                    text.setEditable(false);
+                    textLabel.setEditable(false);
                     Inventory product = getTableView().getItems().get(getIndex());
+                    text.setText(""+product.getQuantity());
                     if (product.getQuantity() < 80) {
-                        text.setText("Low");
-                        text.setStyle("-fx-background-color: rgb(120,50,4);");
+                        textLabel.setText("Low");
+                        textLabel.setStyle("-fx-background-color: rgb(120,50,4);");
                     }
-                    setGraphic(text);
+                    setGraphic(box);
                 }
             }
         });
