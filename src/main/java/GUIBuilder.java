@@ -1,8 +1,14 @@
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 public class GUIBuilder {
 
