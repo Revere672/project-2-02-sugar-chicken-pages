@@ -149,8 +149,8 @@ public class AnalysisController {
          GUIRunner.changeScene("order_history");
     }
     @FXML
-    private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("analysis");
+    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("cashier1");
    }
 
     @FXML

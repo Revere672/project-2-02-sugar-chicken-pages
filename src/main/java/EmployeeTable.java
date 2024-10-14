@@ -107,8 +107,8 @@ public class EmployeeTable {
     // }
 
     @FXML
-    private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("employees");
+    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("cashier1");
     }
     @FXML
     private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {

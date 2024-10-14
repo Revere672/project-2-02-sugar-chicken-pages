@@ -134,8 +134,8 @@ public class OrderHistory {
         GUIRunner.changeScene("inventory");
     }
     @FXML
-    private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-         GUIRunner.changeScene("order_history");
+    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+         GUIRunner.changeScene("cashier1");
     }
     @FXML
     private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
