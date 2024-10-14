@@ -43,8 +43,8 @@
             <Button fx:id="analysis" mnemonicParsing="false" onAction="#changeToAnalysis" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Anaylsis" textFill="WHITE" GridPane.columnIndex="4" />
          </children>
       </GridPane>
-      <TableView fx:id="inventory_table" layoutX="16.0" layoutY="186.0" opacity="0.3" prefHeight="200.0" prefWidth="569.0">
       <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
+      <TableView fx:id="inventory_table" layoutX="16.0" layoutY="186.0" opacity="0.3" prefHeight="200.0" prefWidth="569.0">
         <columns>
           <TableColumn fx:id="inventory_ID_col" prefWidth="89.33331108093262" text="Inventory ID" />
           <TableColumn fx:id="prod_name_col" prefWidth="93.99994659423828" text="Product" />
@@ -55,7 +55,7 @@
         </columns>
       </TableView>
       <Button fx:id="add_product_button" layoutX="491.0" layoutY="148.0" mnemonicParsing="false" onAction="#addProduct" opacity="0.3" text="+ Add Product" />
-      <Text fx:id="inventory_text" layoutX="15.0" layoutY="136.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory">
+      <Text fx:id="inventory_text" layoutX="98.0" layoutY="49.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory">
          <font>
             <Font size="32.0" />
          </font>

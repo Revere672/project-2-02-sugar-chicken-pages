@@ -32,17 +32,11 @@ public class GUIBuilder {
 
         Scene employees = new Scene(FXMLLoader.load(getClass().getResource("/fxml/employees.fxml")));
         GUIRunner.scenes.put("employees", employees);
+
         Scene order_history = new Scene(FXMLLoader.load(getClass().getResource("/fxml/orderhistory.fxml")));
         GUIRunner.scenes.put("order_history", order_history);
-        Scene inventory_add_product = new Scene(
-                FXMLLoader.load(getClass().getResource("/fxml/inventory_add_product.fxml")));
-        GUIRunner.scenes.put("inventory_add_product", inventory_add_product);
-        Scene inventory_edit_product = new Scene(
-                FXMLLoader.load(getClass().getResource("/fxml/inventory_edit_product.fxml")));
-        GUIRunner.scenes.put("inventory_edit_product", inventory_edit_product);
-
-        Scene analysis = new Scene(
-                FXMLLoader.load(getClass().getResource("/fxml/analysis.fxml")));
+        
+        Scene analysis = new Scene(FXMLLoader.load(getClass().getResource("/fxml/analysis.fxml")));
         GUIRunner.scenes.put("analysis", analysis);
     }
 }
