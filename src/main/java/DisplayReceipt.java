@@ -20,6 +20,7 @@ public class DisplayReceipt {
     public static ArrayList<Double> extraCostPrice;
     public static HashMap<String,Double> overarchingCosts;
     public static HashMap<String,Integer> numberOfSides;
+    public static HashMap<String,Integer> numberOfProteins;
     public static final DecimalFormat df = new DecimalFormat("$0.00");
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -31,7 +32,7 @@ public class DisplayReceipt {
         rs.next();
         orderId = rs.getInt(1)+1;
 
-        ResultSet rscost=DBUtil.dbExecuteQuery("SELECT Menu_Name,extra_cost FROM menu where extra_cost>0;");
+        ResultSet rscost=DBUtil.dbExecuteQuery("SELECT Menu_Name,extra_cost FROM menu;");
         extraCostName=new ArrayList<>();
         extraCostPrice=new ArrayList<>();
         while(rscost.next()){
@@ -45,10 +46,12 @@ public class DisplayReceipt {
             overarchingCosts.put(overarchResultSet.getString(1),overarchResultSet.getDouble(2));
         }
 
-        ResultSet sidesResultSet=DBUtil.dbExecuteQuery("SELECT item_name,Side_Count FROM overarching_items");
+        ResultSet sidesResultSet=DBUtil.dbExecuteQuery("SELECT item_name,Side_Count,Protein_count FROM overarching_items");
         numberOfSides=new HashMap<>();
+        numberOfProteins=new HashMap<>();
         while(sidesResultSet.next()){
             numberOfSides.put(sidesResultSet.getString(1),sidesResultSet.getInt(2));
+            numberOfProteins.put(sidesResultSet.getString(1),sidesResultSet.getInt(3));
         }
 
         loaded=true;
