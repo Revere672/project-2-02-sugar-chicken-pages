@@ -41,6 +41,7 @@
             <Button fx:id="analysis" mnemonicParsing="false" onAction="#changeToAnalysis" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Anaylsis" textFill="WHITE" GridPane.columnIndex="4" />
          </children>
       </GridPane>
+      <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
       <TableView fx:id="employee_table" layoutX="30.0" layoutY="159.0" prefHeight="227.0" prefWidth="527.0">
         <columns>
           <TableColumn fx:id="employee_id_col" prefWidth="75.0" text="Employee ID" />

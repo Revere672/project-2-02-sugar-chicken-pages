@@ -40,6 +40,7 @@
             <Button fx:id="analysis" mnemonicParsing="false" onAction="#changeToAnalysis" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Anaylsis" textFill="WHITE" GridPane.columnIndex="4" />
          </children>
       </GridPane>
+      <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="206.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="283.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="359.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
