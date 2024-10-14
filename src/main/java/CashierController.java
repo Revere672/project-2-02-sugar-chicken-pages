@@ -20,6 +20,7 @@ public class CashierController implements Initializable {
     private Scene scene;
     public static ArrayList<ToggleButton> selected=new ArrayList<>();
     public static Entry workingEntry;
+    public static String special;
 
     public void switch_to_cashier1(ActionEvent event) throws IOException{
         scene = GUIRunner.changeScene("cashier1");
@@ -70,15 +71,20 @@ public class CashierController implements Initializable {
    }
 
    public void undo(ActionEvent event){
-        if(DisplayReceipt.getEntries().isEmpty()){
+        ArrayList<Entry> entries=DisplayReceipt.getEntries();
+        if(entries.isEmpty()){
             return;
         }
-        DisplayReceipt.getEntries().remove(DisplayReceipt.getEntries().size()-1);
+        DisplayReceipt.subtotal-=entries.get(entries.size()-1).price;
+        entries.remove(entries.size()-1);
         scene=((Node)event.getSource()).getScene();
         DisplayReceipt.updateRecipt(scene);
    }
 
     public void FinishOrder(ActionEvent event) throws IOException, SQLException, ClassNotFoundException{
+        if(DisplayReceipt.getEntries().isEmpty()){
+            return;
+        }
         ResultSet rs=DBUtil.dbExecuteQuery("SELECT MAX(order_id) FROM order_history;");
         rs.next();
         DisplayReceipt.orderId = rs.getInt(1)+1;
@@ -88,7 +94,7 @@ public class CashierController implements Initializable {
         
         String itemSQL="INSERT INTO Order_Items VALUES ";
         int orderNum=1;
-        
+
         for(Entry e:DisplayReceipt.entries){
             System.out.println(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum));
             DisplayReceipt.updateIngredients(e);
@@ -99,6 +105,7 @@ public class CashierController implements Initializable {
         workingEntry=null;
 
         DisplayReceipt.orderId++;
+        DisplayReceipt.subtotal=0;
 
         DisplayReceipt.updateRecipt(((Node)event.getSource()).getScene());
     }
@@ -123,12 +130,12 @@ public class CashierController implements Initializable {
     
     public void buttonPressedOther(ActionEvent event){
         String buttonPressed = ((Node)event.getSource()).getId();
+        ((ToggleButton)event.getSource()).setSelected(false);
         int index=DisplayReceipt.extraCostName.indexOf(buttonPressed);
         workingEntry=new Entry("other",buttonPressed,DisplayReceipt.extraCostPrice.get(index));
         scene=((Node)event.getSource()).getScene();
-        scene.lookup("#AddToOrder").setOpacity(1);
-        scene.lookup("#AddToOrder").setDisable(false);
-        selected.add((ToggleButton)event.getSource());
+        DisplayReceipt.addEntry(workingEntry);
+        DisplayReceipt.updateRecipt(scene);
     }
 
     public void buttonPressedSide(ActionEvent event){
@@ -148,11 +155,16 @@ public class CashierController implements Initializable {
 
     public void buttonPressedProtein(ActionEvent event){
         String buttonPressed = ((Node)event.getSource()).getId();
+
+        if(buttonPressed.contains("Special")){
+            buttonPressed=special;
+        }
+        
         selected.add((ToggleButton)event.getSource());
         
         if(!workingEntry.addProtein(buttonPressed)){
             workingEntry.removeProtein(buttonPressed);
-            deSelect(buttonPressed);
+            deSelect((buttonPressed==special?"Special : ":"")+buttonPressed);
         }
 
         scene=((Node)event.getSource()).getScene();
@@ -163,7 +175,8 @@ public class CashierController implements Initializable {
 
     public void buttonPressedType(ActionEvent event) throws IOException{
         String buttonPressed = ((Node)event.getSource()).getId();
-        workingEntry=new Entry(new String[]{buttonPressed},DisplayReceipt.overarchingCosts.get(buttonPressed));
+        System.out.print(buttonPressed);
+        workingEntry=new Entry(new String[]{buttonPressed.replaceAll("-", " ")},DisplayReceipt.overarchingCosts.get(buttonPressed.replaceAll("-", " ")));
         DisplayReceipt.addEntry(workingEntry);
         ToggleButton pressed=((ToggleButton)event.getSource());
         pressed.setSelected(false);
@@ -176,6 +189,13 @@ public class CashierController implements Initializable {
         DisplayReceipt.removeEntry(workingEntry);
         deSelectAll();
         switch_to_cashier1(event);
+    }
+
+    public static void updateSpecialtyButton(Scene scene) throws SQLException, ClassNotFoundException{
+        ResultSet rs=DBUtil.dbExecuteQuery("SELECT menu_Name FROM menu WHERE position('Special' in menu_name)>0 AND active=true;");
+        rs.next();
+        special=rs.getString(1).replaceAll("Special: ", "");
+        ((ToggleButton)scene.lookup("#SpecialtyItem")).setText(special);
     }
 
     @FXML

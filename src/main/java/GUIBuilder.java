@@ -10,7 +10,7 @@ public class GUIBuilder {
         loadScenes();
     }
 
-    private void loadScenes() throws IOException {
+    private void loadScenes() throws IOException, SQLException, ClassNotFoundException {
         Scene inventory = new Scene(FXMLLoader.load(getClass().getResource("/fxml/inventory.fxml")));
         GUIRunner.scenes.put("inventory", inventory);
 
@@ -23,6 +23,7 @@ public class GUIBuilder {
         Scene cashier2 = new Scene(cashier2Loader.load());
         GUIRunner.scenes.put("cashier2", cashier2);
         cashier2.setUserData(cashier2Loader.getController());
+        CashierController.updateSpecialtyButton(cashier2);
 
         Scene employees = new Scene(FXMLLoader.load(getClass().getResource("/fxml/employees.fxml")));
         GUIRunner.scenes.put("employees", employees);
