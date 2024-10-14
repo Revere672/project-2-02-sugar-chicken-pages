@@ -30,26 +30,6 @@ shadowJar {
 }
 
 
-// application {
-//   // Define the main class for the application.
-//   mainClass = 'GUIRunner'
-// }
-
-mainClassName = 'GUIRunner'
-
-jar {
-  manifest {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    attributes 'Main-Class': mainClassName
-  }
-  from {
-    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    configurations.runtimeClasspath.collect {it.isDirectory() ? it : zipTree(it) }
-  }
-  //with jar
-}
-
-
         // https://mvnrepository.com/artifact/org.postgresql/postgresql
 dependencies {
 implementation  group: 'org.openjfx', name: 'javafx', version: '11'

@@ -9,8 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+
+import java.io.IOException;
 
 public class EmployeeTable {
+    @FXML
+    private Button log_out_button;
     @FXML
     private Button cashier;
     @FXML
@@ -107,8 +115,8 @@ public class EmployeeTable {
     // }
 
     @FXML
-    private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("employees");
+    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("cashier1");
     }
     @FXML
     private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -122,4 +130,12 @@ public class EmployeeTable {
     private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("analysis");
    }
+
+    @FXML
+    private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
+        Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
+        System.out.println("Logged Out");
+        GUIRunner.stage.setScene(login);
+        GUIRunner.stage.show();
+    }
 }
