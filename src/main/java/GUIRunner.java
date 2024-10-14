@@ -1,6 +1,9 @@
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.application.Application;
@@ -16,6 +19,7 @@ public class GUIRunner extends Application {
     public static HashMap<String, Scene> scenes;
     public static Stage stage;
     public static GUIBuilder build;
+    public static Date lastZReport;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -45,5 +49,30 @@ public class GUIRunner extends Application {
             }
         }
         return newScene;
+    }
+
+    public static ArrayList<String> xReport() throws ClassNotFoundException, SQLException{
+        ResultSet rs= DBUtil.dbExecuteQuery("WITH last_Day AS ( SELECT Total_Price,order_time FROM order_history WHERE order_time>'"+lastZReport+"'"
+                                                +"SELECT EXTRACT(HOUR FROM Order_Time) AS Hour_of_Day, COUNT(*) AS Order_Count, SUM(Total_Price) AS Total_Sales FROM last_Day GROUP BY EXTRACT (HOUR FROM Order_Time) ORDER BY Hour_of_Day;");
+
+        ArrayList<String> result=new ArrayList<>();
+        
+        while(rs.next()){
+            result.add(rs.getString(0));
+        }
+        
+        return result;
+    }
+    public static ArrayList<String> zReport() throws ClassNotFoundException, SQLException{
+        ResultSet rs= DBUtil.dbExecuteQuery("WITH last_Day AS ( SELECT Total_Price,order_time FROM order_history WHERE order_time>'"+lastZReport+"'"
+                                                +"SELECT EXTRACT(HOUR FROM Order_Time) AS Hour_of_Day, COUNT(*) AS Order_Count, SUM(Total_Price) AS Total_Sales FROM last_Day GROUP BY EXTRACT (HOUR FROM Order_Time) ORDER BY Hour_of_Day;");
+
+        ArrayList<String> result=new ArrayList<>();
+        
+        while(rs.next()){
+            result.add(rs.getString(0));
+        }
+        lastZReport = new Date(new java.util.Date().getTime());
+        return result;
     }
 }
