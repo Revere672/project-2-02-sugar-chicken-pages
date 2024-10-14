@@ -6,7 +6,11 @@ import javafx.scene.Scene;
 
 public class GUIBuilder {
 
-    public GUIBuilder(String[] args) throws ClassNotFoundException, SQLException, IOException {
+    public GUIBuilder() throws ClassNotFoundException, SQLException, IOException {
+        loadScenes();
+    }
+
+    private void loadScenes() throws IOException {
         Scene inventory = new Scene(FXMLLoader.load(getClass().getResource("/fxml/inventory.fxml")));
         GUIRunner.scenes.put("inventory", inventory);
 

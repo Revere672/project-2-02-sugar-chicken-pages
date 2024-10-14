@@ -1,8 +1,34 @@
-
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
+
+application {
+  // Define the main class for the application.
+  mainClass = 'MainEntry'
+}
+
+
+tasks.jar {
+    enabled = false
+}
+
+mainClassName = 'MainEntry'
+
+shadowJar {
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    from('.') {
+        include 'gradle.properties'         
+    }
+    from {
+        project.configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) };
+    }
+}
+
 
 // application {
 //   // Define the main class for the application.
@@ -33,14 +59,16 @@ implementation  group: 'org.openjfx', name: 'javafx-base', version: '12'
 implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
 }
 
+
 repositories {
     mavenCentral()
 }
 
 javafx {
     version = "22.0.1"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', "javafx.graphics", "javafx.web"]
 }
+
 task buildDB(type: Exec){
     workingDir "src/main"
     environment "PGPASSWORD", "${PGPASSWORD}"
@@ -148,8 +176,7 @@ task dropAll{
     }
 }
 
+
 run {
-workingDir "src/main/java"
-mainClassName = 'GUIRunner'
-args = ["${PGHOST}","${PGUSER}", "${PGPASSWORD}"]
+    args = ["${PGHOST}","${PGUSER}", "${PGPASSWORD}"]
 }
