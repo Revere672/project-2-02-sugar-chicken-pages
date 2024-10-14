@@ -1,6 +1,0 @@
-employee_ID,employee_name,employee_email,employee_role,last_login,status
-100001,Paul Fortnite,Fortnite@gmail.com,Cashier,2024-05-06 5:36:26,TRUE
-100002,Joe Biden,Biden@gmail.gov,Cook,2024-01-01 0:00:00,FALSE
-200001,Keanu Reeves,Reeves@assassin.org,Manager,2024-01-01 9:24:22,TRUE
-100003,Mr. Texas A&M,Aggie@gigem.com,Service,2024-01-01 12:42:56,TRUE
-200002,Robber Heavyhand,rob.heavy@tamu.edu,Manager,2024-03-02 8:43:22,TRUE

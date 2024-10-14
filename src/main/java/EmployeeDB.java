@@ -1,6 +1,9 @@
-import java.sql.*;
-import javafx.collections.ObservableList;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 public class EmployeeDB {
     
     public static ObservableList<Employee> find_Employee(String name) throws SQLException, ClassNotFoundException {
@@ -22,7 +25,7 @@ public class EmployeeDB {
         if (result_e.next()) {
             e = new Employee();
             e.setEmployeeID(result_e.getInt("employee_ID"));
-            e.setEmployeeName(result_e.getString("emplyee_name"));
+            e.setEmployeeName(result_e.getString("employee_name"));
             e.setEmployeeEmail(result_e.getString("employee_email"));
             e.setEmployeeRole(result_e.getString("employee_role"));
             e.setEmployeeLogin(result_e.getDate("last_login"));
