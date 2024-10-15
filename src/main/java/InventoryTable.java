@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.sql.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -67,6 +68,8 @@ public class InventoryTable {
     private TextArea failed_text1;
     @FXML
     private TextArea failed_text2;
+    @FXML
+    private TextArea failed_text3;
     @FXML
     private TextArea failed_text111;
     @FXML
@@ -480,6 +483,7 @@ public class InventoryTable {
         menu_item_pane.setVisible(false);
         item_name_text.setText(null);
         extra_cost_text.setText(null);
+        setBackground(false);
     }
     @FXML
     private void addFailed() {
@@ -620,9 +624,27 @@ public class InventoryTable {
             addFailed();
         }
         else {
-            InventoryDB.insertMenuItem(item_name_text.getText(), extra_cost_text.getText());
-            ingredient_needed_pane.setVisible(true);
-            
+            // Find if the menu item already exists in the database
+            String menuCopy = "SELECT COUNT(*), active FROM menu WHERE menu_name = '"+item_name_text.getText()+"' GROUP BY menu_name;";
+            ResultSet rs = DBUtil.dbExecuteQuery(menuCopy);
+            rs.next();
+            if (rs.getInt("COUNT") == 1) {
+                if (rs.getBoolean("active")) {
+                    failed_text3.setText("Menu Item already exists on the menu");
+                }
+                else {
+                    //If the menu item is inactive, then set it active
+                    String setActive = "UPDATE menu SET active='"+true+"' WHERE menu_name='"+item_name_text.getText()+"';";
+                    DBUtil.dbExecuteUpdate(setActive);
+                    menu_item_pane.setVisible(false);
+                    setBackground(false);
+                }
+            }
+            else {
+                InventoryDB.insertMenuItem(item_name_text.getText(), extra_cost_text.getText());
+                ingredient_needed_pane.setVisible(true);
+                
+            }
         }
     }
 
