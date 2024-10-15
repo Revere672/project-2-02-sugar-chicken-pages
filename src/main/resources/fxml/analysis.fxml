@@ -39,6 +39,7 @@
             <Button fx:id="analysis" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Anaylsis" textFill="WHITE" GridPane.columnIndex="4" />
          </children>
       </GridPane>
+      <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
       <Button id="undo" layoutX="88.0" layoutY="200.0" mnemonicParsing="false" onAction="#xReport" prefHeight="60.0" prefWidth="162.0" text="X Report" />
       <Button id="undo" layoutX="338.0" layoutY="200.0" mnemonicParsing="false" onAction="#zReport" prefHeight="60.0" prefWidth="162.0" text="Z Report" />
       <AnchorPane id="ReportPage" disable="true" opacity="0.0">
