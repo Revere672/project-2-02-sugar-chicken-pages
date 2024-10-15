@@ -20,13 +20,15 @@ public class GUIRunner extends Application {
     public static GUIBuilder build;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {
         scenes = new HashMap<>();
         build = new GUIBuilder();
 
+        // Load the initial scene
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         scenes.put("login", new Scene(root));
-        GUIRunner.stage = stage;
+        
+        stage = primaryStage;
         stage.setScene(scenes.get("login"));
         stage.show();
     }
@@ -46,17 +48,31 @@ public class GUIRunner extends Application {
         launch();
     }
 
-    public static Scene changeScene(String scene_Name) {
-        Scene newScene = scenes.get(scene_Name);
-        stage.setScene(scenes.get(scene_Name));
-        stage.show();
+    public static Scene changeScene(String sceneName) {
+        Scene newScene = scenes.get(sceneName);
+        
+        if (newScene != null) {
+            // Store the current width and height of the stage
+            double currentWidth = stage.getWidth();
+            double currentHeight = stage.getHeight();
 
-        if (scene_Name.equals("cashier1") || scene_Name.equals("cashier2")) {
-            CashierController cashierController = (CashierController) newScene.getUserData();
-            if (cashierController != null) {
-                cashierController.updateButtonStates();
+            // Set the new scene
+            stage.setScene(newScene);
+            stage.show();
+
+            // Restore the original width and height
+            stage.setWidth(currentWidth);
+            stage.setHeight(currentHeight);
+
+            // Optional: Update button states for cashier scenes
+            if (sceneName.equals("cashier1") || sceneName.equals("cashier2")) {
+                CashierController cashierController = (CashierController) newScene.getUserData();
+                if (cashierController != null) {
+                    cashierController.updateButtonStates();
+                }
             }
         }
+
         return newScene;
     }
 }
