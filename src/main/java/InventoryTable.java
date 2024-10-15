@@ -36,6 +36,10 @@ public class InventoryTable {
     private Pane add_pane;
     @FXML
     private Pane update_pane;
+    @FXML
+    private Pane menu_item_pane;
+    @FXML
+    private Pane ingredient_needed_pane;
 
     @FXML
     private Button log_out_button;
@@ -64,6 +68,8 @@ public class InventoryTable {
     @FXML
     private TextArea failed_text2;
     @FXML
+    private TextArea failed_text111;
+    @FXML
     private Button apply_button;
     @FXML
     private TextField product_name_text1;
@@ -91,6 +97,21 @@ public class InventoryTable {
     private Button increment_button;
     @FXML
     private Button update_button;
+    @FXML
+    private Button next_button;
+    @FXML
+    private Button add_button1;
+    @FXML 
+    private Button done_button;
+    @FXML
+    private TextField item_name_text;
+    @FXML
+    private TextField extra_cost_text;
+    @FXML
+    private TextField ingredient_name_text;
+    @FXML
+    private TextField quantity_needed_text;
+
     @FXML
     private TableView<Inventory> inventory_table;
     @FXML
@@ -143,6 +164,8 @@ public class InventoryTable {
         edit_pane.setVisible(false);
         add_pane.setVisible(false);
         update_pane.setVisible(false);
+        menu_item_pane.setVisible(false);
+        ingredient_needed_pane.setVisible(false);
         setBackground(false);
 
         inventory_ID_col.setCellValueFactory(cellData -> cellData.getValue().inventoryIDProperty().asObject());
@@ -259,7 +282,7 @@ public class InventoryTable {
     private void setBackground(Boolean value) {
         if (value) {
             main_inventory.getChildren().forEach(node -> {
-                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane))) {
+                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane) || node.equals(menu_item_pane) || node.equals(ingredient_needed_pane))) {
                     node.setOpacity(0.3);
                     node.setDisable(true);
                 }
@@ -267,7 +290,7 @@ public class InventoryTable {
         }
         else {
             main_inventory.getChildren().forEach(node -> {
-                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane))) {
+                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane) || node.equals(menu_item_pane) || node.equals(ingredient_needed_pane))) {
                     node.setOpacity(1);
                     node.setDisable(false);
                 }
@@ -444,8 +467,20 @@ public class InventoryTable {
         add_pane.setVisible(false);
         update_pane.setVisible(false);
         searchInventory(null);
+        menu_item_pane.setVisible(false);
+        ingredient_needed_pane.setVisible(false);
     }
-
+    @FXML
+    private void cancelIngredientNeededPane(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        ingredient_needed_pane.setVisible(false);
+        setBackground(false);
+    }
+    @FXML
+    private void cancelMenuItemPane(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        menu_item_pane.setVisible(false);
+        item_name_text.setText(null);
+        extra_cost_text.setText(null);
+    }
     @FXML
     private void addFailed() {
         failed_text.setText("One or more entries are blank");
@@ -570,5 +605,44 @@ public class InventoryTable {
         System.out.println("Logged Out");
         GUIRunner.stage.setScene(login);
         GUIRunner.stage.show();
+    }
+
+    @FXML
+    private void addMenuItem(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        setBackground(true);
+        menu_item_pane.setVisible(true);
+        item_name_text.requestFocus();
+    }
+
+    @FXML
+    private void addToMenu(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if(item_name_text.getText() == "" || extra_cost_text.getText() == "") {
+            addFailed();
+        }
+        else {
+            InventoryDB.insertMenuItem(item_name_text.getText(), extra_cost_text.getText());
+            ingredient_needed_pane.setVisible(true);
+            
+        }
+    }
+
+    @FXML
+    private void addToIngredientsNeeded(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if(ingredient_name_text.getText() == "" || quantity_needed_text.getText() == "") {
+            addFailed();
+        }
+        else {
+            try {
+                InventoryDB.insertIngredientsNeeded(item_name_text.getText(), ingredient_name_text.getText(), quantity_needed_text.getText());
+                ingredient_name_text.setText(null);
+                quantity_needed_text.setText(null);
+                failed_text111.setText("If that is all please click done");
+            }
+            catch(Exception e) {
+                add_pane.setVisible(true);
+                add_pane.toFront();
+                failed_text111.setText("Please try adding again");
+            }
+        }
     }
 }
