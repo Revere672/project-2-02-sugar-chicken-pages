@@ -40,82 +40,63 @@
             <Button fx:id="analysis" mnemonicParsing="false" onAction="#changeToAnalysis" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Anaylsis" textFill="WHITE" GridPane.columnIndex="4" />
          </children>
       </GridPane>
-      <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="206.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="283.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="359.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="437.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9da0a6" height="42.0" layoutX="516.0" layoutY="112.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="206.0" layoutY="179.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="285.0" layoutY="179.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="205.0" layoutY="227.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="288.0" layoutY="227.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8daded" height="42.0" layoutX="204.0" layoutY="274.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="437.0" layoutY="179.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="515.0" layoutY="179.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="437.0" layoutY="227.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eb8da6" height="42.0" layoutX="515.0" layoutY="227.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <ToggleButton id="Cub Meal" fx:id="button_cub_meal" layoutX="442.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Cub Meal">
+
+       <ToggleButton id="Cub-Meal" fx:id="button_cub_meal" layoutX="437.0" layoutY="110.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #cccccc; -fx-border-color: #000000;" text="Cub Meal">
          <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
+            <Font name="Arial Narrow Bold" size="11.0" />
+
          </font>
       </ToggleButton>
-      <ToggleButton id="A la carte" fx:id="button_carte" layoutX="518.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="A la Carte" textAlignment="CENTER">
+      <ToggleButton id="A-La-Carte" fx:id="button_carte" layoutX="516.0" layoutY="110.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #cccccc; -fx-border-color: #000000;" text="A la Carte" textAlignment="CENTER">
          <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
+            <Font name="Arial Narrow Bold" size="11.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Bigger Plate" fx:id="button_big_plate" layoutX="356.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Bigger Plate">
+      <ToggleButton id="Bigger-Plate" fx:id="button_big_plate" layoutX="359.0" layoutY="110.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #cccccc; -fx-border-color: #000000;" text="Bigger Plate">
          <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
+            <Font name="Arial Narrow Bold" size="9.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Bowl" fx:id="button_bowl" layoutX="220.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Bowl">
+      <ToggleButton id="Plate" fx:id="button_plate" layoutX="283.0" layoutY="110.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #cccccc; -fx-border-color: #000000;" text="Plate">
          <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
+            <Font name="Arial Narrow Bold" size="11.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Plate" fx:id="button_plate" layoutX="297.0" layoutY="121.0" mnemonicParsing="false" onAction="#buttonPressedType" text="Plate">
+      <ToggleButton id="Bowl" fx:id="button_bowl" layoutX="205.0" layoutY="110.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #cccccc; -fx-border-color: #000000;" text="Bowl">
          <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
+            <Font name="Arial Narrow Bold" size="11.0" />
          </font>
       </ToggleButton>
-      <ToggleButton fx:id="button_water_cup" layoutX="207.0" layoutY="188.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Water Cup">
-         <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
-         </font>
-      </ToggleButton>
-      <ToggleButton id="Drink" fx:id="button_fountain_drink" layoutX="277.0" layoutY="187.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="25.0" prefWidth="90.0" text="Fountain Drink">
-         <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
-         </font>
-      </ToggleButton>
-      <ToggleButton id="Water Bottle" fx:id="button_water_bottle" layoutX="203.0" layoutY="236.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Water Bottle">
-         <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
-         </font>
-      </ToggleButton>
-      <ToggleButton id="Gatorade" fx:id="button_gatorade" layoutX="292.0" layoutY="236.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Gatorade">
-         <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
-         </font>
-      </ToggleButton>
-      <ToggleButton id="Juice" fx:id="button_juice" layoutX="217.0" layoutY="283.0" mnemonicParsing="false" onAction="#buttonPressedOther" text="Juice">
-         <font>
-            <Font name="Arial Narrow Bold" size="12.0" />
-         </font>
-      </ToggleButton>
-      <ToggleButton id="Chicken Eggroll" fx:id="button_chicken_egg_roll" layoutX="445.0" layoutY="183.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="52.0" text="Chicken Egg Roll" textAlignment="CENTER" wrapText="true">
+      <ToggleButton id="Water Cup" fx:id="button_water_cup" layoutX="205.0" layoutY="170.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #5a93db; -fx-border-color: #000000;" text="Water Cup">
          <font>
             <Font name="Arial Narrow Bold" size="10.0" />
          </font>
       </ToggleButton>
-    <AnchorPane id="ReciptWindow" layoutX="20.0" layoutY="91.0" minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="162.0">
-         <children>
-            <TextArea id="ReceiptText" editable="false" layoutX="-1.0" layoutY="13.0" prefHeight="233.0" prefWidth="118.0" />
-            <TextArea id="PriceArea" editable="false" focusTraversable="false" layoutX="117.0" layoutY="13.0" prefHeight="233.0" prefWidth="52.0" />
-         </children>
-      </AnchorPane>
+      <ToggleButton id="Drink" fx:id="button_fountain_drink" layoutX="283.0" layoutY="170.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #5a93db; -fx-border-color: #000000;" text="Fountain Drink">
+         <font>
+            <Font name="Arial Narrow Bold" size="8.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton id="Water Bottle" fx:id="button_water_bottle" layoutX="205.0" layoutY="215.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #5a93db; -fx-border-color: #000000;" text="Water Bottle">
+         <font>
+            <Font name="Arial Narrow Bold" size="10.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton id="Gatorade" fx:id="button_gatorade" layoutX="283.0" layoutY="215.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #5a93db; -fx-border-color: #000000;" text="Gatorade">
+         <font>
+            <Font name="Arial Narrow Bold" size="10.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton id="Juice" fx:id="button_juice" layoutX="205.0" layoutY="260.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #5a93db; -fx-border-color: #000000;" text="Juice">
+         <font>
+            <Font name="Arial Narrow Bold" size="10.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton id="Chicken Eggroll" fx:id="button_chicken_egg_roll" layoutX="439.0" layoutY="170.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #eb8da6; -fx-border-color: #000000;" text="Chicken Egg Roll" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial Narrow Bold" size="9.0" />
+         </font>
+      </ToggleButton>
       <TextField id="subtotal" editable="false" layoutX="14.0" layoutY="344.0" prefHeight="25.0" prefWidth="125.0" text="Subtotal:">
          <font>
             <Font size="10.0" />
@@ -126,26 +107,44 @@
             <Font size="10.0" />
          </font>
       </TextField>
-      <ToggleButton id="Veggie Spring Roll" fx:id="button_veggie_spring_roll" layoutX="520.0" layoutY="183.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="59.0" text="Veggie Spring Roll" textAlignment="CENTER" wrapText="true">
+      <ToggleButton id="Vegetable Spring Roll" fx:id="button_veggie_spring_roll" layoutX="516.0" layoutY="170.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #eb8da6; -fx-border-color: #000000;" text="Vegetable Spring Roll" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="Arial Narrow Bold" size="10.0" />
+            <Font name="Arial Narrow Bold" size="9.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Cream Cheese Rangoon" fx:id="button_rangoon" layoutX="433.0" layoutY="231.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="74.0" text="Cream Cheese Rangoon" textAlignment="CENTER" wrapText="true">
+      <ToggleButton id="Cream Cheese Rangoon" fx:id="button_rangoon" layoutX="439.0" layoutY="215.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #eb8da6; -fx-border-color: #000000;" text="Cream Cheese Rangoon" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="Arial Narrow Bold" size="10.0" />
+            <Font name="Arial Narrow Bold" size="8.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="Apple Pie Roll" fx:id="button_apple_pie_roll" layoutX="511.0" layoutY="231.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="33.0" prefWidth="74.0" text="Apple Pie Roll" textAlignment="CENTER" wrapText="true">
+      <ToggleButton id="Apple Pie Roll" fx:id="button_apple_pie_roll" layoutX="516.0" layoutY="215.0" mnemonicParsing="false" onAction="#buttonPressedOther" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #eb8da6; -fx-border-color: #000000;" text="Apple Pie Roll" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="Arial Narrow Bold" size="10.0" />
+            <Font name="Arial Narrow Bold" size="9.0" />
          </font>
       </ToggleButton>
       <Rectangle fx:id="background_confirm" arcHeight="5.0" arcWidth="5.0" fill="#b7ffcc" height="42.0" layoutX="494.0" layoutY="323.0" opacity="0.0" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="67.0" />
-      <Button id="AddToOrder" layoutX="467.0" layoutY="344.0" mnemonicParsing="false" onAction="#addToOrder" opacity="0.0" prefHeight="36.0" prefWidth="104.0" text="Add To Order" />
-      <TextField id="SubtotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="344.0" prefHeight="25.0" prefWidth="52.0" />
-      <TextField id="TotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="134.0" layoutY="369.0" prefHeight="25.0" prefWidth="52.0" />
-      <Button id="submit" layoutX="198.0" layoutY="358.0" mnemonicParsing="false" onAction="#FinishOrder" prefHeight="30.0" prefWidth="104.0" text="Finish Order" />
-      <Button id="undo" layoutX="205.0" layoutY="326.0" mnemonicParsing="false" onAction="#undo" prefHeight="26.0" prefWidth="90.0" text="Undo" />
+      <Button id="AddToOrder" layoutX="467.0" layoutY="344.0" mnemonicParsing="false" onAction="#addToOrder" opacity="0.0" prefHeight="36.0" prefWidth="104.0" text="Add To Order" visible="false" />
+      <TextArea id="ReceiptText" editable="false" layoutX="14.0" layoutY="104.0" prefHeight="233.0" prefWidth="118.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" />
+      <TextArea id="PriceArea" editable="false" focusTraversable="false" layoutX="129.0" layoutY="104.0" prefHeight="233.0" prefWidth="52.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" />
+      <TextField id="subtotal" editable="false" layoutX="14.0" layoutY="344.0" prefHeight="26.0" prefWidth="118.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" text="Subtotal:">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField id="total" editable="false" layoutX="14.0" layoutY="369.0" prefHeight="26.0" prefWidth="118.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" text="Total:">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField id="SubtotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="129.0" layoutY="344.0" prefHeight="26.0" prefWidth="52.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" />
+      <TextField id="TotalValue" alignment="CENTER_RIGHT" editable="false" layoutX="129.0" layoutY="369.0" prefHeight="26.0" prefWidth="52.0" style="-fx-border-radius: 0; -fx-background-radius: 0;" />
+      <Button id="submit" layoutX="198.0" layoutY="358.0" mnemonicParsing="false" onAction="#FinishOrder" prefHeight="30.0" prefWidth="104.0" style="-fx-background-color: #ce123c; -fx-border-color: #000000;" text="Finish Order" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button id="undo" layoutX="205.0" layoutY="326.0" mnemonicParsing="false" onAction="#undo" prefHeight="26.0" prefWidth="90.0" style="-fx-background-color: #384862; -fx-border-color: #000000;" text="Undo" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
    </children>
 </AnchorPane>
