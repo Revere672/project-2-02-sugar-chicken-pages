@@ -217,6 +217,12 @@ public class InventoryDB {
                 "    END AS Restock_Recommendation " +
                 "FROM Inventory i " +
                 "LEFT JOIN Daily_Usage du ON i.Inventory_ID = du.Inventory_ID " +
+                "WHERE " +  
+                "   CASE " +
+                "       WHEN i.Quantity <= 0 THEN 'Yes' " +
+                "       WHEN COALESCE(du.Total_Quantity_Used, 0) > (i.Quantity / 2) THEN 'Yes' " +
+                "       ELSE 'No' " + 
+                "   END = 'Yes'" +
                 "ORDER BY i.Inventory_ID;";
             ResultSet rsRestock = DBUtil.dbExecuteQuery(restockQuery);
             while (rsRestock.next()) {
