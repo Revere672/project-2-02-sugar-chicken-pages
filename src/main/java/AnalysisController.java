@@ -3,19 +3,18 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import javafx.scene.control.TextArea;
-import com.sun.jdi.event.ThreadStartEvent;
 
-import javafx.scene.chart.ScatterChart;
-import javafx.scene.chart.XYChart;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class AnalysisController {
     private Scene scene;    
@@ -188,6 +187,8 @@ public class AnalysisController {
     @FXML
     private void displayGraph(ActionEvent event)throws SQLException, ClassNotFoundException {
         scene=((Node)event.getSource()).getScene();
+        scene.lookup("#GraphPage").setDisable(true);
+        scene.lookup("#GraphPage").setOpacity(0);
         scene.lookup("#GraphPane").setDisable(false);
         scene.lookup("#GraphPane").setOpacity(1);
         LocalDate s=((DatePicker)scene.lookup("#StartTimeGraph")).getValue();

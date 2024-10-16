@@ -78,6 +78,24 @@
          </children>
       </AnchorPane>
       <Button id="Graph" layoutX="350.0" layoutY="265.0" mnemonicParsing="false" onAction="#openGraph" prefHeight="60.0" prefWidth="162.0" text="Graph Inventory" />
+      <Pane id="GraphPane" disable="true" opacity="0.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8d8b8b" height="400.0" opacity="0.74" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+            <ScatterChart id="GraphActual" layoutX="33.0">
+              <xAxis>
+                <NumberAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </ScatterChart>
+            <Button focusTraversable="false" layoutX="519.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeGraph" prefHeight="19.0" prefWidth="67.0" text="Close" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
       <AnchorPane id="GraphPage" disable="true" opacity="0.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8d8b8b" height="400.0" opacity="0.74" stroke="BLACK" strokeType="INSIDE" width="600.0" />
@@ -92,28 +110,11 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <ChoiceBox id="InventoryBox" layoutX="176.0" layoutY="207.0" prefWidth="150.0" onAction="#choiceBoxed"/>
+            <ChoiceBox id="InventoryBox" layoutX="176.0" layoutY="207.0" onAction="#choiceBoxed" prefWidth="150.0" />
             <TextArea id="AllItems" layoutX="176.0" layoutY="242.0" prefHeight="75.0" prefWidth="244.0" />
             <Button layoutX="373.0" layoutY="207.0" mnemonicParsing="false" onAction="#displayGraph" text="Done" />
             <DatePicker id="StartTimeGraph" layoutX="288.0" layoutY="130.0" prefHeight="19.0" prefWidth="150.0" />
             <DatePicker id="EndTimeGraph" layoutX="288.0" layoutY="158.0" prefHeight="3.0" prefWidth="150.0" />
-            <Pane id="GraphPane" disable="true" opacity="0.0" prefHeight="400.0" prefWidth="600.0">
-               <children>
-                  <ScatterChart id="GraphActual" layoutX="33.0">
-                    <xAxis>
-                      <NumberAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </ScatterChart>
-                  <Button focusTraversable="false" layoutX="519.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeGraph" prefHeight="19.0" prefWidth="67.0" text="Close" textAlignment="CENTER" textFill="RED">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-               </children>
-            </Pane>
          </children>
       </AnchorPane>
    </children>
