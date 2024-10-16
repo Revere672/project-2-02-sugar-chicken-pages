@@ -135,4 +135,61 @@ public class InventoryDB {
             throw e;
         }
     }
+
+    public static ObservableList<Restock> getRestockReport() throws SQLException, ClassNotFoundException {
+        ObservableList<Restock> restockList = FXCollections.observableArrayList();
+        try {
+            String restockQuery = "WITH Last_Order_Day AS ( " +
+                "    SELECT DATE(MAX(o.Order_Time)) AS Last_Order_Date " +
+                "    FROM Order_History o " +
+                "), " +
+                "Orders_Last_Day AS ( " +
+                "    SELECT o.Order_ID " +
+                "    FROM Order_History o " +
+                "    JOIN Last_Order_Day lod ON DATE(o.Order_Time) = lod.Last_Order_Date " +
+                "), " +
+                "Daily_Usage AS ( " +
+                "    SELECT " +
+                "        i.Inventory_ID, " +
+                "        i.Product_Name, " +
+                "        SUM(ing.Quantity_Needed) AS Total_Quantity_Used " +
+                "    FROM " +
+                "        Inventory i " +
+                "    LEFT JOIN Ingredients_Needed ing ON i.Inventory_ID = ing.Inventory_ID " +
+                "    LEFT JOIN Order_Items oi ON ing.Menu_Name = oi.Side_1 OR ing.Menu_Name = oi.Side_2 " +
+                "                                OR ing.Menu_Name = oi.Protein_1 OR ing.Menu_Name = oi.Protein_2 " +
+                "                                OR ing.Menu_Name = oi.Protein_3 OR ing.Menu_Name = oi.Misc_Item " +
+                "    JOIN Orders_Last_Day old ON oi.Order_ID = old.Order_ID " +
+                "    GROUP BY i.Inventory_ID, i.Product_Name " +
+                ") " +
+                "SELECT " +
+                "    i.Inventory_ID, " +
+                "    i.Product_Name, " +
+                "    COALESCE(du.Total_Quantity_Used, 0) AS Total_Quantity_Used, " +
+                "    i.Quantity AS Current_Inventory, " +
+                "    CASE " +
+                "        WHEN i.Quantity <= 0 THEN 'Yes' " +
+                "        WHEN COALESCE(du.Total_Quantity_Used, 0) > (i.Quantity / 2) THEN 'Yes' " +
+                "        ELSE 'No' " +
+                "    END AS Restock_Recommendation " +
+                "FROM Inventory i " +
+                "LEFT JOIN Daily_Usage du ON i.Inventory_ID = du.Inventory_ID " +
+                "ORDER BY i.Inventory_ID;";
+            ResultSet rsRestock = DBUtil.dbExecuteQuery(restockQuery);
+            while (rsRestock.next()) {
+                Restock restock = new Restock();
+                restock.setInventoryID(rsRestock.getInt("inventory_ID"));
+                restock.setProductName(rsRestock.getString("product_name"));
+                restock.setQuantity(rsRestock.getDouble("total_quantity_used"));
+                restock.setCurrInv(rsRestock.getDouble("current_inventory"));
+                restock.setRestockRecommendation(rsRestock.getString("restock_recommendation"));
+                restockList.add(restock);
+            }
+            return restockList;
+        }
+        catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }
