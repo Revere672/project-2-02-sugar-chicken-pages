@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -186,8 +188,8 @@ public class AnalysisController {
         }
 
         choose_items.setItems(menuItemsqueered);
-        String start = startTime.getText();
-        String end = endTime.getText();
+        // String start = startTime.getText();
+        // String end = endTime.getText();
 
         saleReport_pane.setVisible(true);
     }
@@ -204,7 +206,39 @@ public class AnalysisController {
         confirm_pane.setVisible(true);
         confirm_pane.toFront();
 
-        String qq = "SELECT ORD* FROM order_history";
+        Timestamp start = Timestamp.valueOf(startTime.getValue().atStartOfDay());
+        //long s =start.getTime()/3600000;
+        Timestamp end = Timestamp.valueOf(endTime.getValue().plusDays(1).atStartOfDay());
+        //long e =end.getTime()/3600000;
+
+        //String qq = "SELECT ORD* FROM order_history";
+        String[] arr = sales_textArea.getText().split(",");
+        for(String item : arr){
+            System.out.println(item);
+            String qq = "SELECT\r\n" + //
+                            "m.Menu_ID,\r\n" + //
+                            "        m.Menu_Name,\r\n" + //
+                            "COUNT(m.Menu_Name)\r\n" + //
+                            "    FROM\r\n" + //
+                            "        Menu m\r\n" + //
+                            "    LEFT JOIN Order_Items oi ON m.Menu_Name = oi.Side_1 OR\r\n" + //
+                            "                                m.Menu_Name = oi.Side_2 OR\r\n" + //
+                            "                                m.Menu_Name = oi.Protein_1 OR\r\n" + //
+                            "                                m.Menu_Name = oi.Protein_2 OR\r\n" + //
+                            "                                m.Menu_Name = oi.Protein_3 OR\r\n" + //
+                            "                                m.Menu_Name = oi.Misc_Item\r\n" + //
+                            "    JOIN Order_History o ON oi.Order_ID = o.Order_ID\r\n" + //
+                            "    WHERE\r\n" + //
+                            "        m.Menu_Name = '"+item+"' AND  \r\n" + //
+                            "        o.Order_Time >= '"+start.toString()+"' AND  \r\n" + //
+                            "        o.Order_Time < '"+end.toString()+"'  \r\n" + //
+                            "    GROUP BY\r\n" + //
+                            "        m.Menu_Name;";
+                
+            ResultSet rs = DBUtil.dbExecuteQuery(qq);
+            rs.next();
+            result_text.setText(result_text.getText() + rs.getString("Menu_Name") + ": " + rs.getString("COUNT") + "\n\n");
+        }
     }
 
     @FXML
@@ -212,6 +246,21 @@ public class AnalysisController {
         
         //get rid of the subscreen on analysis
         saleReport_pane.setVisible(false);
+    }
+
+    @FXML
+    private void SelectItems(ActionEvent actionEvent)throws SQLException, ClassNotFoundException, IOException{
+        String items = sales_textArea.getText();
+        
+        
+        if(items.length()>0){
+            items=items+","+choose_items.getValue().toString();
+        }
+        else{
+            items=choose_items.getValue().toString();
+        }
+
+        sales_textArea.setText(items);
     }
 
 
@@ -237,9 +286,9 @@ public class AnalysisController {
     @FXML
     private ComboBox<String> choose_items;
     @FXML
-    private TextField startTime;
+    private DatePicker startTime;
     @FXML
-    private TextField endTime;
+    private DatePicker endTime;
     @FXML
     private Button confirm_button;
     @FXML
@@ -249,4 +298,7 @@ public class AnalysisController {
     private Pane confirm_pane;
     @FXML
     private TextArea result_text;
+
+    @FXML
+    private TextArea sales_textArea;
 }
