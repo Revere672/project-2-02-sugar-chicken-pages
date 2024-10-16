@@ -47,7 +47,7 @@
 
          </font>
       </ToggleButton>
-      <ToggleButton id="A-la-Carte" fx:id="button_carte" layoutX="516.0" layoutY="110.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #cccccc; -fx-border-color: #000000;" text="A la Carte" textAlignment="CENTER">
+      <ToggleButton id="A-La-Carte" fx:id="button_carte" layoutX="516.0" layoutY="110.0" mnemonicParsing="false" onAction="#buttonPressedType" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #cccccc; -fx-border-color: #000000;" text="A la Carte" textAlignment="CENTER">
          <font>
             <Font name="Arial Narrow Bold" size="11.0" />
          </font>
