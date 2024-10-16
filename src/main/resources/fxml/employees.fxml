@@ -64,11 +64,15 @@
          <Button fx:id="search_button" layoutX="191.0" layoutY="123.0" mnemonicParsing="false" onAction="#searchEmployee" prefHeight="25.0" prefWidth="27.0" />
          <TextField fx:id="search_bar" layoutX="30.0" layoutY="123.0" onAction="#searchEmployee" promptText="Search Bar" />
          <Text layoutX="30.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee List" wrappingWidth="101.33333333333348" />
-         <ImageView fitHeight="69.0" fitWidth="71.0" layoutX="9.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../images/sugar_chicken%20(no%20text).png" />
-            </image>
+         <ImageView fitHeight="69.0" fitWidth="71.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/resized_sugar_chicken%20(no%20text).png" />
+               </image>
          </ImageView>
+         <Button fx:id="logoutButton" text="Log Out" onAction="#logOut" layoutX="531.0" layoutY="45.0">
+            <font>
+               <Font name="Power Green Narrow" size="16.0" />
+            </font></Button>
       </children>
    </AnchorPane>
 </VBox>

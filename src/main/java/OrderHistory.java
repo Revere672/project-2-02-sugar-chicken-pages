@@ -33,6 +33,8 @@ public class OrderHistory {
     private TableColumn<Order, Double> price_col;
     @FXML
     private TableColumn<Order, Integer> employee_ID_col;
+    @FXML
+    private Button logoutButton;
 
     private int currentOffset = 0;
     private boolean isLoading = false;
@@ -144,4 +146,12 @@ public class OrderHistory {
         GUIRunner.changeScene("inventory");
     }
 
+    @FXML
+    public void logOut(ActionEvent e) {
+        GUIRunner.currentUser = 0;  
+        GUIRunner.isManager = false; 
+
+        GUIRunner.changeScene("login");
+        System.out.println("Logout successful");
+    }
 }

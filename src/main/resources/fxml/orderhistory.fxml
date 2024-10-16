@@ -59,11 +59,15 @@
          </Text>
          <TextField fx:id="order_search" layoutX="397.0" layoutY="108.0" promptText="Search" />
          <Button fx:id="order_search_button" layoutX="549.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" />
-         <ImageView fitHeight="69.0" fitWidth="71.0" layoutX="9.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../images/sugar_chicken%20(no%20text).png" />
-            </image>
+         <ImageView fitHeight="69.0" fitWidth="71.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/resized_sugar_chicken%20(no%20text).png" />
+               </image>
          </ImageView>
       </children>
+      <Button fx:id="logoutButton" text="Log Out" onAction="#logOut" layoutX="531.0" layoutY="45.0">
+            <font>
+               <Font name="Power Green Narrow" size="16.0" />
+            </font></Button>
    </AnchorPane>
 </VBox>

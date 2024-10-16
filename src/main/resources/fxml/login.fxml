@@ -31,9 +31,9 @@
                     <Font name="System Bold" size="35.0" />
                 </font>
             </Label>
-            <ImageView fitHeight="69.0" fitWidth="71.0" layoutX="9.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="69.0" fitWidth="71.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@../images/sugar_chicken%20(no%20text).png" />
+                    <Image url="@../images/resized_sugar_chicken%20(no%20text).png" />
                 </image>
             </ImageView>
         </children>

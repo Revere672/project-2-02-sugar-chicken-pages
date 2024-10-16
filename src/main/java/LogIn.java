@@ -41,9 +41,9 @@ public class LogIn {
             System.out.println("Login Successful");
         } else {
             System.out.println("Login Failed");
-            username.clear();
-            password.clear();
             username.requestFocus();
         }
+        username.clear();
+        password.clear();
     }
 }

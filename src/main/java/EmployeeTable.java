@@ -34,6 +34,8 @@ public class EmployeeTable {
     private TableColumn<Employee, Date> Last_login_col;
     @FXML
     private TableColumn<Employee, Boolean> active_col;
+    @FXML
+    private Button logoutButton;
 
     @FXML
     private void searchEmployee(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {// searches when
@@ -118,5 +120,14 @@ public class EmployeeTable {
     @FXML
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("order_history");
+    }
+
+    @FXML
+    public void logOut(ActionEvent e) {
+        GUIRunner.currentUser = 0;  
+        GUIRunner.isManager = false; 
+
+        GUIRunner.changeScene("login");
+        System.out.println("Logout successful");
     }
 }

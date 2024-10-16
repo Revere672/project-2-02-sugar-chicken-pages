@@ -32,6 +32,8 @@ public class InventoryTable {
     private TableColumn<Inventory, Double> cost_col;
     @FXML
     private TableColumn<Inventory, Double> quantity_col;
+    @FXML
+    private Button logoutButton;
 
     @FXML
     private void searchInventory(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
@@ -109,5 +111,14 @@ public class InventoryTable {
     @FXML
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("order_history");
+    }
+
+    @FXML
+    public void logOut(ActionEvent e) {
+        GUIRunner.currentUser = 0;  
+        GUIRunner.isManager = false; 
+
+        GUIRunner.changeScene("login");
+        System.out.println("Logout successful");
     }
 }
