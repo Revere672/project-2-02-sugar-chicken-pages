@@ -33,6 +33,20 @@ public class InventoryDB {
         return inventory;
     }
 
+    private static Menu getMenuResult(ResultSet rsMenu) throws SQLException {
+        Menu menu = null;
+
+        if (rsMenu.next()) {
+            menu = new Menu();
+            menu.setMenuID(rsMenu.getInt("menu_ID"));
+            menu.setMenuName(rsMenu.getString("menu_name"));
+            menu.setExtraCost(rsMenu.getDouble("extra_cost"));
+            menu.setActive(rsMenu.getBoolean("active"));
+        }
+
+        return menu;
+    }
+
     public static ObservableList<Inventory> searchInventories() throws SQLException, ClassNotFoundException {
         String stmt = "SELECT * FROM inventory ORDER BY inventory_id ASC;";
 
@@ -73,6 +87,35 @@ public class InventoryDB {
         try {
             DBUtil.dbExecuteUpdate(stmt);
         } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public static void insertMenuItem(String menu_name, String extra_cost) throws SQLException, ClassNotFoundException {
+        String idStmt = "SELECT * FROM menu ORDER BY menu_ID DESC LIMIT 1;";
+        ResultSet rs = DBUtil.dbExecuteQuery(idStmt);
+        Menu item = getMenuResult(rs);
+        int menu_ID = item.getMenuID() + 1;
+        String stmt = "INSERT INTO menu (menu_name, menu_ID, extra_cost, active) VALUES ('"+menu_name+"', '"+menu_ID+"', '"+Double.parseDouble(extra_cost)+"', '"+true+"');";
+
+        try {
+            DBUtil.dbExecuteUpdate(stmt);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public static void insertIngredientsNeeded(String menu_name, String product_name, String quantity_needed) throws SQLException, ClassNotFoundException {
+        try {
+        String idStmt = "SELECT * FROM inventory WHERE product_name = '"+product_name+"';";
+        ResultSet rs = DBUtil.dbExecuteQuery(idStmt);
+        rs.next();
+        int inventory_ID = rs.getInt("inventory_ID");
+        String stmt = "INSERT INTO ingredients_needed (menu_name, inventory_ID, quantity_needed) VALUES ('"+menu_name+"', '"+inventory_ID+"', '"+Double.parseDouble(quantity_needed)+"');";
+
+        DBUtil.dbExecuteUpdate(stmt);
+        } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
     }
