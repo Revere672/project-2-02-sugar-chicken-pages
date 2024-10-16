@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -210,34 +213,76 @@ public class AnalysisController {
         //long s =start.getTime()/3600000;
         Timestamp end = Timestamp.valueOf(endTime.getValue().plusDays(1).atStartOfDay());
         //long e =end.getTime()/3600000;
-
+        
+        result_text.setText("Sales Report from " + start.toLocalDateTime().toLocalDate().toString() + " - " + end.toLocalDateTime().toLocalDate().toString() + "\n\n");
+        result_text.setText(result_text.getText() + "Total Counts of Selected Items:\n\n");
         //String qq = "SELECT ORD* FROM order_history";
         String[] arr = sales_textArea.getText().split(",");
         for(String item : arr){
-            System.out.println(item);
             String qq = "SELECT\r\n" + //
-                            "m.Menu_ID,\r\n" + //
-                            "        m.Menu_Name,\r\n" + //
-                            "COUNT(m.Menu_Name)\r\n" + //
-                            "    FROM\r\n" + //
-                            "        Menu m\r\n" + //
-                            "    LEFT JOIN Order_Items oi ON m.Menu_Name = oi.Side_1 OR\r\n" + //
-                            "                                m.Menu_Name = oi.Side_2 OR\r\n" + //
-                            "                                m.Menu_Name = oi.Protein_1 OR\r\n" + //
-                            "                                m.Menu_Name = oi.Protein_2 OR\r\n" + //
-                            "                                m.Menu_Name = oi.Protein_3 OR\r\n" + //
-                            "                                m.Menu_Name = oi.Misc_Item\r\n" + //
-                            "    JOIN Order_History o ON oi.Order_ID = o.Order_ID\r\n" + //
-                            "    WHERE\r\n" + //
-                            "        m.Menu_Name = '"+item+"' AND  \r\n" + //
-                            "        o.Order_Time >= '"+start.toString()+"' AND  \r\n" + //
-                            "        o.Order_Time < '"+end.toString()+"'  \r\n" + //
-                            "    GROUP BY\r\n" + //
-                            "        m.Menu_Name;";
+                        "        m.Menu_ID,\r\n" + //
+                        "        m.Menu_Name,\r\n" + //
+                        "        COUNT(m.Menu_Name)\r\n" + //
+                        "    FROM\r\n" + //
+                        "        Menu m\r\n" + //
+                        "    LEFT JOIN Order_Items oi ON m.Menu_Name = oi.Side_1 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Side_2 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_1 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_2 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_3 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Misc_Item\r\n" + //
+                        "    JOIN Order_History o ON oi.Order_ID = o.Order_ID\r\n" + //
+                        "    WHERE\r\n" + //
+                        "        m.Menu_Name = '"+item+"' AND  \r\n" + //
+                        "        o.Order_Time >= '"+start.toString()+"' AND  \r\n" + //
+                        "        o.Order_Time < '"+end.toString()+"'  \r\n" + //
+                        "    GROUP BY\r\n" + //
+                        "        m.Menu_Name;";
                 
             ResultSet rs = DBUtil.dbExecuteQuery(qq);
-            rs.next();
-            result_text.setText(result_text.getText() + rs.getString("Menu_Name") + ": " + rs.getString("COUNT") + "\n\n");
+            if (rs.next()) {
+                result_text.setText(result_text.getText() + rs.getString("Menu_Name") + ": " + rs.getString("COUNT") + "\n\n");
+            }
+        }
+
+        result_text.setText(result_text.getText() + "Counts of Selected Items by hour:\n\n");
+        for (String item : arr) {
+            String qq =        "SELECT\r\n" + //
+                        "        m.Menu_ID,\r\n" + //
+                        "        m.Menu_Name,\r\n" + //
+                        "        DATE_TRUNC('hour', o.Order_Time) AS Order_Hour,\r\n" + //
+                        "        COUNT(m.Menu_Name)\r\n" + //
+                        "    FROM\r\n" + //
+                        "        Menu m\r\n" + //
+                        "    LEFT JOIN Order_Items oi ON m.Menu_Name = oi.Side_1 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Side_2 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_1 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_2 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_3 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Misc_Item\r\n" + //
+                        "    JOIN Order_History o ON oi.Order_ID = o.Order_ID\r\n" + //
+                        "    WHERE\r\n" + //
+                        "        m.Menu_Name = '"+item+"' AND  \r\n" + //
+                        "        o.Order_Time >= '"+start.toString()+"' AND  \r\n" + //
+                        "        o.Order_Time < '"+end.toString()+"'  \r\n" + //
+                        "    GROUP BY\r\n" + //
+                        "        m.Menu_Name, DATE_TRUNC('hour', o.Order_Time);";
+            
+            result_text.setText(result_text.getText() + item + " by hour:\n");
+            ResultSet rs = DBUtil.dbExecuteQuery(qq);
+            LocalDate currentDate = start.toLocalDateTime().toLocalDate();
+            result_text.setText(result_text.getText() + "\t" + currentDate.toString() + ":\n");
+            while (rs.next()) {
+                LocalDate thisDate = rs.getDate("Order_Hour").toLocalDate();
+                if (!thisDate.equals(currentDate)) {
+                    currentDate = thisDate;
+                    result_text.setText(result_text.getText() + "\t" + currentDate.toString() + ":\n");
+                }
+
+                LocalTime thisTime = rs.getTimestamp("Order_Hour").toLocalDateTime().toLocalTime();
+                int count = rs.getInt("COUNT");
+                result_text.setText(result_text.getText() + "\t\t" + thisTime + ": " + count + "\n");
+            }
         }
     }
 
@@ -246,6 +291,20 @@ public class AnalysisController {
         
         //get rid of the subscreen on analysis
         saleReport_pane.setVisible(false);
+    }
+
+    @FXML
+    private void close_sale_report(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+        //get rid of the subscreen on analysis
+        confirm_pane.setVisible(false);
+    }
+
+    @FXML
+    private void clear_selected_items(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+        //get rid of the subscreen on analysis
+        sales_textArea.setText("");
     }
 
     @FXML
