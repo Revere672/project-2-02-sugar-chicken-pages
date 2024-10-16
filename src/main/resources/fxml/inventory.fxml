@@ -19,7 +19,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
-<AnchorPane fx:id="main_inventory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
+<AnchorPane fx:id="main_inventory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="600.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" opacity="0.3" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
@@ -66,6 +66,7 @@
       <TextField fx:id="product_search" layoutX="15.0" layoutY="148.0" onAction="#searchInventory" opacity="0.3" promptText="Enter Product Name" />
       <Button fx:id="restock_report_button" layoutX="491.0" layoutY="114.0" mnemonicParsing="false" onAction="#restockReport" opacity="0.3" text="Restock Report" />
       <Button fx:id="product_search_button" layoutX="173.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchInventory" opacity="0.3" prefHeight="25.0" prefWidth="60.0" text="Search" />
+      <Button fx:id="add_menu_item_button" layoutX="386.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMenuItem" opacity="0.3" text="+ Menu Item" />
       <Pane fx:id="add_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Button fx:id="add_button" layoutX="290.0" layoutY="218.0" mnemonicParsing="false" onAction="#add" text="Add" />
