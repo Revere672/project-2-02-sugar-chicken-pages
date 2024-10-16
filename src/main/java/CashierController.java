@@ -264,24 +264,63 @@ public class CashierController implements Initializable {
         }
     }
 
+    /**
+     * Handles the action event for changing the scene to the employees view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("employees");
     }
+
+    /**
+     * Handles the action event for changing the scene to the inventory view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("inventory");
     }
+
+    /**
+     * Handles the action event for changing the scene to the order history view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-         GUIRunner.changeScene("order_history");
+        GUIRunner.changeScene("order_history");
     }
-    @FXML
-    private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("analysis");
-   }
 
-   @FXML
+    /**
+     * Handles the action event for changing the scene to the cashier view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
+    @FXML
+    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("cashier1");
+    }
+
+    /**
+     * Handles the action event for logging out and changing the scene to the login view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws IOException if an I/O error occurs.
+     */
+    @FXML
     private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
         System.out.println("Logged Out");
