@@ -25,7 +25,7 @@ public class CashierController implements Initializable {
     public static ArrayList<ToggleButton> selected=new ArrayList<>();
     public static Entry workingEntry;
     public static String special;
-    public static Font butFont;
+    public static Font butFont=new Font("Arial",8.3);;
 
     static class Tuple3{
         public Integer x;
@@ -142,7 +142,6 @@ public class CashierController implements Initializable {
             DisplayReceipt.load();
         } catch (SQLException | ClassNotFoundException ex) {
         }
-        butFont=new Font("Arial",9);
     }
     
     public static void buttonPressedOther(ActionEvent event){
@@ -218,44 +217,45 @@ public class CashierController implements Initializable {
 
         while(rs.next()){
             Tuple3 pos=locs.get(Integer.parseInt(rs.getString(2))/10000*10000);
-            ToggleButton but=new ToggleButton(rs.getString(1));
+            ToggleButton but=new ToggleButton(rs.getString(1).replaceAll("Special:",""));
             but.setId(rs.getString(1));
             but.setPrefHeight(40);
             but.setPrefWidth(65);
             but.setFont(butFont);
             but.setWrapText(true);
-            but.setCenterShape(true);
             switch (Integer.parseInt(rs.getString(2))/10000) {
                 case 61://apps
                     but.setOnAction((ActionEvent event) -> {
                         buttonPressedOther(event);
                     });
-                    but.setStyle("-fx-background-color: #eb8da6; -fx-border-color: #000000;");
+                    but.setStyle("-fx-background-color: #eb8da6; -fx-border-color: #000000;-fx-text-alignment: center;");
                     ((GridPane)scene1.lookup("#Grid")).add(but,pos.x,pos.y);
                     break;
                 case 63://drinks
                     but.setOnAction((ActionEvent event) -> {
                         buttonPressedOther(event);
                     });
-                    but.setStyle("-fx-background-color: #5a93db; -fx-border-color: #000000;");
+                    but.setStyle("-fx-background-color: #5a93db; -fx-border-color: #000000;-fx-text-alignment: center;");
                     ((GridPane)scene1.lookup("#Grid")).add(but,pos.x,pos.y);
                     break;
                 case 62://protien
                     but.setOnAction((ActionEvent event) -> {
                         buttonPressedProtein(event);
                     });
-                    but.setStyle("-fx-background-color: #d9ead3ff; -fx-border-color: #000000;");
+                    if(DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(rs.getString(1)))>0.1)
+                    but.setStyle("-fx-background-color: #d9ead3ff; -fx-border-color: #FDAA48;-fx-text-alignment: center;");
+                    else
+                    but.setStyle("-fx-background-color: #d9ead3ff; -fx-border-color: #000000;-fx-text-alignment: center;");
                     ((GridPane)scene2.lookup("#Grid")).add(but,pos.x,pos.y);
                     break;
                 default://sides
                     but.setOnAction((ActionEvent event) -> {
                         buttonPressedSide(event);
                     });
-                    but.setStyle("-fx-background-color: #ADD8E6; -fx-border-color: #000000;");
+                    but.setStyle("-fx-background-color: #ADD8E6; -fx-border-color: #000000;-fx-text-alignment: center;");
                     ((GridPane)scene2.lookup("#Grid")).add(but,pos.x,pos.y);
                     break;
             }
-            System.out.println(rs.getString(1));
             pos.y++;
             if(pos.y>=4){
                 pos.y=0;
