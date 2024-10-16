@@ -4,7 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
@@ -26,5 +29,10 @@
             <Font name="System Bold" size="35.0" />
          </font>
       </Label>
+    <ImageView fitHeight="69.0" fitWidth="71.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/resized_sugar_chicken%20(no%20text).png" />
+               </image>
+    </ImageView>
    </children>
 </AnchorPane>

@@ -33,6 +33,20 @@ public class InventoryDB {
         return inventory;
     }
 
+    private static Menu getMenuResult(ResultSet rsMenu) throws SQLException {
+        Menu menu = null;
+
+        if (rsMenu.next()) {
+            menu = new Menu();
+            menu.setMenuID(rsMenu.getInt("menu_ID"));
+            menu.setMenuName(rsMenu.getString("menu_name"));
+            menu.setExtraCost(rsMenu.getDouble("extra_cost"));
+            menu.setActive(rsMenu.getBoolean("active"));
+        }
+
+        return menu;
+    }
+
     public static ObservableList<Inventory> searchInventories() throws SQLException, ClassNotFoundException {
         String stmt = "SELECT * FROM inventory ORDER BY inventory_id ASC;";
 
@@ -73,6 +87,35 @@ public class InventoryDB {
         try {
             DBUtil.dbExecuteUpdate(stmt);
         } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public static void insertMenuItem(String menu_name, String extra_cost) throws SQLException, ClassNotFoundException {
+        String idStmt = "SELECT * FROM menu ORDER BY menu_ID DESC LIMIT 1;";
+        ResultSet rs = DBUtil.dbExecuteQuery(idStmt);
+        Menu item = getMenuResult(rs);
+        int menu_ID = item.getMenuID() + 1;
+        String stmt = "INSERT INTO menu (menu_name, menu_ID, extra_cost, active) VALUES ('"+menu_name+"', '"+menu_ID+"', '"+Double.parseDouble(extra_cost)+"', '"+true+"');";
+
+        try {
+            DBUtil.dbExecuteUpdate(stmt);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public static void insertIngredientsNeeded(String menu_name, String product_name, String quantity_needed) throws SQLException, ClassNotFoundException {
+        try {
+        String idStmt = "SELECT * FROM inventory WHERE product_name = '"+product_name+"';";
+        ResultSet rs = DBUtil.dbExecuteQuery(idStmt);
+        rs.next();
+        int inventory_ID = rs.getInt("inventory_ID");
+        String stmt = "INSERT INTO ingredients_needed (menu_name, inventory_ID, quantity_needed) VALUES ('"+menu_name+"', '"+inventory_ID+"', '"+Double.parseDouble(quantity_needed)+"');";
+
+        DBUtil.dbExecuteUpdate(stmt);
+        } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
     }
@@ -131,6 +174,69 @@ public class InventoryDB {
             }
             return 0.0;
         } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static ObservableList<Restock> getRestockReport() throws SQLException, ClassNotFoundException {
+        ObservableList<Restock> restockList = FXCollections.observableArrayList();
+        try {
+            String restockQuery = "WITH Last_Order_Day AS ( " +
+                "    SELECT DATE(MAX(o.Order_Time)) AS Last_Order_Date " +
+                "    FROM Order_History o " +
+                "), " +
+                "Orders_Last_Day AS ( " +
+                "    SELECT o.Order_ID " +
+                "    FROM Order_History o " +
+                "    JOIN Last_Order_Day lod ON DATE(o.Order_Time) = lod.Last_Order_Date " +
+                "), " +
+                "Daily_Usage AS ( " +
+                "    SELECT " +
+                "        i.Inventory_ID, " +
+                "        i.Product_Name, " +
+                "        SUM(ing.Quantity_Needed) AS Total_Quantity_Used " +
+                "    FROM " +
+                "        Inventory i " +
+                "    LEFT JOIN Ingredients_Needed ing ON i.Inventory_ID = ing.Inventory_ID " +
+                "    LEFT JOIN Order_Items oi ON ing.Menu_Name = oi.Side_1 OR ing.Menu_Name = oi.Side_2 " +
+                "                                OR ing.Menu_Name = oi.Protein_1 OR ing.Menu_Name = oi.Protein_2 " +
+                "                                OR ing.Menu_Name = oi.Protein_3 OR ing.Menu_Name = oi.Misc_Item " +
+                "    JOIN Orders_Last_Day old ON oi.Order_ID = old.Order_ID " +
+                "    GROUP BY i.Inventory_ID, i.Product_Name " +
+                ") " +
+                "SELECT " +
+                "    i.Inventory_ID, " +
+                "    i.Product_Name, " +
+                "    COALESCE(du.Total_Quantity_Used, 0) AS Total_Quantity_Used, " +
+                "    i.Quantity AS Current_Inventory, " +
+                "    CASE " +
+                "        WHEN i.Quantity <= 0 THEN 'Yes' " +
+                "        WHEN COALESCE(du.Total_Quantity_Used, 0) > (i.Quantity / 2) THEN 'Yes' " +
+                "        ELSE 'No' " +
+                "    END AS Restock_Recommendation " +
+                "FROM Inventory i " +
+                "LEFT JOIN Daily_Usage du ON i.Inventory_ID = du.Inventory_ID " +
+                "WHERE " +  
+                "   CASE " +
+                "       WHEN i.Quantity <= 0 THEN 'Yes' " +
+                "       WHEN COALESCE(du.Total_Quantity_Used, 0) > (i.Quantity / 2) THEN 'Yes' " +
+                "       ELSE 'No' " + 
+                "   END = 'Yes'" +
+                "ORDER BY i.Inventory_ID;";
+            ResultSet rsRestock = DBUtil.dbExecuteQuery(restockQuery);
+            while (rsRestock.next()) {
+                Restock restock = new Restock();
+                restock.setInventoryID(rsRestock.getInt("inventory_ID"));
+                restock.setProductName(rsRestock.getString("product_name"));
+                restock.setQuantity(rsRestock.getDouble("total_quantity_used"));
+                restock.setCurrInv(rsRestock.getDouble("current_inventory"));
+                restock.setRestockRecommendation(rsRestock.getString("restock_recommendation"));
+                restockList.add(restock);
+            }
+            return restockList;
+        }
+        catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw e;
         }

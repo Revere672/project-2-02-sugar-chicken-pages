@@ -2,5 +2,6 @@ item_name,side_count,protein_count,has_misc,item_cost,status
 Bowl,1,1,TRUE,8.30,TRUE
 Plate,1,2,TRUE,9.80,TRUE
 Bigger Plate,1,3,TRUE,11.30,TRUE
-A la carte,0,1,FALSE,0,TRUE
+A La Carte,0,1,FALSE,4.40,TRUE
+Cub Meal,1,1,TRUE,6.60,TRUE
 other,0,0,TRUE,0,TRUE
