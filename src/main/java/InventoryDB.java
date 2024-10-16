@@ -91,11 +91,30 @@ public class InventoryDB {
         }
     }
 
-    public static void insertMenuItem(String menu_name, String extra_cost) throws SQLException, ClassNotFoundException {
-        String idStmt = "SELECT * FROM menu ORDER BY menu_ID DESC LIMIT 1;";
+    public static void insertMenuItem(String menu_name, String extra_cost, String type) throws SQLException, ClassNotFoundException {
+        String idStmt = 
+        "SELECT " +
+        "   MAX(CASE WHEN Menu_ID LIKE '60%' THEN Menu_ID END) AS Highest_Menu_ID_60, " +
+        "   MAX(CASE WHEN Menu_ID LIKE '61%' THEN Menu_ID END) AS Highest_Menu_ID_61, " +
+        "   MAX(CASE WHEN Menu_ID LIKE '62%' THEN Menu_ID END) AS Highest_Menu_ID_62, " +
+        "   MAX(CASE WHEN Menu_ID LIKE '63%' THEN Menu_ID END) AS Highest_Menu_ID_63 " +
+        "FROM menu; ";
         ResultSet rs = DBUtil.dbExecuteQuery(idStmt);
-        Menu item = getMenuResult(rs);
-        int menu_ID = item.getMenuID() + 1;
+        rs.next();
+        int menu_ID = 0;
+        if(type.equals("Side")) {
+            menu_ID = rs.getInt("Highest_Menu_ID_60") + 1;
+        }
+        if(type.equals("Appetizer")) {
+            menu_ID = rs.getInt("Highest_Menu_ID_61") + 1;
+        }
+        if(type.equals("Protein")) {
+            menu_ID = rs.getInt("Highest_Menu_ID_62") + 1;
+        }
+        if(type.equals("Misc")) {
+            menu_ID = rs.getInt("Highest_Menu_ID_63") + 1;
+        }
+        
         String stmt = "INSERT INTO menu (menu_name, menu_ID, extra_cost, active) VALUES ('"+menu_name+"', '"+menu_ID+"', '"+Double.parseDouble(extra_cost)+"', '"+true+"');";
 
         try {

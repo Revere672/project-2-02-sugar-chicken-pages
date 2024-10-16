@@ -109,7 +109,7 @@ public class OrderHistory {
         employee_ID_col.setCellValueFactory(cellData -> cellData.getValue().employeeIDProperty().asObject());
 
         view_button_col.setCellFactory(param -> new TableCell<Order, Void>() {
-            private final Button viewButton = new Button("🔍");
+            private final Button viewButton = new Button("\uD83D\uDC41");
 
             @Override
             protected void updateItem(Void item, boolean empty) {

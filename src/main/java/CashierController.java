@@ -5,20 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
-import javafx.stage.Stage;
-
-import javafx.fxml.FXMLLoader;
-
-import java.io.IOException;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 
 public class CashierController implements Initializable {
 
@@ -26,6 +25,18 @@ public class CashierController implements Initializable {
     public static ArrayList<ToggleButton> selected=new ArrayList<>();
     public static Entry workingEntry;
     public static String special;
+    public static Font butFont=new Font("Arial",8.3);;
+
+    static class Tuple3{
+        public Integer x;
+        public Integer y;
+        public Integer change;
+        public Tuple3(int a,int b,int c){
+            x=a;
+            y=b;
+            change=c;
+        }
+    }
 
     public void switch_to_cashier1(ActionEvent event) throws IOException{
         scene = GUIRunner.changeScene("cashier1");
@@ -59,7 +70,7 @@ public class CashierController implements Initializable {
         switch_to_cashier1(event);
     }
 
-    public void deSelectAll(){
+    public static void deSelectAll(){
         for(ToggleButton t : selected){
             System.out.println(t.getId());
             t.setSelected(false);
@@ -67,7 +78,7 @@ public class CashierController implements Initializable {
         selected.clear();
    }
 
-   public void deSelect(String s){
+   public static void deSelect(String s){
         for(ToggleButton t : selected){
             if(t.getId().equals(s)){
             t.setSelected(false);
@@ -133,17 +144,17 @@ public class CashierController implements Initializable {
         }
     }
     
-    public void buttonPressedOther(ActionEvent event){
+    public static void buttonPressedOther(ActionEvent event){
         String buttonPressed = ((Node)event.getSource()).getId();
         ((ToggleButton)event.getSource()).setSelected(false);
         int index=DisplayReceipt.extraCostName.indexOf(buttonPressed);
         workingEntry=new Entry("other",buttonPressed,DisplayReceipt.extraCostPrice.get(index));
-        scene=((Node)event.getSource()).getScene();
+        Scene scene=((Node)event.getSource()).getScene();
         DisplayReceipt.addEntry(workingEntry);
         DisplayReceipt.updateRecipt(scene);
     }
 
-    public void buttonPressedSide(ActionEvent event){
+    public static void buttonPressedSide(ActionEvent event){
         String buttonPressed = ((Node)event.getSource()).getId();
         selected.add((ToggleButton)event.getSource());
         
@@ -152,13 +163,13 @@ public class CashierController implements Initializable {
             deSelect(buttonPressed);
         }
 
-        scene=((Node)event.getSource()).getScene();
+        Scene scene=((Node)event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
         scene.lookup("#AddToOrder").setDisable(false);
         DisplayReceipt.updateRecipt(scene);
     }
 
-    public void buttonPressedProtein(ActionEvent event){
+    public static void buttonPressedProtein(ActionEvent event){
         String buttonPressed = ((Node)event.getSource()).getId();
 
         if(buttonPressed.contains("Special")){
@@ -172,7 +183,7 @@ public class CashierController implements Initializable {
             deSelect((buttonPressed==special?"Special : ":"")+buttonPressed);
         }
 
-        scene=((Node)event.getSource()).getScene();
+        Scene scene=((Node)event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
         scene.lookup("#AddToOrder").setDisable(false);
         DisplayReceipt.updateRecipt(scene);
@@ -196,11 +207,61 @@ public class CashierController implements Initializable {
         switch_to_cashier1(event);
     }
 
-    public static void updateSpecialtyButton(Scene scene) throws SQLException, ClassNotFoundException{
-        ResultSet rs=DBUtil.dbExecuteQuery("SELECT menu_Name FROM menu WHERE position('Special' in menu_name)>0 AND active=true;");
-        rs.next();
-        special=rs.getString(1).replaceAll("Special: ", "");
-        ((ToggleButton)scene.lookup("#SpecialtyItem")).setText(special);
+    public static void buildGrids(Scene scene1,Scene scene2)throws SQLException, ClassNotFoundException {
+        ResultSet rs=DBUtil.dbExecuteQuery("SELECT menu_Name,menu_id FROM menu WHERE active=true;");
+        HashMap<Integer,Tuple3> locs=new HashMap<>();
+        locs.put(600000,new Tuple3(0,0,1));
+        locs.put(610000,new Tuple3(4,0,-1));
+        locs.put(620000,new Tuple3(4,0,-1));
+        locs.put(630000,new Tuple3(0,0,1));
+
+        while(rs.next()){
+            Tuple3 pos=locs.get(Integer.parseInt(rs.getString(2))/10000*10000);
+            ToggleButton but=new ToggleButton(rs.getString(1).replaceAll("Special:",""));
+            but.setId(rs.getString(1));
+            but.setPrefHeight(40);
+            but.setPrefWidth(65);
+            but.setFont(butFont);
+            but.setWrapText(true);
+            switch (Integer.parseInt(rs.getString(2))/10000) {
+                case 61://apps
+                    but.setOnAction((ActionEvent event) -> {
+                        buttonPressedOther(event);
+                    });
+                    but.setStyle("-fx-background-color: #eb8da6; -fx-border-color: #000000;-fx-text-alignment: center;");
+                    ((GridPane)scene1.lookup("#Grid")).add(but,pos.x,pos.y);
+                    break;
+                case 63://drinks
+                    but.setOnAction((ActionEvent event) -> {
+                        buttonPressedOther(event);
+                    });
+                    but.setStyle("-fx-background-color: #5a93db; -fx-border-color: #000000;-fx-text-alignment: center;");
+                    ((GridPane)scene1.lookup("#Grid")).add(but,pos.x,pos.y);
+                    break;
+                case 62://protien
+                    but.setOnAction((ActionEvent event) -> {
+                        buttonPressedProtein(event);
+                    });
+                    if(DisplayReceipt.extraCostPrice.get(DisplayReceipt.extraCostName.indexOf(rs.getString(1)))>0.1)
+                    but.setStyle("-fx-background-color: #d9ead3ff; -fx-border-color: #FDAA48;-fx-text-alignment: center;");
+                    else
+                    but.setStyle("-fx-background-color: #d9ead3ff; -fx-border-color: #000000;-fx-text-alignment: center;");
+                    ((GridPane)scene2.lookup("#Grid")).add(but,pos.x,pos.y);
+                    break;
+                default://sides
+                    but.setOnAction((ActionEvent event) -> {
+                        buttonPressedSide(event);
+                    });
+                    but.setStyle("-fx-background-color: #ADD8E6; -fx-border-color: #000000;-fx-text-alignment: center;");
+                    ((GridPane)scene2.lookup("#Grid")).add(but,pos.x,pos.y);
+                    break;
+            }
+            pos.y++;
+            if(pos.y>=4){
+                pos.y=0;
+                pos.x+=pos.change;
+            }
+        }
     }
 
     @FXML
@@ -259,91 +320,6 @@ public class CashierController implements Initializable {
 
     @FXML
     private ToggleButton button_confirm;
-
-    //Buttons for all of the beverage options
-    @FXML
-    private ToggleButton button_water_cup;
-
-    @FXML
-    private ToggleButton button_fountain_drink;
-
-    @FXML
-    private ToggleButton button_water_bottle;
-
-    @FXML
-    private ToggleButton button_gatorade;
-
-    @FXML
-    private ToggleButton button_juice;
-
-    @FXML
-    private ToggleButton button_milk;
-
-    //Buttons for all of the appetizer options
-    @FXML
-    private ToggleButton button_chicken_egg_roll;
-
-    @FXML
-    private ToggleButton button_veggie_spring_roll;
-
-    @FXML
-    private ToggleButton button_rangoon;
-
-    @FXML
-    private ToggleButton button_apple_pie_roll;
-
-    //Buttons for all of the side options
-    @FXML
-    private ToggleButton button_fried_rice;
-
-    @FXML
-    private ToggleButton button_white_rice;
-
-    @FXML
-    private ToggleButton button_chow_mein;
-
-    @FXML
-    private ToggleButton button_super_greens;
-
-    //Buttons for all of the protein options
-    @FXML
-    private ToggleButton button_bourbon_chicken;
-
-    @FXML
-    private ToggleButton button_orange_chicken;
-
-    @FXML
-    private ToggleButton button_teriyaki_chicken;
-
-    @FXML
-    private ToggleButton button_angus_steak;
-
-    @FXML
-    private ToggleButton button_kung_pao_chicken;
-
-    @FXML
-    private ToggleButton button_honey_sesame_chicken;
-
-    @FXML
-    private ToggleButton button_honey_walnut_shrimp;
-
-    @FXML
-    private ToggleButton button_beijing_beef;
-
-    @FXML
-    private ToggleButton button_mushroom_chicken;
-
-    @FXML
-    private ToggleButton button_string_bean_chicken;
-
-    @FXML
-    private ToggleButton button_broccoli_beef;
-
-    @FXML
-    private ToggleButton button_black_pepper_chicken;
-
-    @FXML
-    private ToggleButton button_sweet_fire_chicken;
 
     @FXML
     private Button logoutButton;

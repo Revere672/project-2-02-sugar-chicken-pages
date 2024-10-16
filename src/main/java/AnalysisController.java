@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -13,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.ScatterChart;
@@ -23,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -273,6 +276,7 @@ public class AnalysisController {
         scene.lookup("#GraphPane").setDisable(true);
         scene.lookup("#GraphPane").setOpacity(0);
         ((ScatterChart<Number,Number>)scene.lookup("#GraphActual")).getData().clear();
+        ((TextArea)scene.lookup("#AllItems")).clear();
     }
 
     @FXML
