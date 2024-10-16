@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
@@ -40,11 +43,25 @@
          </children>
       </GridPane>
       <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
+      <Button fx:id="sale_report_button" layoutX="100.0" layoutY="300.0" mnemonicParsing="false" onAction="#Sales_Report" text="Sales Report" />
       <Button id="undo" layoutX="88.0" layoutY="200.0" mnemonicParsing="false" onAction="#xReport" prefHeight="60.0" prefWidth="162.0" text="X Report" />
       <Button id="undo" layoutX="338.0" layoutY="200.0" mnemonicParsing="false" onAction="#zReport" prefHeight="60.0" prefWidth="162.0" text="Z Report" />
+      <Pane fx:id="confirm_pane" prefHeight="252.0" prefWidth="389.0" style="-fx-background-color: rgb(120,120,120);">
+         <children>
+            <TextArea fx:id="result_text" prefHeight="258.0" prefWidth="389.0" />
+         </children></Pane>
+      <Pane fx:id="saleReport_pane" prefHeight="252.0" prefWidth="395.0" style="-fx-background-color: rgb(120,120,120);">
+         <children>
+            <ComboBox fx:id="choose_items" layoutX="29.0" layoutY="33.0" prefHeight="30.0" prefWidth="150.0" promptText="Items:" />
+            <TextField fx:id="startTime" layoutX="217.0" layoutY="71.0" promptText="Start Time: " />
+            <TextField fx:id="endTime" layoutX="217.0" layoutY="126.0" promptText="End Time: " />
+            <Button fx:id="cancel_sale_button" layoutX="250.0" layoutY="210.0" mnemonicParsing="false" onAction="#Cancel_Button" text="Cancel" />
+            <Button fx:id="confirm_button" layoutX="250.0" layoutY="175.0" mnemonicParsing="false" onAction="#Confirm_Button" text="Confirm" />
+         </children>
+      </Pane>
       <AnchorPane id="ReportPage" disable="true" opacity="0.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8d8b8b" height="400.0" opacity="0.74" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8d8b8b" height="400.0" layoutX="2.0" opacity="0.74" stroke="BLACK" strokeType="INSIDE" width="600.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="258.0" layoutX="150.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
             <TextField id="Title" alignment="CENTER" editable="false" focusTraversable="false" layoutX="186.0" layoutY="86.0" prefHeight="30.0" prefWidth="231.0" style="-fx-border-color: #ffffff;" text="X Report" />
             <Separator layoutX="150.0" layoutY="123.0" prefHeight="3.0" prefWidth="300.0" />
@@ -64,12 +81,12 @@
             <TextField id="BowlSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="244.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
             <TextField id="PlateSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="263.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
             <TextField id="BiggerPlateSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="282.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
-            <TextField id="OtherSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="301.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
-            <Button focusTraversable="false" layoutX="405.0" layoutY="58.0" mnemonicParsing="false" onAction="#closeReport" prefHeight="66.0" prefWidth="67.0" style="-fx-background-color: #FFffff00;" text="X" textFill="RED">
+            <Button focusTraversable="false" mnemonicParsing="false" onAction="#closeReport" prefHeight="66.0" prefWidth="67.0" style="-fx-background-color: #FFffff00;" text="X" textFill="RED">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
+            <TextField id="OtherSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="301.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
          </children>
       </AnchorPane>
    </children>

@@ -2,13 +2,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Observable;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import javafx.fxml.FXMLLoader;
@@ -166,6 +172,49 @@ public class AnalysisController {
         GUIRunner.stage.show();
     }
 
+
+    //////SALES REPORT
+
+    @FXML
+    private void Sales_Report(ActionEvent actionEvent)throws SQLException, ClassNotFoundException, IOException{
+        String q = "SELECT menu_name FROM menu;";
+        ResultSet rs = DBUtil.dbExecuteQuery(q);
+
+        ObservableList<String> menuItemsqueered = FXCollections.observableArrayList();
+        while(rs.next()){
+            menuItemsqueered.add(rs.getString("menu_name"));
+        }
+
+        choose_items.setItems(menuItemsqueered);
+        String start = startTime.getText();
+        String end = endTime.getText();
+
+        saleReport_pane.setVisible(true);
+    }
+
+    // @FXML
+    // private void Sales_Report(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+    //     saleReport_pane.setVisible(true);
+    // }
+
+    @FXML
+    private void Confirm_Button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+        confirm_pane.setVisible(true);
+        confirm_pane.toFront();
+
+        String qq = "SELECT ORD* FROM order_history";
+    }
+
+    @FXML
+    private void Cancel_Button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+        //get rid of the subscreen on analysis
+        saleReport_pane.setVisible(false);
+    }
+
+
     @FXML
     private Button cashier;
     @FXML
@@ -178,4 +227,26 @@ public class AnalysisController {
     private Button order_history;
     @FXML
     private Button log_out_button;
+
+    
+    ////////////////////SALES REPORT
+    @FXML
+    private Button sale_report_button;
+    @FXML
+    private Pane saleReport_pane;
+    @FXML
+    private ComboBox<String> choose_items;
+    @FXML
+    private TextField startTime;
+    @FXML
+    private TextField endTime;
+    @FXML
+    private Button confirm_button;
+    @FXML
+    private Button cancel_button;
+
+    @FXML
+    private Pane confirm_pane;
+    @FXML
+    private TextArea result_text;
 }
