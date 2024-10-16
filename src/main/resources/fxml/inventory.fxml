@@ -116,6 +116,30 @@
             <TextArea fx:id="failed_text2" editable="false" layoutX="111.0" layoutY="166.0" prefHeight="16.0" prefWidth="133.0" />
          </children>
       </Pane>
+      <Button fx:id="add_menu_item_button" layoutX="386.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMenuItem" opacity="0.3" text="+ Menu Item" />
+      <Pane fx:id="menu_item_pane" layoutX="123.0" layoutY="81.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
+         <children>
+            <Text layoutX="22.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name" />
+            <Button fx:id="next_button" layoutX="185.0" layoutY="218.0" mnemonicParsing="false" onAction="#addToMenu" text="Next" />
+            <Button fx:id="cancel_button3" layoutX="118.0" layoutY="218.0" mnemonicParsing="false" onAction="#cancelMenuItemPane" text="Cancel" />
+            <TextField fx:id="item_name_text" layoutX="103.0" layoutY="51.0" onAction="#nameEditEnter" />
+            <TextField fx:id="extra_cost_text" layoutX="103.0" layoutY="86.0" onAction="#costEditEnter" />
+            <Text layoutX="25.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra Cost" />
+            <TextArea fx:id="failed_text3" editable="false" layoutX="76.0" layoutY="159.0" prefHeight="40.0" prefWidth="203.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="ingredient_needed_pane" layoutX="123.0" layoutY="81.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+         <children>
+            <Button fx:id="add_button1" layoutX="296.0" layoutY="218.0" mnemonicParsing="false" onAction="#addToIngredientsNeeded" text="Add" />
+            <Button fx:id="cancel_button11" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancelIngredientNeededPane" text="Cancel" />
+            <TextField fx:id="ingredient_name_text" layoutX="103.0" layoutY="72.0" onAction="#nameAddEnter" />
+            <TextField fx:id="quantity_needed_text" layoutX="103.0" layoutY="129.0" onAction="#supplierAddEnter" />
+            <Text layoutX="6.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient Name" />
+            <Text layoutX="6.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Needed" />
+            <TextArea fx:id="failed_text111" layoutX="12.0" layoutY="203.0" prefHeight="40.0" prefWidth="203.0" />
+            <Button fx:id="done_button" layoutX="230.0" layoutY="218.0" mnemonicParsing="false" onAction="#cancel" text="Done" />
+         </children>
+      </Pane>
       <Pane fx:id="restock_pane" layoutX="123.0" layoutY="66.0" prefHeight="298.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
          <children>
             <Text layoutX="111.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Report">
