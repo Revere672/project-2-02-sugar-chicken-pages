@@ -1,33 +1,33 @@
 menu_name,menu_ID,extra_cost,status
-Apple Pie Roll,600000,2.00,TRUE
-Beijing Beef,600001,0.00,TRUE
-Black Pepper Chicken,600002,0.00,TRUE
-Black Pepper Sirloin Steak,600003,1.50,TRUE
-Special: Bourbon Chicken,600004,0.00,TRUE
-Broccoli Beef,600005,0.00,TRUE
-Chicken Eggroll,600006,2.00,TRUE
-Chicken Potsticker,600007,0.00,FALSE
+Apple Pie Roll,610000,2.00,TRUE
+Beijing Beef,620001,0.00,TRUE
+Black Pepper Chicken,620002,0.00,TRUE
+Black Pepper Sirloin Steak,620003,1.50,TRUE
+Special: Bourbon Chicken,620004,0.00,TRUE
+Broccoli Beef,620005,0.00,TRUE
+Chicken Eggroll,610006,2.00,TRUE
+Chicken Potsticker,610007,0.00,FALSE
 Chow Mein,600008,0.00,TRUE
 Fried Rice,600009,0.00,TRUE
-Grilled Chicken,600010,0.00,FALSE
-Honey Sesame Chicken,600011,0.00,TRUE
-Honey Walnut Shrimp,600012,1.50,TRUE
-Kung Pao Chicken,600013,0.00,TRUE
-Mushroom Chicken,600014,0.00,TRUE
-Orange Chicken,600015,0.00,TRUE
-String Bean Chicken,600016,0.00,TRUE
+Grilled Chicken,620010,0.00,FALSE
+Honey Sesame Chicken,620011,0.00,TRUE
+Honey Walnut Shrimp,620012,1.50,TRUE
+Kung Pao Chicken,620013,0.00,TRUE
+Mushroom Chicken,620014,0.00,TRUE
+Orange Chicken,620015,0.00,TRUE
+String Bean Chicken,620016,0.00,TRUE
 Super Greens,600017,0.00,TRUE
-Sweet & Sour Chicken,600018,0.00,FALSE
-SweetFire Chicken,600019,0.00,TRUE
-Teriyaki Chicken,600020,0.00,TRUE
-Vegetable Spring Roll,600021,2.00,TRUE
+Sweet & Sour Chicken,620018,0.00,FALSE
+SweetFire Chicken,620019,0.00,TRUE
+Teriyaki Chicken,620020,0.00,TRUE
+Vegetable Spring Roll,610021,2.00,TRUE
 White Rice,600024,0.00,TRUE
-Drink,600025,2.30,TRUE
-20 oz lemon-lime gatorade,600022,2.70,TRUE
-20 oz glacier freeze gatorade,600022,2.70,TRUE
-20 oz fruit punch gatorade,600022,2.70,TRUE
-Cream Cheese Rangoon,600023,2.00,TRUE
-Gatorade,600022,2.70,TRUE
+Drink,630025,2.30,TRUE
+20 oz lemon-lime gatorade,630022,2.70,TRUE
+20 oz glacier freeze gatorade,630022,2.70,TRUE
+20 oz fruit punch gatorade,630022,2.70,TRUE
+Cream Cheese Rangoon,610023,2.00,TRUE
+Gatorade,630022,2.70,TRUE
 null,0,0.00,FALSE
-Water Bottle,600026,2.30,TRUE
-Water Cup,600027,0,TRUE
+Water Bottle,630026,2.30,TRUE
+Water Cup,630027,0,TRUE
