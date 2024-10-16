@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -63,6 +64,7 @@
       <TextField fx:id="product_search" layoutX="15.0" layoutY="148.0" onAction="#searchInventory" opacity="0.3" promptText="Enter Product Name" />
       <Button fx:id="restock_report_button" layoutX="491.0" layoutY="114.0" mnemonicParsing="false" onAction="#restockReport" opacity="0.3" text="Restock Report" />
       <Button fx:id="product_search_button" layoutX="173.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchInventory" opacity="0.3" prefHeight="25.0" prefWidth="60.0" text="Search" />
+      <Button fx:id="set_inactive" layoutX="390.0" layoutY="114.0" mnemonicParsing="false" onAction="#setInactive" text="Set Inactive" />
       <Button fx:id="add_menu_item_button" layoutX="386.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMenuItem" opacity="0.3" text="+ Menu Item" />
       <Pane fx:id="add_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
@@ -113,7 +115,7 @@
             <TextArea fx:id="failed_text2" editable="false" layoutX="111.0" layoutY="166.0" prefHeight="16.0" prefWidth="133.0" />
          </children>
       </Pane>
-      <Pane fx:id="restock_pane" layoutX="123.0" layoutY="66.0" prefHeight="298.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+      <Pane fx:id="restock_pane" layoutX="123.0" layoutY="66.0" prefHeight="298.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Text layoutX="111.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Report">
                <font>
@@ -133,9 +135,11 @@
             <TextField fx:id="extra_cost_text" layoutX="103.0" layoutY="86.0" onAction="#costEditEnter" />
             <Text layoutX="25.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra Cost" />
             <TextArea fx:id="failed_text3" editable="false" layoutX="76.0" layoutY="159.0" prefHeight="40.0" prefWidth="203.0" />
+            <Text layoutX="18.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type of Item" />
+            <ChoiceBox fx:id="type_of_item_dropdown" layoutX="102.0" layoutY="125.0" prefWidth="150.0" />
          </children>
       </Pane>
-      <Pane fx:id="ingredient_needed_pane" layoutX="123.0" layoutY="81.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+      <Pane fx:id="ingredient_needed_pane" layoutX="123.0" layoutY="81.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Button fx:id="add_button1" layoutX="296.0" layoutY="218.0" mnemonicParsing="false" onAction="#addToIngredientsNeeded" text="Add" />
             <Button fx:id="cancel_button11" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancelIngredientNeededPane" text="Cancel" />
@@ -145,6 +149,13 @@
             <Text layoutX="6.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity Needed" />
             <TextArea fx:id="failed_text111" layoutX="12.0" layoutY="203.0" prefHeight="40.0" prefWidth="203.0" />
             <Button fx:id="done_button" layoutX="230.0" layoutY="218.0" mnemonicParsing="false" onAction="#cancel" text="Done" />
+         </children>
+      </Pane>
+      <Pane fx:id="inactive_item_pane" layoutX="122.0" layoutY="142.0" prefHeight="116.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
+         <children>
+            <Text layoutX="25.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name" />
+            <Button fx:id="done_button111" layoutX="155.0" layoutY="77.0" mnemonicParsing="false" onAction="#makeItemInactive" text="Done" />
+            <ChoiceBox fx:id="item_name_dropdown" layoutX="111.0" layoutY="37.0" prefWidth="150.0" />
          </children>
       </Pane>
    </children>

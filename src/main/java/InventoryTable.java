@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.control.ChoiceBox;
 
 public class InventoryTable {
     @FXML
@@ -34,6 +36,8 @@ public class InventoryTable {
     private Pane menu_item_pane;
     @FXML
     private Pane ingredient_needed_pane;
+    @FXML 
+    private Pane inactive_item_pane;
 
     @FXML
     private Button log_out_button;
@@ -113,6 +117,14 @@ public class InventoryTable {
     private TextField ingredient_name_text;
     @FXML
     private TextField quantity_needed_text;
+    @FXML
+    private ChoiceBox type_of_item_dropdown;
+    @FXML
+    private ChoiceBox item_name_dropdown;
+    @FXML 
+    private Button done_button111;
+    @FXML
+    private Button set_inactive;
 
     @FXML
     private TableView<Inventory> inventory_table;
@@ -169,6 +181,7 @@ public class InventoryTable {
         restock_pane.setVisible(false);
         menu_item_pane.setVisible(false);
         ingredient_needed_pane.setVisible(false);
+        inactive_item_pane.setVisible(false);
         setBackground(false);
 
         inventory_ID_col.setCellValueFactory(cellData -> cellData.getValue().inventoryIDProperty().asObject());
@@ -285,14 +298,14 @@ public class InventoryTable {
     private void setBackground(Boolean value) {
         if (value) {
             main_inventory.getChildren().forEach(node -> {
-                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(restock_pane) || node.equals(update_pane)|| node.equals(menu_item_pane) || node.equals(ingredient_needed_pane))) {
+                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(restock_pane) || node.equals(update_pane)|| node.equals(menu_item_pane) || node.equals(ingredient_needed_pane) || node.equals(inactive_item_pane))) {
                     node.setOpacity(0.3);
                     node.setDisable(true);
                 }
             });
         } else {
             main_inventory.getChildren().forEach(node -> {
-                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane) || node.equals(restock_pane)|| node.equals(menu_item_pane) || node.equals(ingredient_needed_pane))) {
+                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane) || node.equals(restock_pane)|| node.equals(menu_item_pane) || node.equals(ingredient_needed_pane) || node.equals(inactive_item_pane))) {
                     node.setOpacity(1);
                     node.setDisable(false);
                 }
@@ -636,10 +649,14 @@ public class InventoryTable {
         setBackground(true);
         menu_item_pane.setVisible(true);
         item_name_text.requestFocus();
+        type_of_item_dropdown.getItems().add("Side");
+        type_of_item_dropdown.getItems().add("Appetizer");
+        type_of_item_dropdown.getItems().add("Protein");
+        type_of_item_dropdown.getItems().add("Misc");
     }
 
     @FXML
-    private void addToMenu(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    private void addToMenu(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
         if (item_name_text.getText() == "" || extra_cost_text.getText() == "") {
             addFailed();
         } else {
@@ -665,10 +682,21 @@ public class InventoryTable {
                     String setInactive = "UPDATE menu set active ='" + false + "'WHERE menu_name LIKE 'Special:%';";
                     DBUtil.dbExecuteUpdate(setInactive);
                 }
-                InventoryDB.insertMenuItem(item_name_text.getText(), extra_cost_text.getText());
+                InventoryDB.insertMenuItem(item_name_text.getText(), extra_cost_text.getText(), type_of_item_dropdown.getValue().toString());
                 ingredient_needed_pane.setVisible(true);
             }
         }
+
+        FXMLLoader cashier1Loader = new FXMLLoader(getClass().getResource("/fxml/cashier1.fxml"));
+        Scene cashier1 = new Scene(cashier1Loader.load());
+        GUIRunner.scenes.put("cashier1", cashier1);
+        cashier1.setUserData(cashier1Loader.getController());
+
+        FXMLLoader cashier2Loader = new FXMLLoader(getClass().getResource("/fxml/cashier2.fxml"));
+        Scene cashier2 = new Scene(cashier2Loader.load());
+        GUIRunner.scenes.put("cashier2", cashier2);
+        cashier2.setUserData(cashier2Loader.getController());
+        CashierController.buildGrids(cashier1,cashier2);
     }
 
     @FXML
@@ -688,5 +716,39 @@ public class InventoryTable {
                 failed_text111.setText("Please try adding again");
             }
         }
+    }
+
+    @FXML 
+    private void setInactive(ActionEvent event) throws SQLException, ClassNotFoundException{
+        inactive_item_pane.setVisible(true);
+        setBackground(true);
+        String qry = "SELECT menu_name FROM menu WHERE active = '" + true + "';";
+        ResultSet rs = DBUtil.dbExecuteQuery(qry);
+        ArrayList<String> menu_items = new ArrayList<>();
+        while(rs.next()) {
+            menu_items.add(rs.getString(1));
+        }
+        item_name_dropdown.getItems().addAll(menu_items);
+    }
+
+    @FXML
+    private void makeItemInactive(ActionEvent event) throws SQLException, ClassNotFoundException, IOException{
+        String setInactive = "UPDATE menu SET active='" + false + "' WHERE menu_name='"
+                                + item_name_dropdown.getValue().toString() + "';"; 
+        DBUtil.dbExecuteUpdate(setInactive);
+
+        inactive_item_pane.setVisible(false);
+        setBackground(false);  
+
+        FXMLLoader cashier1Loader = new FXMLLoader(getClass().getResource("/fxml/cashier1.fxml"));
+        Scene cashier1 = new Scene(cashier1Loader.load());
+        GUIRunner.scenes.put("cashier1", cashier1);
+        cashier1.setUserData(cashier1Loader.getController());
+
+        FXMLLoader cashier2Loader = new FXMLLoader(getClass().getResource("/fxml/cashier2.fxml"));
+        Scene cashier2 = new Scene(cashier2Loader.load());
+        GUIRunner.scenes.put("cashier2", cashier2);
+        cashier2.setUserData(cashier2Loader.getController());
+        CashierController.buildGrids(cashier1,cashier2);              
     }
 }
