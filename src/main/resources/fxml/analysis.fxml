@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.ScatterChart?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
@@ -46,11 +44,28 @@
          </children>
       </GridPane>
       <Button fx:id="log_out_button" layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="80.0" style="-fx-background-color: #ffd966ff; -fx-background-radius: 30;" text="Log out" />
+      <Button fx:id="sale_report_button" layoutX="88.0" layoutY="300.0" mnemonicParsing="false" onAction="#Sales_Report" prefHeight="60.0" prefWidth="162.0" text="Sales Report" />
       <Button id="undo" layoutX="88.0" layoutY="200.0" mnemonicParsing="false" onAction="#xReport" prefHeight="60.0" prefWidth="162.0" text="X Report" />
       <Button id="undo" layoutX="338.0" layoutY="200.0" mnemonicParsing="false" onAction="#zReport" prefHeight="60.0" prefWidth="162.0" text="Z Report" />
+      <Pane fx:id="confirm_pane" layoutX="100.0" layoutY="50.0" prefHeight="252.0" prefWidth="389.0" style="-fx-background-color: rgb(120,120,120);" visible="false">
+         <children>
+            <TextArea fx:id="result_text" editable="false" prefHeight="211.0" prefWidth="389.0" />
+            <Button fx:id="close_result_button" layoutX="175.0" layoutY="215.0" mnemonicParsing="false" onAction="#close_sale_report" text="Done" />
+         </children></Pane>
+      <Pane fx:id="saleReport_pane" layoutX="100.0" layoutY="50.0" prefHeight="252.0" prefWidth="395.0" style="-fx-background-color: rgb(120,120,120);" visible="false">
+         <children>
+            <ComboBox fx:id="choose_items" layoutX="29.0" layoutY="33.0" onAction="#SelectItems" prefHeight="30.0" prefWidth="150.0" promptText="Items:" />
+            <TextArea fx:id="sales_textArea" editable="false" layoutY="67.0" prefHeight="128.0" prefWidth="193.0" />
+            <Button fx:id="cancel_sale_button" layoutX="250.0" layoutY="210.0" mnemonicParsing="false" onAction="#Cancel_Button" prefHeight="25.0" prefWidth="58.0" text="Cancel" />
+            <Button fx:id="clear_button" layoutX="75.0" layoutY="200.0" mnemonicParsing="false" onAction="#clear_selected_items" text="Clear" />
+            <Button fx:id="confirm_button" layoutX="250.0" layoutY="175.0" mnemonicParsing="false" onAction="#Confirm_Button" text="Confirm" />
+            <DatePicker fx:id="startTime" layoutX="200.0" layoutY="100.0" promptText="Start Time:" />
+            <DatePicker fx:id="endTime" layoutX="200.0" layoutY="140.0" promptText="End Time:" />
+         </children>
+      </Pane>
       <AnchorPane id="ReportPage" disable="true" opacity="0.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8d8b8b" height="400.0" opacity="0.74" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8d8b8b" height="400.0" layoutX="2.0" opacity="0.74" stroke="BLACK" strokeType="INSIDE" width="600.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="258.0" layoutX="150.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
             <TextField id="Title" alignment="CENTER" editable="false" focusTraversable="false" layoutX="186.0" layoutY="86.0" prefHeight="30.0" prefWidth="231.0" style="-fx-border-color: #ffffff;" text="X Report" />
             <Separator layoutX="150.0" layoutY="123.0" prefHeight="3.0" prefWidth="300.0" />
@@ -70,52 +85,12 @@
             <TextField id="BowlSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="244.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
             <TextField id="PlateSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="263.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
             <TextField id="BiggerPlateSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="282.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
+            <Button focusTraversable="false" mnemonicParsing="false" onAction="#closeReport" prefHeight="66.0" prefWidth="67.0" style="-fx-background-color: #FFffff00;" text="X" textFill="RED">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
             <TextField id="OtherSales" alignment="CENTER" editable="false" focusTraversable="false" layoutX="304.0" layoutY="301.0" minHeight="10.0" minWidth="10.0" prefHeight="19.0" prefWidth="137.0" style="-fx-border-color: #ffffff;" />
-            <Button focusTraversable="false" layoutX="405.0" layoutY="58.0" mnemonicParsing="false" onAction="#closeReport" prefHeight="66.0" prefWidth="67.0" style="-fx-background-color: #FFffff00;" text="X" textFill="RED">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
-      <Button id="Graph" layoutX="350.0" layoutY="265.0" mnemonicParsing="false" onAction="#openGraph" prefHeight="60.0" prefWidth="162.0" text="Graph Inventory" />
-      <Pane id="GraphPane" disable="true" opacity="0.0" prefHeight="400.0" prefWidth="600.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8d8b8b" height="400.0" opacity="0.74" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-            <ScatterChart id="GraphActual" layoutX="33.0">
-              <xAxis>
-                <NumberAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </ScatterChart>
-            <Button focusTraversable="false" layoutX="519.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeGraph" prefHeight="19.0" prefWidth="67.0" text="Close" textAlignment="CENTER" textFill="RED">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-      <AnchorPane id="GraphPage" disable="true" opacity="0.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8d8b8b" height="400.0" opacity="0.74" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="258.0" layoutX="150.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
-            <TextField id="Title" alignment="CENTER" editable="false" focusTraversable="false" layoutX="186.0" layoutY="86.0" prefHeight="30.0" prefWidth="231.0" style="-fx-border-color: #ffffff;" text="Options" />
-            <Separator layoutX="150.0" layoutY="123.0" prefHeight="3.0" prefWidth="300.0" />
-            <TextField id="Title" alignment="CENTER" editable="false" focusTraversable="false" layoutX="156.0" layoutY="129.0" minHeight="10.0" minWidth="10.0" prefHeight="26.0" prefWidth="107.0" style="-fx-border-color: #ffffff;" text="Start Time" />
-            <TextField id="Title" alignment="CENTER" editable="false" focusTraversable="false" layoutX="156.0" layoutY="157.0" minHeight="10.0" minWidth="10.0" prefHeight="26.0" prefWidth="107.0" style="-fx-border-color: #ffffff;" text="End Time" />
-            <Separator layoutX="154.0" layoutY="187.0" prefHeight="3.0" prefWidth="292.0" />
-            <Button focusTraversable="false" layoutX="405.0" layoutY="58.0" mnemonicParsing="false" onAction="#closeGraph" prefHeight="66.0" prefWidth="67.0" style="-fx-background-color: #FFffff00;" text="X" textFill="RED">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <ChoiceBox id="InventoryBox" layoutX="176.0" layoutY="207.0" onAction="#choiceBoxed" prefWidth="150.0" />
-            <TextArea id="AllItems" layoutX="176.0" layoutY="242.0" prefHeight="75.0" prefWidth="244.0" />
-            <Button layoutX="373.0" layoutY="207.0" mnemonicParsing="false" onAction="#displayGraph" text="Done" />
-            <DatePicker id="StartTimeGraph" layoutX="288.0" layoutY="130.0" prefHeight="19.0" prefWidth="150.0" />
-            <DatePicker id="EndTimeGraph" layoutX="288.0" layoutY="158.0" prefHeight="3.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
    </children>

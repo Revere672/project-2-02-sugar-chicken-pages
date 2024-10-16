@@ -57,6 +57,8 @@ public class EmployeeTable {
     private TableColumn<Employee, Date> Last_login_col;
     @FXML
     private TableColumn<Employee, Boolean> active_col;
+    @FXML
+    private Button logoutButton;
 
     @FXML
     private ChoiceBox<String> employee_dropdown;

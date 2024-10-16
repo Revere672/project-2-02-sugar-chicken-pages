@@ -321,4 +321,6 @@ public class CashierController implements Initializable {
     @FXML
     private ToggleButton button_confirm;
 
+    @FXML
+    private Button logoutButton;
 }

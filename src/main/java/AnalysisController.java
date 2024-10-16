@@ -4,7 +4,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +23,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+import javafx.fxml.FXMLLoader;
+
+import java.io.IOException;
 
 public class AnalysisController {
     private Scene scene;    
@@ -289,6 +304,152 @@ public class AnalysisController {
         GUIRunner.stage.show();
     }
 
+
+    //////SALES REPORT
+
+    @FXML
+    private void Sales_Report(ActionEvent actionEvent)throws SQLException, ClassNotFoundException, IOException{
+        String q = "SELECT menu_name FROM menu;";
+        ResultSet rs = DBUtil.dbExecuteQuery(q);
+
+        ObservableList<String> menuItemsqueered = FXCollections.observableArrayList();
+        while(rs.next()){
+            menuItemsqueered.add(rs.getString("menu_name"));
+        }
+
+        choose_items.setItems(menuItemsqueered);
+        // String start = startTime.getText();
+        // String end = endTime.getText();
+
+        saleReport_pane.setVisible(true);
+    }
+
+    // @FXML
+    // private void Sales_Report(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+    //     saleReport_pane.setVisible(true);
+    // }
+
+    @FXML
+    private void Confirm_Button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+        confirm_pane.setVisible(true);
+        confirm_pane.toFront();
+
+        Timestamp start = Timestamp.valueOf(startTime.getValue().atStartOfDay());
+        //long s =start.getTime()/3600000;
+        Timestamp end = Timestamp.valueOf(endTime.getValue().plusDays(1).atStartOfDay());
+        //long e =end.getTime()/3600000;
+        
+        result_text.setText("Sales Report from " + start.toLocalDateTime().toLocalDate().toString() + " - " + end.toLocalDateTime().toLocalDate().toString() + "\n\n");
+        result_text.setText(result_text.getText() + "Total Counts of Selected Items:\n\n");
+        //String qq = "SELECT ORD* FROM order_history";
+        String[] arr = sales_textArea.getText().split(",");
+        for(String item : arr){
+            String qq = "SELECT\r\n" + //
+                        "        m.Menu_ID,\r\n" + //
+                        "        m.Menu_Name,\r\n" + //
+                        "        COUNT(m.Menu_Name)\r\n" + //
+                        "    FROM\r\n" + //
+                        "        Menu m\r\n" + //
+                        "    LEFT JOIN Order_Items oi ON m.Menu_Name = oi.Side_1 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Side_2 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_1 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_2 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_3 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Misc_Item\r\n" + //
+                        "    JOIN Order_History o ON oi.Order_ID = o.Order_ID\r\n" + //
+                        "    WHERE\r\n" + //
+                        "        m.Menu_Name = '"+item+"' AND  \r\n" + //
+                        "        o.Order_Time >= '"+start.toString()+"' AND  \r\n" + //
+                        "        o.Order_Time < '"+end.toString()+"'  \r\n" + //
+                        "    GROUP BY\r\n" + //
+                        "        m.Menu_Name;";
+                
+            ResultSet rs = DBUtil.dbExecuteQuery(qq);
+            if (rs.next()) {
+                result_text.setText(result_text.getText() + rs.getString("Menu_Name") + ": " + rs.getString("COUNT") + "\n\n");
+            }
+        }
+
+        result_text.setText(result_text.getText() + "Counts of Selected Items by hour:\n\n");
+        for (String item : arr) {
+            String qq =        "SELECT\r\n" + //
+                        "        m.Menu_ID,\r\n" + //
+                        "        m.Menu_Name,\r\n" + //
+                        "        DATE_TRUNC('hour', o.Order_Time) AS Order_Hour,\r\n" + //
+                        "        COUNT(m.Menu_Name)\r\n" + //
+                        "    FROM\r\n" + //
+                        "        Menu m\r\n" + //
+                        "    LEFT JOIN Order_Items oi ON m.Menu_Name = oi.Side_1 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Side_2 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_1 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_2 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Protein_3 OR\r\n" + //
+                        "                                m.Menu_Name = oi.Misc_Item\r\n" + //
+                        "    JOIN Order_History o ON oi.Order_ID = o.Order_ID\r\n" + //
+                        "    WHERE\r\n" + //
+                        "        m.Menu_Name = '"+item+"' AND  \r\n" + //
+                        "        o.Order_Time >= '"+start.toString()+"' AND  \r\n" + //
+                        "        o.Order_Time < '"+end.toString()+"'  \r\n" + //
+                        "    GROUP BY\r\n" + //
+                        "        m.Menu_Name, DATE_TRUNC('hour', o.Order_Time);";
+            
+            result_text.setText(result_text.getText() + item + " by hour:\n");
+            ResultSet rs = DBUtil.dbExecuteQuery(qq);
+            LocalDate currentDate = start.toLocalDateTime().toLocalDate();
+            result_text.setText(result_text.getText() + "\t" + currentDate.toString() + ":\n");
+            while (rs.next()) {
+                LocalDate thisDate = rs.getDate("Order_Hour").toLocalDate();
+                if (!thisDate.equals(currentDate)) {
+                    currentDate = thisDate;
+                    result_text.setText(result_text.getText() + "\t" + currentDate.toString() + ":\n");
+                }
+
+                LocalTime thisTime = rs.getTimestamp("Order_Hour").toLocalDateTime().toLocalTime();
+                int count = rs.getInt("COUNT");
+                result_text.setText(result_text.getText() + "\t\t" + thisTime + ": " + count + "\n");
+            }
+        }
+    }
+
+    @FXML
+    private void Cancel_Button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+        //get rid of the subscreen on analysis
+        saleReport_pane.setVisible(false);
+    }
+
+    @FXML
+    private void close_sale_report(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+        //get rid of the subscreen on analysis
+        confirm_pane.setVisible(false);
+    }
+
+    @FXML
+    private void clear_selected_items(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
+        
+        //get rid of the subscreen on analysis
+        sales_textArea.setText("");
+    }
+
+    @FXML
+    private void SelectItems(ActionEvent actionEvent)throws SQLException, ClassNotFoundException, IOException{
+        String items = sales_textArea.getText();
+        
+        
+        if(items.length()>0){
+            items=items+","+choose_items.getValue().toString();
+        }
+        else{
+            items=choose_items.getValue().toString();
+        }
+
+        sales_textArea.setText(items);
+    }
+
+
     @FXML
     private Button cashier;
     @FXML
@@ -301,4 +462,29 @@ public class AnalysisController {
     private Button order_history;
     @FXML
     private Button log_out_button;
+
+    
+    ////////////////////SALES REPORT
+    @FXML
+    private Button sale_report_button;
+    @FXML
+    private Pane saleReport_pane;
+    @FXML
+    private ComboBox<String> choose_items;
+    @FXML
+    private DatePicker startTime;
+    @FXML
+    private DatePicker endTime;
+    @FXML
+    private Button confirm_button;
+    @FXML
+    private Button cancel_button;
+
+    @FXML
+    private Pane confirm_pane;
+    @FXML
+    private TextArea result_text;
+
+    @FXML
+    private TextArea sales_textArea;
 }
