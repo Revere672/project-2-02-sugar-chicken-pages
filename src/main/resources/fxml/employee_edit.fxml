@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EmployeeTable">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384862" height="75.0" opacity="0.3" stroke="#14141400" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
+      <Polygon fill="#384862" layoutX="510.0" layoutY="59.0" opacity="0.3" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -10.0, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ce123c" height="75.0" opacity="0.3" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="450.0" />
+      <Polygon fill="#ce123c" layoutX="459.0" layoutY="60.0" opacity="0.3" points="53.33331298828125, -60.0, -10.0, 15.000007629394531, -9.0, -60.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="WHITE" layoutX="44.0" layoutY="38.0" opacity="0.3" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+      <GridPane alignment="CENTER" layoutY="72.0" opacity="0.3" prefHeight="30.0" prefWidth="600.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="cashier" mnemonicParsing="false" onAction="#changeToCashier" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Cashier" textFill="WHITE" />
+            <Button fx:id="inventory" mnemonicParsing="false" onAction="#changeToInventory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Inventory" textFill="WHITE" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Employees" textFill="WHITE" GridPane.columnIndex="2" />
+            <Button fx:id="order_history" mnemonicParsing="false" onAction="#changeToOrderHistory" prefHeight="25.0" prefWidth="167.0" style="-fx-background-color: #ce123c; -fx-background-radius: 0;" text="Order History" textFill="WHITE" GridPane.columnIndex="3" />
+         </children>
+      </GridPane>
+      <TableView fx:id="employee_table" layoutX="30.0" layoutY="159.0" opacity="0.3" prefHeight="227.0" prefWidth="527.0">
+        <columns>
+          <TableColumn fx:id="employee_id_col" prefWidth="75.0" text="Employee ID" />
+          <TableColumn fx:id="name_col" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="email_col" prefWidth="75.0" text="Email" />
+            <TableColumn fx:id="role_col" prefWidth="75.0" text="Role" />
+            <TableColumn fx:id="Last_login_col" prefWidth="75.0" text="Last Login" />
+            <TableColumn fx:id="active_col" prefWidth="96.0" text="Active/Inactive" />
+            <TableColumn fx:id="edit_col" prefWidth="55.33331298828125" text="Edit" />
+        </columns>
+      </TableView>
+      <Text layoutX="104.0" layoutY="47.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee List">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button layoutX="483.0" layoutY="123.0" mnemonicParsing="false" opacity="0.3" text="+Add Employee" />
+      <Button fx:id="search_button" layoutX="191.0" layoutY="123.0" mnemonicParsing="false" onAction="#searchEmployee" opacity="0.3" prefHeight="25.0" prefWidth="52.0" text="Search" />
+      <Text layoutX="30.0" layoutY="115.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee List" wrappingWidth="101.33333333333348" />
+      <TextField fx:id="search_bar1" layoutX="29.0" layoutY="123.0" onAction="#searchEmployee" opacity="0.3" promptText="Search Bar" />
+      <Button fx:id="edit_button" layoutX="250.0" layoutY="123.0" mnemonicParsing="false" onAction="#editEmployee" opacity="0.3" prefHeight="25.0" prefWidth="52.0" text="Edit" />
+      <Pane layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+         <children>
+            <ChoiceBox fx:id="employee_dropdown" layoutX="96.0" layoutY="22.0" prefWidth="150.0" onAction="#fill_employee"/>
+            <ChoiceBox fx:id="status_dropdown" layoutX="96.0" layoutY="104.0" prefWidth="150.0" />
+            <TextField fx:id="edit_email" layoutX="96.0" layoutY="61.0" />
+            <Text layoutX="39.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+            <Text layoutX="38.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
+            <Text layoutX="29.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee" />
+            <Text layoutX="44.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
+            <Text layoutX="29.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Login" />
+            <Text layoutX="22.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee ID" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="95.0" layoutY="146.0" stroke="BLACK" strokeType="INSIDE" width="146.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="95.0" layoutY="210.0" stroke="BLACK" strokeType="INSIDE" width="146.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="95.0" layoutY="176.0" stroke="BLACK" strokeType="INSIDE" width="146.0" />
+            <Text fx:id="role_text" layoutX="155.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="login_text" layoutX="155.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="eid_text" layoutX="155.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Button fx:id="apply_button" layoutX="272.0" layoutY="74.0" mnemonicParsing="false" onAction="#Apply_button" text="Apply" />
+            <Button fx:id="cancel_button" layoutX="269.0" layoutY="159.0" mnemonicParsing="false" onAction="#Cancel_button" text="Cancel" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

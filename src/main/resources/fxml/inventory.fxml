@@ -61,7 +61,9 @@
          </font>
       </Text>
       <TextField fx:id="product_search" layoutX="15.0" layoutY="148.0" onAction="#searchInventory" opacity="0.3" promptText="Enter Product Name" />
+      <Button fx:id="restock_report_button" layoutX="491.0" layoutY="114.0" mnemonicParsing="false" onAction="#restockReport" opacity="0.3" text="Restock Report" />
       <Button fx:id="product_search_button" layoutX="173.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchInventory" opacity="0.3" prefHeight="25.0" prefWidth="60.0" text="Search" />
+      <Button fx:id="add_menu_item_button" layoutX="386.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMenuItem" opacity="0.3" text="+ Menu Item" />
       <Pane fx:id="add_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Button fx:id="add_button" layoutX="290.0" layoutY="218.0" mnemonicParsing="false" onAction="#add" text="Add" />
@@ -111,7 +113,17 @@
             <TextArea fx:id="failed_text2" editable="false" layoutX="111.0" layoutY="166.0" prefHeight="16.0" prefWidth="133.0" />
          </children>
       </Pane>
-      <Button fx:id="add_menu_item_button" layoutX="386.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMenuItem" opacity="0.3" text="+ Menu Item" />
+      <Pane fx:id="restock_pane" layoutX="123.0" layoutY="66.0" prefHeight="298.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+         <children>
+            <Text layoutX="111.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Report">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="restock_report_scrollable" editable="false" layoutX="23.0" layoutY="42.0" prefHeight="210.0" prefWidth="309.0" />
+            <Button fx:id="cancel_button3" layoutX="294.0" layoutY="263.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+         </children>
+      </Pane>
       <Pane fx:id="menu_item_pane" layoutX="123.0" layoutY="81.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Text layoutX="22.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name" />

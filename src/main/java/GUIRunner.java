@@ -1,9 +1,9 @@
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.io.InputStream;
 import java.util.Properties;
-import java.io.FileInputStream;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -3,7 +3,7 @@ Apple Pie Roll,600000,2.00,TRUE
 Beijing Beef,600001,0.00,TRUE
 Black Pepper Chicken,600002,0.00,TRUE
 Black Pepper Sirloin Steak,600003,1.50,TRUE
-Bourbon Chicken,600004,0.00,TRUE
+Special: Bourbon Chicken,600004,0.00,TRUE
 Broccoli Beef,600005,0.00,TRUE
 Chicken Eggroll,600006,2.00,TRUE
 Chicken Potsticker,600007,0.00,FALSE
@@ -30,3 +30,4 @@ Cream Cheese Rangoon,600023,2.00,TRUE
 Gatorade,600022,2.70,TRUE
 null,0,0.00,FALSE
 Water Bottle,600026,2.30,TRUE
+Water Cup,600027,0,TRUE

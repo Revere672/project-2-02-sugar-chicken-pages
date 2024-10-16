@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.util.Pair;
 
 public class DisplayReceipt {
 
@@ -21,6 +22,7 @@ public class DisplayReceipt {
     public static HashMap<String,Double> overarchingCosts;
     public static HashMap<String,Integer> numberOfSides;
     public static HashMap<String,Integer> numberOfProteins;
+    public static HashMap<String,ArrayList<Pair<Double, Integer>>> ingredients;
     public static final DecimalFormat df = new DecimalFormat("$0.00");
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -31,6 +33,17 @@ public class DisplayReceipt {
         ResultSet rs=DBUtil.dbExecuteQuery("SELECT MAX(order_id) FROM order_history;");
         rs.next();
         orderId = rs.getInt(1)+1;
+
+        ResultSet rsin=DBUtil.dbExecuteQuery("SELECT * FROM ingredients_needed;");
+        ingredients=new HashMap<>();
+        while(rsin.next()){
+            Pair<Double,Integer> values=new Pair<>(rsin.getDouble(3),rsin.getInt(2));
+            if(ingredients.get(rsin.getString(1))==null){
+                ingredients.put(rsin.getString(1), new ArrayList<Pair<Double,Integer>>());
+            }
+            ingredients.get(rsin.getString(1)).add(values);
+        }
+
 
         ResultSet rscost=DBUtil.dbExecuteQuery("SELECT Menu_Name,extra_cost FROM menu;");
         extraCostName=new ArrayList<>();
@@ -100,44 +113,39 @@ public class DisplayReceipt {
     public static void updateIngredients(Entry entry) throws SQLException, ClassNotFoundException{
         boolean half=entry.isHalfSide();
         if(entry.side1!=null){
-            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.side1+"'");
-            loopEntry(rs, half);
+            loopEntry(ingredients.get(entry.side1), half);
         }
         if(entry.side2!=null){
-            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.side2+"'");
-            loopEntry(rs, half);
+            loopEntry(ingredients.get(entry.side2), half);
         }
         if(entry.protien1!=null){
-            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.protien1+"'");
-            loopEntry(rs, half);
+            loopEntry(ingredients.get(entry.protien1), half);
         }
         if(entry.protien2!=null){
-            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.protien2+"'");
-            loopEntry(rs, half);
+            loopEntry(ingredients.get(entry.protien2), half);
         }
         if(entry.protien3!=null){
-            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.protien3+"'");
-            loopEntry(rs, half);
+            loopEntry(ingredients.get(entry.protien3), half);
         }
         if(entry.miscItem!=null){
-            ResultSet rs = DBUtil.dbExecuteQuery("SELECT Inventory_ID,quantity_needed FROM ingredients_needed WHERE menu_name = '"+entry.miscItem+"'");
-            loopEntry(rs, half);
+            loopEntry(ingredients.get(entry.miscItem), half);
         }
     }
     
-    public static void loopEntry(ResultSet rs,boolean half) throws SQLException, ClassNotFoundException{
-        while(rs.next()){
+    public static void loopEntry(ArrayList<Pair<Double, Integer>> rs,boolean half) throws SQLException, ClassNotFoundException{
+        if(rs==null){
+            return;
+        }
+        String amounts="";
+        for(Pair<Double, Integer> item:rs){
             if(half){
-                reduceInventory(rs.getDouble(2)*.5, rs.getInt(1));
+                amounts+="WHEN "+Integer.toString(item.getValue())+" THEN Quantity - "+Double.toString(item.getKey()*.5);
             }
             else{
-                reduceInventory(rs.getDouble(2), rs.getInt(1));
+                amounts+="WHEN "+Integer.toString(item.getValue())+" THEN Quantity - "+Double.toString(item.getKey());
             }
         }
-    }
-
-    public static void reduceInventory(double amount,int id) throws SQLException, ClassNotFoundException{
-        DBUtil.dbExecuteUpdate("UPDATE inventory SET Quantity = Quantity - "+amount+" WHERE inventory_id = "+id);
+        DBUtil.dbExecuteUpdate("UPDATE inventory SET Quantity = CASE inventory_id "+amounts+" ELSE Quantity END");
     }
 
 }

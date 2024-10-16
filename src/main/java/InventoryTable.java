@@ -1,32 +1,25 @@
+import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.AnchorPane;
-
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
-import javafx.scene.text.Text;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-//import javafx.scene.layout.Priority;
-import javafx.stage.Stage;
-
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-
-import java.io.IOException;
+import javafx.scene.text.Text;
 
 public class InventoryTable {
     @FXML
@@ -100,6 +93,12 @@ public class InventoryTable {
     private Button increment_button;
     @FXML
     private Button update_button;
+
+    @FXML
+    private Pane restock_pane;
+    @FXML
+    private TextArea restock_report_scrollable;
+
     @FXML
     private Button next_button;
     @FXML
@@ -167,6 +166,7 @@ public class InventoryTable {
         edit_pane.setVisible(false);
         add_pane.setVisible(false);
         update_pane.setVisible(false);
+        restock_pane.setVisible(false);
         menu_item_pane.setVisible(false);
         ingredient_needed_pane.setVisible(false);
         setBackground(false);
@@ -278,22 +278,21 @@ public class InventoryTable {
         restock_text2.setText(null);
         update2.setText(null);
         failed_text2.setText(null);
+        restock_report_scrollable.setText(null);
     }
 
     @FXML
     private void setBackground(Boolean value) {
         if (value) {
             main_inventory.getChildren().forEach(node -> {
-                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane)
-                        || node.equals(menu_item_pane) || node.equals(ingredient_needed_pane))) {
+                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(restock_pane) || node.equals(update_pane)|| node.equals(menu_item_pane) || node.equals(ingredient_needed_pane))) {
                     node.setOpacity(0.3);
                     node.setDisable(true);
                 }
             });
         } else {
             main_inventory.getChildren().forEach(node -> {
-                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane)
-                        || node.equals(menu_item_pane) || node.equals(ingredient_needed_pane))) {
+                if (!(node.equals(edit_pane) || node.equals(add_pane) || node.equals(update_pane) || node.equals(restock_pane)|| node.equals(menu_item_pane) || node.equals(ingredient_needed_pane))) {
                     node.setOpacity(1);
                     node.setDisable(false);
                 }
@@ -334,6 +333,20 @@ public class InventoryTable {
         setBackground(true);
         update_pane.setVisible(true);
         update2.requestFocus();
+    }
+
+    @FXML
+    private void restockReport(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        setBackground(true);
+        restock_pane.setVisible(true);
+
+        ObservableList<Restock> restockReport = InventoryDB.getRestockReport();
+        String full_report = "";
+        for (Restock r : restockReport) {
+            full_report += r.formattedString() + "\n\n";
+        }
+
+        restock_report_scrollable.setText(full_report);
     }
 
     // @FXML
@@ -469,10 +482,12 @@ public class InventoryTable {
         restock_text2.setText(null);
         update2.setText(null);
         failed_text2.setText(null);
+        restock_report_scrollable.setText(null);
         setBackground(false);
         edit_pane.setVisible(false);
         add_pane.setVisible(false);
         update_pane.setVisible(false);
+        restock_pane.setVisible(false);
         searchInventory(null);
         menu_item_pane.setVisible(false);
         ingredient_needed_pane.setVisible(false);
