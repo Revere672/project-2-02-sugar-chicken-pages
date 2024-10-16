@@ -39,7 +39,6 @@ public class EmployeeDB {
         try {
             ResultSet returned_Employee = DBUtil.dbExecuteQuery(selected_Employee);//Get ResultSet of the returned employees
             ObservableList<Employee> e_list = getEmployeeList(returned_Employee);//Send ResultSet to the getEmployeeList function and return the employee object
-            System.out.println(e_list.size());
             return e_list;
         } catch (SQLException error) {
             System.out.println("SQL select operation has been failed: " + error);
