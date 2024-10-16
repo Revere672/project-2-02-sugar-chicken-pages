@@ -72,7 +72,7 @@ public class CashierController implements Initializable {
 
     public static void deSelectAll(){
         for(ToggleButton t : selected){
-            System.out.println(t.getId());
+            //System.out.println(t.getId());
             t.setSelected(false);
         }
         selected.clear();
@@ -112,7 +112,7 @@ public class CashierController implements Initializable {
         int orderNum=1;
 
         for(Entry e:DisplayReceipt.entries){
-            System.out.println(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum));
+           // System.out.println(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum));
             DisplayReceipt.updateIngredients(e);
             DBUtil.dbExecuteUpdate(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum++));
         }
@@ -127,7 +127,7 @@ public class CashierController implements Initializable {
     }
 
     public void updateButtonStates() {
-        System.out.println(GUIRunner.isManager);
+        //System.out.println(GUIRunner.isManager);
         boolean isManager = GUIRunner.isManager;
         cashier.setDisable(!isManager);
         inventory.setDisable(!isManager);
@@ -191,7 +191,7 @@ public class CashierController implements Initializable {
 
     public void buttonPressedType(ActionEvent event) throws IOException{
         String buttonPressed = ((Node)event.getSource()).getId();
-        System.out.print(buttonPressed);
+        //System.out.print(buttonPressed);
         workingEntry=new Entry(new String[]{buttonPressed.replaceAll("-", " ")},DisplayReceipt.overarchingCosts.get(buttonPressed.replaceAll("-", " ")));
         DisplayReceipt.addEntry(workingEntry);
         ToggleButton pressed=((ToggleButton)event.getSource());

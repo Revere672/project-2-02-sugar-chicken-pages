@@ -1,5 +1,5 @@
-import java.sql.ResultSet;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
@@ -39,11 +39,11 @@ public class LogIn {
             GUIRunner.currentUser=rs.getInt(1);
             if(rs.getInt(1) >= 200000) {
                 GUIRunner.isManager = true;
-                System.out.println("This user is a Manager");
+                //System.out.println("This user is a Manager");
                 GUIRunner.changeScene("inventory");
             } else {
                 GUIRunner.isManager = false;
-                System.out.println("This user is a Cashier");
+                //System.out.println("This user is a Cashier");
                 GUIRunner.changeScene("cashier1");
 
             }

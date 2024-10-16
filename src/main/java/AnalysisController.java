@@ -3,12 +3,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Arrays;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,17 +17,11 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-
-import javafx.fxml.FXMLLoader;
-
-import java.io.IOException;
 
 public class AnalysisController {
     private Scene scene;    
@@ -106,6 +96,7 @@ public class AnalysisController {
         ((TextField)scene.lookup("#PlateSales")).setText("$"+values.get(9));
         ((TextField)scene.lookup("#BiggerPlateSales")).setText("$"+values.get(6));
         String addedValues=Double.toString(Double.parseDouble(values.get(8))+Double.parseDouble(values.get(5)));
+        //System.out.print(addedValues);
         ((TextField)scene.lookup("#OtherSales")).setText("$"+addedValues);
     }
     @FXML
