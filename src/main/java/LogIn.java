@@ -1,4 +1,5 @@
 import java.sql.ResultSet;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
@@ -14,8 +15,16 @@ public class LogIn {
     @FXML
     PasswordField password;
     @FXML
-    Button logInButton;
+    Button log_in_button;
 
+    @FXML
+    public void initialize() throws ClassNotFoundException, SQLException, IOException {
+        username.clear();
+        password.clear();
+        username.requestFocus();
+        GUIRunner.scenes.clear();
+        GUIBuilder build = new GUIBuilder();
+    }
     @FXML
     public void nextEntry(ActionEvent e) throws SQLException, ClassNotFoundException {
         password.requestFocus();
