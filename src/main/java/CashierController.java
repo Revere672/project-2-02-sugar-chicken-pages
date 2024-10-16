@@ -204,6 +204,15 @@ public class CashierController implements Initializable {
     }
 
     @FXML
+    public void logOut(ActionEvent e) {
+        GUIRunner.currentUser = 0;  
+        GUIRunner.isManager = false; 
+
+        GUIRunner.changeScene("login");
+        System.out.println("Logout sucessful");
+    }
+
+    @FXML
     private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("employees");
     }
@@ -345,4 +354,6 @@ public class CashierController implements Initializable {
     @FXML
     private ToggleButton button_sweet_fire_chicken;
 
+    @FXML
+    private Button logoutButton;
 }
