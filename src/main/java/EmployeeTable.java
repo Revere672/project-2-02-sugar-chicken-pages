@@ -334,13 +334,4 @@ public class EmployeeTable {
         GUIRunner.stage.setScene(login);
         GUIRunner.stage.show();
     }
-
-    @FXML
-    public void logOut(ActionEvent e) {
-        GUIRunner.currentUser = 0;  
-        GUIRunner.isManager = false; 
-
-        GUIRunner.changeScene("login");
-        System.out.println("Logout successful");
-    }
 }
