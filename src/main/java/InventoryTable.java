@@ -23,6 +23,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * Controller class for handling the inventory table and components.
+ * @author Reeve Baker
+ */
 public class InventoryTable {
     @FXML
     private AnchorPane main_inventory;
@@ -145,6 +149,13 @@ public class InventoryTable {
 
     private int product_ID;
 
+    /**
+     * Handles the event to search the SQL database for a given product.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void searchInventory(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         try {
@@ -161,6 +172,13 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to search the SQL database to retrieve all items in the inventory.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void searchInventories(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
@@ -173,6 +191,12 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Initializes the inventory screen and table.
+     * 
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
         edit_pane.setVisible(false);
@@ -294,6 +318,11 @@ public class InventoryTable {
         restock_report_scrollable.setText(null);
     }
 
+    /**
+     * Enables the background and sets the opacity when a new Pane pops up.
+     * 
+     * @param value Disables and enables the background of the inventory screen.
+     */
     @FXML
     private void setBackground(Boolean value) {
         if (value) {
@@ -313,6 +342,12 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Populates the inventory table with a single inventory item.
+     * 
+     * @param inventory The inventory item to show in the inventory table.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void populateInventory(Inventory inventory) throws ClassNotFoundException {
         if (inventory != null) {
@@ -322,11 +357,24 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Populates the inventory with a list of products.
+     * 
+     * @param inventoryData List of products to show in the inventory table.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void populateInventories(ObservableList<Inventory> inventoryData) throws ClassNotFoundException {
         inventory_table.setItems(inventoryData);
     }
 
+    /**
+     * Handles the event to enable the Pane to add a product to the inventory.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void addProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(true);
@@ -334,6 +382,13 @@ public class InventoryTable {
         product_name_text1.requestFocus();
     }
 
+    /**
+     * Handles the event to enable the Pane to edit a product in the inventory.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void editProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(true);
@@ -341,6 +396,13 @@ public class InventoryTable {
         product_name_text.requestFocus();
     }
 
+    /**
+     * Handles the event to enable the Pane to update the quantity of a product in stock.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void updateProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(true);
@@ -348,6 +410,13 @@ public class InventoryTable {
         update2.requestFocus();
     }
 
+    /**
+     * Handles the event to enable and generate the Pane to show the restock report.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void restockReport(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(true);
@@ -386,6 +455,13 @@ public class InventoryTable {
     // }
     // }
 
+    /**
+     * Handles the event to generate the product information for the Edit Pane.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void fillProduct(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
@@ -400,6 +476,13 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to generate the product information in the Update Pane.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void fillUpdate(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
@@ -413,6 +496,13 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to insert a new product into the inventory table.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void add(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if (product_name_text1.getText() == "" || supplier_text1.getText() == "" || cost_text1.getText() == ""
@@ -438,6 +528,13 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to update the given product with the new information.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void apply(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if (product_name_text.getText() == "" || supplier_text.getText() == "" || cost_text.getText() == ""
@@ -460,6 +557,13 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to update the product with the new quantity after restock.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void update(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if (Double.parseDouble(quantity_text2.getText()) < 0) {
@@ -477,6 +581,13 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to close the current Pane being shown.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void cancel(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         product_name_text.setText(null);
@@ -506,12 +617,26 @@ public class InventoryTable {
         ingredient_needed_pane.setVisible(false);
     }
 
+    /**
+     * Handles the event to close the Igredient Needed Pane.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void cancelIngredientNeededPane(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         ingredient_needed_pane.setVisible(false);
         setBackground(false);
     }
 
+    /**
+     * Handles the event to close the Menu Item Pane.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void cancelMenuItemPane(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         menu_item_pane.setVisible(false);
@@ -520,22 +645,38 @@ public class InventoryTable {
         setBackground(false);
     }
 
+    /**
+     * Generates failed text for invalid input.
+     */
     @FXML
     private void addFailed() {
         failed_text.setText("One or more entries are blank");
         failed_text1.setText("One or more entries are blank");
     }
 
+    /**
+     * Generates failed text for invalid input.
+     */
     @FXML
     private void updateFailed() {
         failed_text2.setText("Quantity cannot be negative");
     }
 
+    /**
+     * Generates failed text for invalid input.
+     */
     @FXML
     private void changeQuantityFailed() {
         failed_text2.setText("Cannot increment/decrement by a negative");
     }
 
+    /**
+     * Handles the event to increment the product quantity by a given amount.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void increment(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         double amount = 0.0;
@@ -551,6 +692,13 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to decrement the product quantity by a given amount.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void decrement(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         double amount = 0.0;
@@ -566,46 +714,109 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to focus to the supplier text.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void nameEditEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         supplier_text.requestFocus();
     }
 
+    /**
+     * Handles the event to focus to the cost text.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void supplierEditEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         cost_text.requestFocus();
     }
 
+    /**
+     * Handles the event to focus to the restock text.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void costEditEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         restock_text.requestFocus();
     }
 
+    /**
+     * Handles the event to focus to the apply button.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void restockEditEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         apply_button.requestFocus();
     }
 
+    /**
+     * Handles the event to focus to the supplier text.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void nameAddEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         supplier_text1.requestFocus();
     }
 
+    /**
+     * Handles the event to focus to the cost text.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void supplierAddEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         cost_text1.requestFocus();
     }
 
+    /**
+     * Handles the event to focus to the quantity text.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void costAddEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         quantity_text1.requestFocus();
     }
 
+    /**
+     * Handles the event to focus to the restock text.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void quantityAddEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         restock_text1.requestFocus();
     }
 
+    /**
+     * Handles the event to focus to the add button.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void restockAddEnter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         add_button.requestFocus();
@@ -675,6 +886,13 @@ public class InventoryTable {
         GUIRunner.stage.show();
     }
 
+    /**
+     * Handles the event to set up the Pane to add a new Menu Item.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void addMenuItem(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(true);
@@ -686,6 +904,14 @@ public class InventoryTable {
         type_of_item_dropdown.getItems().add("Misc");
     }
 
+    /**
+     * Handles the event to add a new menu item.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @throws IOException if a an I/O error occurs.
+     */
     @FXML
     private void addToMenu(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException{
         if (item_name_text.getText() == "" || extra_cost_text.getText() == "") {
@@ -730,6 +956,13 @@ public class InventoryTable {
         CashierController.buildGrids(cashier1,cashier2);
     }
 
+    /**
+     * Handles the event to add ingredients to a new menu item.
+     * 
+     * @param actionEvent The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void addToIngredientsNeeded(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if (ingredient_name_text.getText() == "" || quantity_needed_text.getText() == "") {
@@ -749,6 +982,13 @@ public class InventoryTable {
         }
     }
 
+    /**
+     * Handles the event to open the Pane that sets a menu item to inactive.
+     * 
+     * @param event The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML 
     private void setInactive(ActionEvent event) throws SQLException, ClassNotFoundException{
         inactive_item_pane.setVisible(true);
@@ -762,6 +1002,14 @@ public class InventoryTable {
         item_name_dropdown.getItems().addAll(menu_items);
     }
 
+    /**
+     * Handles the event to set a menu item inactive.
+     * 
+     * @param event The action event.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     private void makeItemInactive(ActionEvent event) throws SQLException, ClassNotFoundException, IOException{
         String setInactive = "UPDATE menu SET active='" + false + "' WHERE menu_name='"

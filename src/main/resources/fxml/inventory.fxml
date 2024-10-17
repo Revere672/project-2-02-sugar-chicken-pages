@@ -6,6 +6,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,9 +18,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 
 <AnchorPane fx:id="main_inventory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryTable">
    <children>
@@ -69,6 +68,7 @@
       <Button fx:id="product_search_button" layoutX="173.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchInventory" opacity="0.3" prefHeight="25.0" prefWidth="60.0" text="Search" />
       <Button fx:id="set_inactive" layoutX="390.0" layoutY="114.0" mnemonicParsing="false" onAction="#setInactive" text="Set Inactive" />
       <Button fx:id="add_menu_item_button" layoutX="386.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMenuItem" opacity="0.3" text="+ Menu Item" />
+      <Button fx:id="add_menu_item_button" layoutX="386.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMenuItem" opacity="0.3" text="+ Menu Item" />
       <Pane fx:id="add_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Button fx:id="add_button" layoutX="290.0" layoutY="218.0" mnemonicParsing="false" onAction="#add" text="Add" />
@@ -101,7 +101,7 @@
             <TextArea fx:id="failed_text" editable="false" layoutX="76.0" layoutY="159.0" prefHeight="40.0" prefWidth="203.0" />
          </children>
       </Pane>
-      <Pane fx:id="update_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
+      <Pane fx:id="update_pane" layoutX="113.0" layoutY="71.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
          <children>
             <Text layoutX="157.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product" />
             <Button fx:id="update_button" layoutX="185.0" layoutY="218.0" mnemonicParsing="false" onAction="#update" text="Update" />
@@ -129,7 +129,6 @@
             <Button fx:id="cancel_button3" layoutX="294.0" layoutY="263.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
          </children>
       </Pane>
-      <Button fx:id="add_menu_item_button" layoutX="386.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMenuItem" opacity="0.3" text="+ Menu Item" />
       <Pane fx:id="menu_item_pane" layoutX="123.0" layoutY="81.0" prefHeight="257.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Text layoutX="22.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name" />
@@ -162,7 +161,7 @@
             <ChoiceBox fx:id="item_name_dropdown" layoutX="111.0" layoutY="37.0" prefWidth="150.0" />
          </children>
       </Pane>
-      <Pane fx:id="restock_pane" layoutX="123.0" layoutY="66.0" prefHeight="298.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);">
+      <Pane fx:id="restock_pane" layoutX="123.0" layoutY="66.0" prefHeight="298.0" prefWidth="355.0" style="-fx-background-color: rgb(180,180,180);" visible="false">
          <children>
             <Text layoutX="111.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restock Report">
                <font>
