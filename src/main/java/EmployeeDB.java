@@ -5,9 +5,10 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/*
+/**
  * Class used for handling database operations relating to employees and their information.
  * Operations include: searching, updating, inserting, and returning employee information
+ * @author Alexey Bobkov
  */
 public class EmployeeDB {
 

@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 /**
  * This class constructs the basic GUI properties for the employee screen where you can view/edit employees in the database
+ * @author Alexey Bobkov
  */
 public class EmployeeTable {
     @FXML
