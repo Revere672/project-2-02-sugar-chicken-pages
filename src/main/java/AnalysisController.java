@@ -23,121 +23,174 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
+/**
+ * Controller class for handling analysis page actions.
+ * @author Aidan Briggs
+ */
 public class AnalysisController {
     private Scene scene;    
+
+    /**
+     * Enum representing different query levels.
+     */
     enum QueryLevel {
         ONE,
         SIX,
         DAY
     }
 
-
-    public static ArrayList<String> xReportDB() throws ClassNotFoundException, SQLException{
-        ResultSet lastZ= DBUtil.dbExecuteQuery("SELECT * FROM z_report");
+    /**
+     * Generates an X report from the database.
+     * 
+     * @return An ArrayList of Strings containing report data.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
+    public static ArrayList<String> xReportDB() throws ClassNotFoundException, SQLException {
+        ResultSet lastZ = DBUtil.dbExecuteQuery("SELECT * FROM z_report");
         lastZ.next();
-        Timestamp lastZReport=lastZ.getTimestamp(1);
+        Timestamp lastZReport = lastZ.getTimestamp(1);
 
-        ResultSet currentDate =DBUtil.dbExecuteQuery("SELECT CURRENT_TIMESTAMP");
+        ResultSet currentDate = DBUtil.dbExecuteQuery("SELECT CURRENT_TIMESTAMP");
         currentDate.next();
 
-        ResultSet rs= DBUtil.dbExecuteQuery("WITH last_day (order_id) AS ( SELECT order_id FROM order_history WHERE order_time > '"+lastZReport+"')" + 
+        ResultSet rs = DBUtil.dbExecuteQuery("WITH last_day (order_id) AS ( SELECT order_id FROM order_history WHERE order_time > '" + lastZReport + "')" + 
                         "SELECT Item_Name, SUM(Item_Cost) FROM Order_Items JOIN last_day ON Order_Items.Order_Id = last_day.order_id GROUP BY Item_Name;");
                         
-        ResultSet rsTotal =DBUtil.dbExecuteQuery("SELECT SUM(Total_Price),Count(*) FROM order_history WHERE order_time>'"+lastZReport+"'");
+        ResultSet rsTotal = DBUtil.dbExecuteQuery("SELECT SUM(Total_Price), Count(*) FROM order_history WHERE order_time > '" + lastZReport + "'");
         rsTotal.next();
-        ArrayList<String> result=new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
         
-        double differenceInHours = (currentDate.getTimestamp(1).getTime() - lastZReport.getTime())/60000/60;
+        double differenceInHours = (currentDate.getTimestamp(1).getTime() - lastZReport.getTime()) / 6000 / 60;
         
         result.add(lastZReport.toString());
         result.add(currentDate.getTimestamp(1).toString());
         result.add(Integer.toString(rsTotal.getInt(2)));
-        result.add(Double.toString(Math.round((rsTotal.getInt(2)/differenceInHours) * 100) / 100));
+        result.add(Double.toString(Math.round((rsTotal.getInt(2) / differenceInHours) * 100) / 100));
         result.add(Double.toString(rsTotal.getDouble(1)));
+        System.out.print(result.get(3));
 
-        boolean flag=true;
-        for(int x=0;x<5;x++){
-            if(flag&&rs.next()){
+        boolean flag = true;
+        for (int x = 0; x < 5; x++) {
+            if (flag && rs.next()) {
                 result.add(Double.toString(rs.getDouble(2)));
-            }
-            else{
+            } else {
                 result.add("0.0");
-                flag=false;
+                flag = false;
             }
         }
         
         return result;
     }
-    public static ArrayList<String> zReportDB() throws ClassNotFoundException, SQLException{
-        ArrayList<String> result=xReportDB();
+
+    /**
+     * Generates a Z report from the database and updates the last report time.
+     * 
+     * @return An ArrayList of Strings containing report data.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
+    public static ArrayList<String> zReportDB() throws ClassNotFoundException, SQLException {
+        ArrayList<String> result = xReportDB();
         
-        DBUtil.dbExecuteUpdate("UPDATE z_report SET last_report = \'"+result.get(1)+"\'");
+        DBUtil.dbExecuteUpdate("UPDATE z_report SET last_report = '" + result.get(1) + "'");
 
         return result;
     }
     
+    /**
+     * Handles the action event for generating an X report.
+     * 
+     * @param event The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void xReport(ActionEvent event) throws SQLException, ClassNotFoundException {
-        scene=((Node)event.getSource()).getScene();
+        scene = ((Node) event.getSource()).getScene();
 
-        ((TextField)scene.lookup("#Title")).setText("X Report");
+        ((TextField) scene.lookup("#Title")).setText("X Report");
 
         scene.lookup("#ReportPage").setDisable(false);
         scene.lookup("#ReportPage").setOpacity(1);
         ArrayList<String> values = xReportDB();
-        ((TextField)scene.lookup("#StartTime")).setText(values.get(0).replaceAll("\\..*",""));
-        ((TextField)scene.lookup("#EndTime")).setText(values.get(1).replaceAll("\\..*",""));
+        ((TextField) scene.lookup("#StartTime")).setText(values.get(0).replaceAll("\\..*", ""));
+        ((TextField) scene.lookup("#EndTime")).setText(values.get(1).replaceAll("\\..*", ""));
 
-        ((TextField)scene.lookup("#OrdersPlaced")).setText(values.get(2));
-        ((TextField)scene.lookup("#TotalSales")).setText("$"+values.get(4));
-        ((TextField)scene.lookup("#SalesPerHour")).setText(values.get(3));
+        ((TextField) scene.lookup("#OrdersPlaced")).setText(values.get(2));
+        ((TextField) scene.lookup("#TotalSales")).setText("$" + values.get(4));
+        ((TextField) scene.lookup("#SalesPerHour")).setText(values.get(3));
 
-        ((TextField)scene.lookup("#BowlSales")).setText("$"+values.get(7));
-        ((TextField)scene.lookup("#PlateSales")).setText("$"+values.get(9));
-        ((TextField)scene.lookup("#BiggerPlateSales")).setText("$"+values.get(6));
-        String addedValues=Double.toString(Double.parseDouble(values.get(8))+Double.parseDouble(values.get(5)));
-        //System.out.print(addedValues);
-        ((TextField)scene.lookup("#OtherSales")).setText("$"+addedValues);
+        ((TextField) scene.lookup("#BowlSales")).setText("$" + values.get(7));
+        ((TextField) scene.lookup("#PlateSales")).setText("$" + values.get(9));
+        ((TextField) scene.lookup("#BiggerPlateSales")).setText("$" + values.get(6));
+        String addedValues = Double.toString(Double.parseDouble(values.get(8)) + Double.parseDouble(values.get(5)));
+        ((TextField) scene.lookup("#OtherSales")).setText("$" + addedValues);
     }
+
+    /**
+     * Handles the action event for generating a Z report.
+     * 
+     * @param event The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void zReport(ActionEvent event) throws SQLException, ClassNotFoundException {
-        scene=((Node)event.getSource()).getScene();
+        scene = ((Node) event.getSource()).getScene();
 
-        ((TextField)scene.lookup("#Title")).setText("Z Report");
+        ((TextField) scene.lookup("#Title")).setText("Z Report");
 
         scene.lookup("#ReportPage").setDisable(false);
         scene.lookup("#ReportPage").setOpacity(1);
         ArrayList<String> values = zReportDB();
-        ((TextField)scene.lookup("#StartTime")).setText(values.get(0).replaceAll("\\..*",""));
-        ((TextField)scene.lookup("#EndTime")).setText(values.get(1).replaceAll("\\..*",""));
+        ((TextField) scene.lookup("#StartTime")).setText(values.get(0).replaceAll("\\..*", ""));
+        ((TextField) scene.lookup("#EndTime")).setText(values.get(1).replaceAll("\\..*", ""));
 
-        ((TextField)scene.lookup("#OrdersPlaced")).setText(values.get(2));
-        ((TextField)scene.lookup("#TotalSales")).setText("$"+values.get(4));
-        ((TextField)scene.lookup("#SalesPerHour")).setText(values.get(3));
+        ((TextField) scene.lookup("#OrdersPlaced")).setText(values.get(2));
+        ((TextField) scene.lookup("#TotalSales")).setText("$" + values.get(4));
+        ((TextField) scene.lookup("#SalesPerHour")).setText(values.get(3));
 
-        ((TextField)scene.lookup("#BowlSales")).setText("$"+values.get(7));
-        ((TextField)scene.lookup("#PlateSales")).setText("$"+values.get(9));
-        ((TextField)scene.lookup("#BiggerPlateSales")).setText("$"+values.get(6));
-        String addedValues=Double.toString(Double.parseDouble(values.get(8))+Double.parseDouble(values.get(5)));
-        ((TextField)scene.lookup("#OtherSales")).setText("$"+addedValues);
+        ((TextField) scene.lookup("#BowlSales")).setText("$" + values.get(7));
+        ((TextField) scene.lookup("#PlateSales")).setText("$" + values.get(9));
+        ((TextField) scene.lookup("#BiggerPlateSales")).setText("$" + values.get(6));
+        String addedValues = Double.toString(Double.parseDouble(values.get(8)) + Double.parseDouble(values.get(5)));
+        ((TextField) scene.lookup("#OtherSales")).setText("$" + addedValues);
     }
 
+    /**
+     * Handles the action event for opening the graph page.
+     * 
+     * @param event The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
-    private void openGraph(ActionEvent event) throws SQLException, ClassNotFoundException{
-        scene=((Node)event.getSource()).getScene();
+    private void openGraph(ActionEvent event) throws SQLException, ClassNotFoundException {
+        scene = ((Node) event.getSource()).getScene();
         scene.lookup("#GraphPage").setDisable(false);
         scene.lookup("#GraphPage").setOpacity(1);
         scene.lookup("#GraphPage").setVisible(true);
-        ChoiceBox box=((ChoiceBox)scene.lookup("#InventoryBox"));
+        ChoiceBox box = ((ChoiceBox) scene.lookup("#InventoryBox"));
 
-        if(box.getItems().isEmpty()){
-            ResultSet rs=DBUtil.dbExecuteQuery("SELECT * FROM inventory;");
-            while(rs.next()){
+        if (box.getItems().isEmpty()) {
+            ResultSet rs = DBUtil.dbExecuteQuery("SELECT * FROM inventory;");
+            while (rs.next()) {
                 box.getItems().add(rs.getString(2));
             }
         }
     }
 
+    /**
+     * Handles the action event for opening the graph page.
+     * 
+     * @param start The start time for the graph
+     * @param end The end time for the graph
+     * @param productName The name of the product you want to check
+     * @param q The level of fidelity that you want to check at
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     private ResultSet runGraphQuery(Timestamp start,Timestamp end,String productName,QueryLevel ql)throws SQLException, ClassNotFoundException{
         String query="WITH Hour_Range AS ("+
     "SELECT generate_series("+
@@ -192,6 +245,13 @@ public class AnalysisController {
        return DBUtil.dbExecuteQuery(query);
     }
 
+    /**
+     * Handles the action event for displaying the graph page.
+     * 
+     * @param event The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void displayGraph(ActionEvent event)throws SQLException, ClassNotFoundException {
         scene=((Node)event.getSource()).getScene();
@@ -238,6 +298,13 @@ public class AnalysisController {
         
     }
 
+    /**
+     * Handles the action event for adding newly selected events.
+     * 
+     * @param event The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void choiceBoxed(ActionEvent event){
         scene=((Node)event.getSource()).getScene();
@@ -252,6 +319,11 @@ public class AnalysisController {
         ((TextArea)scene.lookup("#AllItems")).setText(items);
     }
 
+    /**
+     * Handles the action event for closing the report page.
+     * 
+     * @param event The action event.
+     */
     @FXML
     private void closeReport(ActionEvent event){
         scene=((Node)event.getSource()).getScene();
@@ -259,6 +331,11 @@ public class AnalysisController {
         scene.lookup("#ReportPage").setOpacity(0);
     }
 
+    /**
+     * Handles the action event for closing the graph page.
+     * 
+     * @param event The action event.
+     */
     @FXML
     private void closeGraph(ActionEvent event){
         scene=((Node)event.getSource()).getScene();
@@ -270,23 +347,63 @@ public class AnalysisController {
         ((TextArea)scene.lookup("#AllItems")).clear();
     }
 
+
+    /**
+     * Handles the action event for changing the scene to the employees view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("employees");
     }
+
+    /**
+     * Handles the action event for changing the scene to the inventory view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("inventory");
     }
+
+    /**
+     * Handles the action event for changing the scene to the order history view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-         GUIRunner.changeScene("order_history");
+        GUIRunner.changeScene("order_history");
     }
+
+    /**
+     * Handles the action event for changing the scene to the cashier view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("cashier1");
-   }
+    }
 
+    /**
+     * Handles the action event for logging out and changing the scene to the login view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));

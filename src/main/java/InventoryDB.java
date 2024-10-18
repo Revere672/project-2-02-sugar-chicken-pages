@@ -2,8 +2,20 @@ import java.sql.*;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
+/**
+ * Class for generating and sending SQL queries to the database.
+ * @author Reeve Baker
+ */
 public class InventoryDB {
     
+    /**
+     * Searches the database for a product in the inventory table.
+     * 
+     * @param product_name Name of the product.
+     * @return A list of the products similar to the product name.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static ObservableList<Inventory> searchInventory(String product_name) throws SQLException, ClassNotFoundException {
         String stmt = "SELECT * FROM inventory WHERE product_name LIKE '%"+product_name+"%' ORDER BY inventory_id ASC;";
 
@@ -18,6 +30,13 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Gets the inventory item from a result set.
+     * 
+     * @param rsInventory A result set of an inventory item.
+     * @return An inventory object.
+     * @throws SQLException if a database access error occurs.
+     */
     private static Inventory getInventoryResult(ResultSet rsInventory) throws SQLException {
         Inventory inventory = null;
 
@@ -33,6 +52,13 @@ public class InventoryDB {
         return inventory;
     }
 
+    /**
+     * Creates a menu object from a result set.
+     * 
+     * @param rsMenu A result set containing a menu item.
+     * @return A menu item object.
+     * @throws SQLException if a database access error occurs.
+     */
     private static Menu getMenuResult(ResultSet rsMenu) throws SQLException {
         Menu menu = null;
 
@@ -47,6 +73,13 @@ public class InventoryDB {
         return menu;
     }
 
+    /**
+     * Searches the database for a all products in the inventory table.
+     * 
+     * @return A list of all the products in the inventory.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static ObservableList<Inventory> searchInventories() throws SQLException, ClassNotFoundException {
         String stmt = "SELECT * FROM inventory ORDER BY inventory_id ASC;";
 
@@ -61,6 +94,14 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Creates a list of inventory objects from a result set.
+     * 
+     * @param rsInventory A result set of a list of inventory items.
+     * @return A list of all the inventory objects in the result set.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     private static ObservableList<Inventory> getInventoryList(ResultSet rsInventory) throws SQLException, ClassNotFoundException {
         ObservableList<Inventory> inventoryList = FXCollections.observableArrayList();
 
@@ -77,6 +118,17 @@ public class InventoryDB {
         return inventoryList;
     }
 
+    /**
+     * Inserts a new product into the inventory database.
+     * 
+     * @param product_name Name of the product.
+     * @param supplier Supplier for the product.
+     * @param cost Cost of the product
+     * @param quantity Quantity of the product.
+     * @param restock_quantity Restock amount to set the quantity to.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static void insertProduct(String product_name, String supplier, String cost, String quantity, String restock_quantity) throws SQLException, ClassNotFoundException {
         String idStmt = "SELECT * FROM inventory ORDER BY inventory_ID DESC LIMIT 1;";
         ResultSet rs = DBUtil.dbExecuteQuery(idStmt);
@@ -91,6 +143,15 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Inserts a new menu item into the menu database.
+     * 
+     * @param menu_name Name of the menu item.
+     * @param extra_cost Extra cost of a menu item.
+     * @param type Type of the menu item.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static void insertMenuItem(String menu_name, String extra_cost, String type) throws SQLException, ClassNotFoundException {
         String idStmt = 
         "SELECT " +
@@ -124,6 +185,15 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Inserts a new ingredient into the ingredients needed database.
+     * 
+     * @param menu_name Name of the menu item.
+     * @param product_name Name of the product.
+     * @param quantity_needed Amount of product to be used in the menu item.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static void insertIngredientsNeeded(String menu_name, String product_name, String quantity_needed) throws SQLException, ClassNotFoundException {
         try {
         String idStmt = "SELECT * FROM inventory WHERE product_name = '"+product_name+"';";
@@ -139,6 +209,17 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Updates a product with the new information in the database.
+     * 
+     * @param product_ID ID of the product.
+     * @param product_name Name of the product.
+     * @param supplier Supplier for the product.
+     * @param cost Cost of the product
+     * @param restock_quantity Restock amount to set the quantity to.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static void editProduct(int product_ID, String product_name, String supplier, String cost, String restock_quantity) throws SQLException, ClassNotFoundException {
         String stmt = "UPDATE inventory SET product_name='"+product_name+"', supplier='"+supplier+"', cost='"+cost+"', restock_quantity='"+restock_quantity+"' WHERE inventory_id='"+product_ID+"';";
 
@@ -149,6 +230,14 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Updates the quantity amount of a product in the database.
+     * 
+     * @param product_ID ID of the product.
+     * @param quantity Quantity of the product.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static void updateRestock(int product_ID, double quantity) throws SQLException, ClassNotFoundException {
         String stmt = "UPDATE inventory SET quantity='"+quantity+"' WHERE inventory_id='"+product_ID+"';";
 
@@ -159,6 +248,14 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Gets a product by product_ID from the database.
+     * 
+     * @param product_ID ID of the product.
+     * @return An inventory object matching the product_ID.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static Inventory findProduct(int product_ID) throws SQLException, ClassNotFoundException {
         try {
             String findStmt = "SELECT * FROM inventory WHERE inventory_id='"+product_ID+"';";
@@ -170,6 +267,14 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Searches the database for a the restock of a product in the inventory table.
+     * 
+     * @param product_ID ID of the product.
+     * @return The restock amount of the product.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static double getRestock(int product_ID) throws SQLException, ClassNotFoundException {
         try {
             String findStmt = "SELECT * FROM inventory WHERE inventory_id='"+product_ID+"';";
@@ -184,6 +289,14 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Searches the database for the quantity of a product in the inventory table.
+     * 
+     * @param product_ID ID of the product.
+     * @return The quantity of the product.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static double getQuantity(int product_ID) throws SQLException, ClassNotFoundException {
         try {
             String findStmt = "SELECT * FROM inventory WHERE inventory_id='"+product_ID+"';";
@@ -198,6 +311,13 @@ public class InventoryDB {
         }
     }
 
+    /**
+     * Generates a list of restock objects for the restock report.
+     * 
+     * @return A list of restock objects.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     public static ObservableList<Restock> getRestockReport() throws SQLException, ClassNotFoundException {
         ObservableList<Restock> restockList = FXCollections.observableArrayList();
         try {

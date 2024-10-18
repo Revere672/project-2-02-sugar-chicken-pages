@@ -27,107 +27,162 @@ public class CashierController implements Initializable {
     public static String special;
     public static Font butFont=new Font("Arial",8.3);;
 
-    static class Tuple3{
+    /**
+     * A class representing a tuple of three integers.
+     */
+    static class Tuple3 {
         public Integer x;
         public Integer y;
         public Integer change;
-        public Tuple3(int a,int b,int c){
-            x=a;
-            y=b;
-            change=c;
+
+        /**
+         * Constructs a Tuple3 with the specified values.
+         *
+         * @param a the first value
+         * @param b the second value
+         * @param c the third value
+         */
+        public Tuple3(int a, int b, int c) {
+            x = a;
+            y = b;
+            change = c;
         }
     }
 
-    public void switch_to_cashier1(ActionEvent event) throws IOException{
+    /**
+     * Switches the scene to the cashier1 view.
+     *
+     * @param event the action event
+     * @throws IOException if an I/O error occurs
+     */
+    public void switch_to_cashier1(ActionEvent event) throws IOException {
         scene = GUIRunner.changeScene("cashier1");
         DisplayReceipt.updateRecipt(scene);
     }
 
-    
-    public Scene switch_to_cashier2(ActionEvent event) throws IOException{
+    /**
+     * Switches the scene to the cashier2 view.
+     *
+     * @param event the action event
+     * @return the new scene
+     * @throws IOException if an I/O error occurs
+     */
+    public Scene switch_to_cashier2(ActionEvent event) throws IOException {
         scene = GUIRunner.changeScene("cashier2");
         DisplayReceipt.updateRecipt(scene);
         return scene;
     }
 
-    public void addToOrder(ActionEvent event) throws IOException{
+    /**
+     * Adds the current working entry to the order and updates the scene.
+     *
+     * @param event the action event
+     * @throws IOException if an I/O error occurs
+     */
+    public void addToOrder(ActionEvent event) throws IOException {
         DisplayReceipt.addEntry(workingEntry);
 
-        scene = ((Node)event.getSource()).getScene();
+        scene = ((Node) event.getSource()).getScene();
         DisplayReceipt.updateRecipt(scene);
-        ((Node)event.getSource()).setOpacity(0);
-        ((Node)event.getSource()).setDisable(true);
+        ((Node) event.getSource()).setOpacity(0);
+        ((Node) event.getSource()).setDisable(true);
         deSelectAll();
         switch_to_cashier1(event);
-        workingEntry=null;
+        workingEntry = null;
     }
 
-    public void done(ActionEvent event) throws IOException{
+    /**
+     * Completes the current action and switches to the cashier1 view.
+     *
+     * @param event the action event
+     * @throws IOException if an I/O error occurs
+     */
+    public void done(ActionEvent event) throws IOException {
         deSelectAll();
-        ((Node)event.getSource()).setOpacity(0);
-        ((Node)event.getSource()).setDisable(true);
-        workingEntry=null;
+        ((Node) event.getSource()).setOpacity(0);
+        ((Node) event.getSource()).setDisable(true);
+        workingEntry = null;
         switch_to_cashier1(event);
     }
 
-    public static void deSelectAll(){
-        for(ToggleButton t : selected){
-            //System.out.println(t.getId());
+    /**
+     * Deselects all selected toggle buttons.
+     */
+    public static void deSelectAll() {
+        for (ToggleButton t : selected) {
             t.setSelected(false);
         }
         selected.clear();
-   }
-
-   public static void deSelect(String s){
-        for(ToggleButton t : selected){
-            if(t.getId().equals(s)){
-            t.setSelected(false);
-            }
-        }
-   }
-
-   public void undo(ActionEvent event){
-        ArrayList<Entry> entries=DisplayReceipt.getEntries();
-        if(entries.isEmpty()){
-            return;
-        }
-        DisplayReceipt.subtotal-=entries.get(entries.size()-1).price;
-        entries.remove(entries.size()-1);
-        scene=((Node)event.getSource()).getScene();
-        DisplayReceipt.updateRecipt(scene);
-   }
-
-    public void FinishOrder(ActionEvent event) throws IOException, SQLException, ClassNotFoundException{
-        if(DisplayReceipt.getEntries().isEmpty()){
-            return;
-        }
-        ResultSet rs=DBUtil.dbExecuteQuery("SELECT MAX(order_id) FROM order_history;");
-        rs.next();
-        DisplayReceipt.orderId = rs.getInt(1)+1;
-        
-        DBUtil.dbExecuteUpdate("INSERT INTO Order_History VALUES ("+DisplayReceipt.orderId+",\'"+DisplayReceipt.dateFormat.format(new Date())+"\',"+(DisplayReceipt.subtotal*1.0875)+","+GUIRunner.currentUser+")");
-
-        
-        String itemSQL="INSERT INTO Order_Items VALUES ";
-        int orderNum=1;
-
-        for(Entry e:DisplayReceipt.entries){
-           // System.out.println(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum));
-            DisplayReceipt.updateIngredients(e);
-            DBUtil.dbExecuteUpdate(itemSQL+e.updateInfo(DisplayReceipt.orderId, orderNum++));
-        }
-        
-        DisplayReceipt.entries.clear();
-        workingEntry=null;
-
-        DisplayReceipt.orderId++;
-        DisplayReceipt.subtotal=0;
-
-        DisplayReceipt.updateRecipt(((Node)event.getSource()).getScene());
     }
 
+    /**
+     * Deselects the toggle button with the specified ID.
+     *
+     * @param s the ID of the toggle button to deselect
+     */
+    public static void deSelect(String s) {
+        for (ToggleButton t : selected) {
+            if (t.getId().equals(s)) {
+                t.setSelected(false);
+            }
+        }
+    }
+
+    /**
+     * Undoes the last entry added to the receipt.
+     *
+     * @param event the action event
+     */
+    public void undo(ActionEvent event) {
+        ArrayList<Entry> entries = DisplayReceipt.getEntries();
+        if (entries.isEmpty()) {
+            return;
+        }
+        DisplayReceipt.subtotal -= entries.get(entries.size() - 1).price;
+        entries.remove(entries.size() - 1);
+        scene = ((Node) event.getSource()).getScene();
+        DisplayReceipt.updateRecipt(scene);
+    }
+
+    /**
+     * Finalizes the order and updates the database.
+     *
+     * @param event the action event
+     * @throws IOException if an I/O error occurs
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
+    public void FinishOrder(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
+        if (DisplayReceipt.getEntries().isEmpty()) {
+            return;
+        }
+        ResultSet rs = DBUtil.dbExecuteQuery("SELECT MAX(order_id) FROM order_history;");
+        rs.next();
+        DisplayReceipt.orderId = rs.getInt(1) + 1;
+
+        DBUtil.dbExecuteUpdate("INSERT INTO Order_History VALUES (" + DisplayReceipt.orderId + ",\'" + DisplayReceipt.dateFormat.format(new Date()) + "\'," + (DisplayReceipt.subtotal * 1.0875) + "," + GUIRunner.currentUser + ")");
+
+        String itemSQL = "INSERT INTO Order_Items VALUES ";
+        int orderNum = 1;
+
+        for (Entry e : DisplayReceipt.entries) {
+            DisplayReceipt.updateIngredients(e);
+            DBUtil.dbExecuteUpdate(itemSQL + e.updateInfo(DisplayReceipt.orderId, orderNum++));
+        }
+
+        DisplayReceipt.entries.clear();
+        workingEntry = null;
+
+        DisplayReceipt.orderId++;
+        DisplayReceipt.subtotal = 0;
+
+        DisplayReceipt.updateRecipt(((Node) event.getSource()).getScene());
+    }
+
+    /**
+     * Updates the states of various buttons based on the user's role.
+     */
     public void updateButtonStates() {
-        //System.out.println(GUIRunner.isManager);
         boolean isManager = GUIRunner.isManager;
         cashier.setDisable(!isManager);
         inventory.setDisable(!isManager);
@@ -135,7 +190,13 @@ public class CashierController implements Initializable {
         order_history.setDisable(!isManager);
         analysis.setDisable(!isManager);
     }
-    
+
+    /**
+     * Initializes the controller.
+     *
+     * @param location the location used to resolve relative paths for the root object, or null if the location is not known
+     * @param resources the resources used to localize the root object, or null if the root object was not localized
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -143,70 +204,104 @@ public class CashierController implements Initializable {
         } catch (SQLException | ClassNotFoundException ex) {
         }
     }
-    
-    public static void buttonPressedOther(ActionEvent event){
-        String buttonPressed = ((Node)event.getSource()).getId();
-        ((ToggleButton)event.getSource()).setSelected(false);
-        int index=DisplayReceipt.extraCostName.indexOf(buttonPressed);
-        workingEntry=new Entry("other",buttonPressed,DisplayReceipt.extraCostPrice.get(index));
-        Scene scene=((Node)event.getSource()).getScene();
+
+    /**
+     * Handles the event when a button for "other" items is pressed.
+     *
+     * @param event the action event
+     */
+    public static void buttonPressedOther(ActionEvent event) {
+        String buttonPressed = ((Node) event.getSource()).getId();
+        ((ToggleButton) event.getSource()).setSelected(false);
+        int index = DisplayReceipt.extraCostName.indexOf(buttonPressed);
+        workingEntry = new Entry("other", buttonPressed, DisplayReceipt.extraCostPrice.get(index));
+        Scene scene = ((Node) event.getSource()).getScene();
         DisplayReceipt.addEntry(workingEntry);
         DisplayReceipt.updateRecipt(scene);
     }
 
-    public static void buttonPressedSide(ActionEvent event){
-        String buttonPressed = ((Node)event.getSource()).getId();
-        selected.add((ToggleButton)event.getSource());
-        
-        if(!workingEntry.addSide(buttonPressed)){
+    /**
+     * Handles the event when a button for side items is pressed.
+     *
+     * @param event the action event
+     */
+    public static void buttonPressedSide(ActionEvent event) {
+        String buttonPressed = ((Node) event.getSource()).getId();
+        selected.add((ToggleButton) event.getSource());
+
+        if (!workingEntry.addSide(buttonPressed)) {
             workingEntry.removeSide(buttonPressed);
             deSelect(buttonPressed);
         }
 
-        Scene scene=((Node)event.getSource()).getScene();
+        Scene scene = ((Node) event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
         scene.lookup("#AddToOrder").setDisable(false);
         DisplayReceipt.updateRecipt(scene);
     }
 
-    public static void buttonPressedProtein(ActionEvent event){
-        String buttonPressed = ((Node)event.getSource()).getId();
+    /**
+     * Handles the event when a button for protein items is pressed.
+     *
+     * @param event the action event
+     */
+    public static void buttonPressedProtein(ActionEvent event) {
+        String buttonPressed = ((Node) event.getSource()).getId();
 
-        if(buttonPressed.contains("Special")){
-            buttonPressed=special;
+        if (buttonPressed.contains("Special")) {
+            buttonPressed = special;
         }
-        
-        selected.add((ToggleButton)event.getSource());
-        
-        if(!workingEntry.addProtein(buttonPressed)){
+
+        selected.add((ToggleButton) event.getSource());
+
+        if (!workingEntry.addProtein(buttonPressed)) {
             workingEntry.removeProtein(buttonPressed);
-            deSelect((buttonPressed==special?"Special : ":"")+buttonPressed);
+            deSelect((buttonPressed.equals(special) ? "Special : " : "") + buttonPressed);
         }
 
-        Scene scene=((Node)event.getSource()).getScene();
+        Scene scene = ((Node) event.getSource()).getScene();
         scene.lookup("#AddToOrder").setOpacity(1);
         scene.lookup("#AddToOrder").setDisable(false);
         DisplayReceipt.updateRecipt(scene);
     }
 
-    public void buttonPressedType(ActionEvent event) throws IOException{
-        String buttonPressed = ((Node)event.getSource()).getId();
-        //System.out.print(buttonPressed);
-        workingEntry=new Entry(new String[]{buttonPressed.replaceAll("-", " ")},DisplayReceipt.overarchingCosts.get(buttonPressed.replaceAll("-", " ")));
+    /**
+     * Handles the event when a button for item types is pressed.
+     *
+     * @param event the action event
+     * @throws IOException if an I/O error occurs
+     */
+    public void buttonPressedType(ActionEvent event) throws IOException {
+        String buttonPressed = ((Node) event.getSource()).getId();
+        workingEntry = new Entry(new String[]{buttonPressed.replaceAll("-", " ")}, DisplayReceipt.overarchingCosts.get(buttonPressed.replaceAll("-", " ")));
         DisplayReceipt.addEntry(workingEntry);
-        ToggleButton pressed=((ToggleButton)event.getSource());
+        ToggleButton pressed = ((ToggleButton) event.getSource());
         pressed.setSelected(false);
-        scene=switch_to_cashier2(event);
-        ((ToggleButton)scene.lookup("#"+pressed.getId())).setSelected(true);
-        selected.add(((ToggleButton)scene.lookup("#"+pressed.getId())));
+        scene = switch_to_cashier2(event);
+        ((ToggleButton) scene.lookup("#" + pressed.getId())).setSelected(true);
+        selected.add(((ToggleButton) scene.lookup("#" + pressed.getId())));
     }
 
-    public void cancelCashier2(ActionEvent event) throws IOException{
+    /**
+     * Cancels the current action and switches back to the cashier1 view.
+     *
+     * @param event the action event
+     * @throws IOException if an I/O error occurs
+     */
+    public void cancelCashier2(ActionEvent event) throws IOException {
         DisplayReceipt.removeEntry(workingEntry);
         deSelectAll();
         switch_to_cashier1(event);
     }
 
+    /**
+     * Builds the grids for the menu items in the specified scenes.
+     *
+     * @param scene1 the first scene
+     * @param scene2 the second scene
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
     public static void buildGrids(Scene scene1,Scene scene2)throws SQLException, ClassNotFoundException {
         ResultSet rs=DBUtil.dbExecuteQuery("SELECT menu_Name,menu_id FROM menu WHERE active=true;");
         HashMap<Integer,Tuple3> locs=new HashMap<>();
@@ -264,24 +359,63 @@ public class CashierController implements Initializable {
         }
     }
 
+    /**
+     * Handles the action event for changing the scene to the employees view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("employees");
     }
+
+    /**
+     * Handles the action event for changing the scene to the inventory view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("inventory");
     }
+
+    /**
+     * Handles the action event for changing the scene to the order history view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-         GUIRunner.changeScene("order_history");
+        GUIRunner.changeScene("order_history");
     }
-    @FXML
-    private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("analysis");
-   }
 
-   @FXML
+    /**
+     * Handles the action event for changing the scene to the cashier view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
+    @FXML
+    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("cashier1");
+    }
+
+    /**
+     * Handles the action event for logging out and changing the scene to the login view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws IOException if an I/O error occurs.
+     */
+    @FXML
     private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
         System.out.println("Logged Out");

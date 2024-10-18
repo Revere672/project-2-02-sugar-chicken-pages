@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -5,22 +6,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
-import javafx.scene.text.Text;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import java.sql.Date;
-
-import java.io.IOException;
-
+import javafx.scene.text.Text;
+/**
+ * This class constructs the basic GUI properties for the employee screen where you can view/edit employees in the database
+ * @author Alexey Bobkov
+ */
 public class EmployeeTable {
     @FXML
     private Button log_out_button;
@@ -112,7 +111,12 @@ public class EmployeeTable {
     private TextField add_id;
 
 
-
+    /**
+     * Searches for an employee from the database.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void searchEmployee(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {// searches when
                                                                                                       // search button
@@ -126,7 +130,12 @@ public class EmployeeTable {
             throw error;
         }
     }
-
+    /**
+     * Searches for employees from the database.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void searchEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
@@ -145,6 +154,11 @@ public class EmployeeTable {
         }
     }
 
+    /**
+     * Initalizes the employee GUI window when the tab is first clicked
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
         edit_pane.setVisible(false);
@@ -164,7 +178,10 @@ public class EmployeeTable {
             status_dropdown.setItems(status_list);
         }
     }
-
+    /**
+     * Sets a background for a pop up menu
+     * @param value a value that determines if a background is visible
+     */
     @FXML
     private void setBackground(Boolean value) {
         if (value) {
@@ -184,7 +201,11 @@ public class EmployeeTable {
             });
         }
     }
-
+    /**
+     * Populates the table of employees for drop down menu with a singular employee
+     * @param e the employee being inserted
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void populateEmployee(Employee e) throws ClassNotFoundException {
         ObservableList<Employee> employeeData = FXCollections.observableArrayList();// make a list for employee data
@@ -192,12 +213,21 @@ public class EmployeeTable {
         employeeData.add(e);// add employee e
         employee_table.setItems(employeeData);// set
     }
-
+    /**
+     * Populates the table of employees for drop down menu with list of employees
+     * @param employeeData data of multiple employees
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void populateEmployees(ObservableList<Employee> employeeData) throws ClassNotFoundException {
         employee_table.setItems(employeeData);// set
     }
-
+    /**
+     * Sets the screen for edit employee pane
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void editEmployee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(true);
@@ -205,7 +235,12 @@ public class EmployeeTable {
         //GUIRunner.changeScene("employee_edit");
     }
 
-    
+    /**
+     * Fills the employee text boxes with user input
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void fill_employee (ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if(employee_dropdown.getValue() != null){//if user has chosen an employee
@@ -224,6 +259,12 @@ public class EmployeeTable {
         }
     }
 
+    /**
+     * Hides a pane when user hits cancel
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void Cancel_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(false);
@@ -231,7 +272,12 @@ public class EmployeeTable {
         searchEmployees(null);
         //GUIRunner.changeScene("employees");
     }
-
+    /**
+     * Hides a pane when user hits cancel
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void Cancel_button2(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(false);
@@ -240,7 +286,12 @@ public class EmployeeTable {
         //GUIRunner.changeScene("employees");
     }
 
-
+    /**
+     * Shows a new pane when user hits Add+ button
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void Add_appear_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         setBackground(false);
@@ -248,6 +299,12 @@ public class EmployeeTable {
         //product_name_text1.requestFocus();
     }
 
+    /**
+     * Sets user fields information for an employee
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void Add_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if (add_employee.getText() == "" || add_email.getText() == "" || add_role.getText() == "" || add_id.getText() == null /*|| add_lastlogin.getText() == "" || add_status.getText() == ""*/){
@@ -269,7 +326,12 @@ public class EmployeeTable {
         }
     }
 
-
+    /**
+     * Shows and dynamically changes an employees status with new pane
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @param actionEvent the action event
+     */
     @FXML
     private void Apply_button(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         //edit_email.setText(e.getEmployeeEmail());
@@ -310,23 +372,62 @@ public class EmployeeTable {
     // }
     // }
 
+    /**
+     * Handles the action event for changing the scene to the employees view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
-    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("cashier1");
+    private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("employees");
     }
+
+    /**
+     * Handles the action event for changing the scene to the inventory view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("inventory");
     }
+
+    /**
+     * Handles the action event for changing the scene to the order history view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
     @FXML
     private void changeToOrderHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-         GUIRunner.changeScene("order_history");
+        GUIRunner.changeScene("order_history");
     }
-    @FXML
-    private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        GUIRunner.changeScene("analysis");
-   }
 
+    /**
+     * Handles the action event for changing the scene to the cashier view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
+    @FXML
+    private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("cashier1");
+    }
+
+    /**
+     * Handles the action event for logging out and changing the scene to the login view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
