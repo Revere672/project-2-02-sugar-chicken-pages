@@ -21,6 +21,9 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
 
+/**
+ * Class controller for the order history view
+ */
 public class OrderHistory {
     // @FXML
     // private TextField order_search;
@@ -78,6 +81,13 @@ public class OrderHistory {
     //     }
     // }
 
+    /**
+     * Handles searching the table for an order
+     * 
+     * @param actionEvent The action event
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     @FXML
     private void searchOrdersByDate(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
@@ -98,6 +108,9 @@ public class OrderHistory {
         }
     }
 
+    /**
+     * Initializes the order history view
+     */
     @FXML
     private void initialize() {
         order_items_pane.setVisible(false);
@@ -139,6 +152,9 @@ public class OrderHistory {
         addScrollListener();
     }
 
+    /**
+     * Handles scrolling on the table to load more orders
+     */
     private void addScrollListener() {
         order_table.skinProperty().addListener((observable, oldSkin, newSkin) -> {
             ScrollBar verticalScrollbar = getVerticalScrollBar(order_table);
@@ -152,6 +168,12 @@ public class OrderHistory {
         });
     }
 
+    /**
+     * Gets the ScrollBar object
+     * 
+     * @param tableView The order history table
+     * @return ScrollBar object in table
+     */
     private ScrollBar getVerticalScrollBar(TableView<?> tableView) {
         for (javafx.scene.Node node : tableView.lookupAll(".scroll-bar")) {
             if (node instanceof ScrollBar) {
@@ -164,6 +186,11 @@ public class OrderHistory {
         return null;
     }
 
+    /**
+     * Enables or disables the background on a Pane pop up
+     * 
+     * @param value Enable or Disable background
+     */
     private void setBackground(Boolean value) {
         if (value) {
             main_order_history.getChildren().forEach(node -> {
@@ -183,6 +210,13 @@ public class OrderHistory {
         }
     }
 
+    /**
+     * Handes displaying the Order information
+     * 
+     * @param actionEvent The action event
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     private void fillHistory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
             ObservableList<Entry> orderItems = OrderDB.searchOrderItems(orderID);
@@ -218,6 +252,13 @@ public class OrderHistory {
         }
     }
 
+    /**
+     * Handles closing the order items pane
+     * 
+     * @param actionEvent The action event
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     @FXML
     private void close_pane(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         order_id_field.setText(null);
@@ -226,6 +267,12 @@ public class OrderHistory {
         order_items_pane.setVisible(false);
     }
 
+    /**
+     * Fills the table with an order object
+     * 
+     * @param order The order to put in the table
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     @FXML
     private void populateOrders(Order order) throws ClassNotFoundException {
         if (order != null) {
@@ -235,6 +282,11 @@ public class OrderHistory {
         }
     }
 
+    /**
+     * Adds a list of orders to the table
+     * 
+     * @param orderData The list of orders to add to the table
+     */
     @FXML
     private void populateOrders(ObservableList<Order> orderData) {
         if (order_table.getItems() == null) {
@@ -244,6 +296,11 @@ public class OrderHistory {
         }
     }
 
+    /**
+     * Replaces the table with new orders
+     * 
+     * @param orderData The list of orders to replace with
+     */
     @FXML
     private void populateOrders_replace(ObservableList<Order> orderData) {
         if (order_table.getItems() != null) {
@@ -252,6 +309,9 @@ public class OrderHistory {
         order_table.setItems(orderData);  // Set the new order data
     }
 
+    /**
+     * Loads orders into the table
+     */
     private void loadOrders() {
         isLoading = true; // Set loading flag to true
         try {
@@ -265,6 +325,11 @@ public class OrderHistory {
         }
     }
 
+    /**
+     * Handles refreshing the order history table
+     * 
+     * @param action The action event
+     */
     @FXML
     private void refresh(ActionEvent action) {
         order_table.getItems().clear();
@@ -278,23 +343,62 @@ public class OrderHistory {
         }
     }
 
+    /**
+     * Handles switching to employee tab 
+     * 
+     * @param actionEvent The action event
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     @FXML
     private void changeToEmployees(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("employees");
     }
+
+    /**
+     * Handles switching to the inventory tab
+     * 
+     * @param actionEvent The action event
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     @FXML
     private void changeToInventory(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("inventory");
     }
+
+    /**
+     * Handles switching to the cashier tab
+     * 
+     * @param actionEvent The action event
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     @FXML
     private void changeToCashier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
          GUIRunner.changeScene("cashier1");
     }
+
+    /**
+     * Handles switching to the analysis tab
+     * 
+     * @param actionEvent The action event
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     @FXML
     private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         GUIRunner.changeScene("analysis");
-   }
+    }
 
+    /**
+     * Handles logging out
+     * 
+     * @param actionEvent The actin event
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     * @throws IOException if an I/O error occurs
+     */
     @FXML
     private void logOut(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         Scene login = new Scene(FXMLLoader.load(getClass().getResource("/fxml/login.fxml")));
