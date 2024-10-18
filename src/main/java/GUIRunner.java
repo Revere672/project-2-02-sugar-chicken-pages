@@ -19,6 +19,12 @@ public class GUIRunner extends Application {
     public static Stage stage;
     public static GUIBuilder build;
 
+    /**
+     * Starts the JavaFX application.
+     *
+     * @param primaryStage the primary stage for this application
+     * @throws Exception if an error occurs during application startup
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         scenes = new HashMap<>();
@@ -33,6 +39,14 @@ public class GUIRunner extends Application {
         stage.show();
     }
 
+    /**
+     * The main method to start the application.
+     *
+     * @param args the command line arguments
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     * @throws SQLException if a database access error occurs
+     * @throws IOException if an I/O error occurs
+     */
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
         Properties properties = new Properties();
         try (InputStream input = GUIRunner.class.getResourceAsStream("/gradle.properties")) {
@@ -54,6 +68,12 @@ public class GUIRunner extends Application {
         launch();
     }
 
+    /**
+     * Changes the scene to the specified scene name.
+     *
+     * @param sceneName the name of the scene to switch to
+     * @return the new scene
+     */
     public static Scene changeScene(String sceneName) {
         Scene newScene = scenes.get(sceneName);
         
