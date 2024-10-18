@@ -1,9 +1,11 @@
 import java.sql.*;
 import javafx.beans.property.*;
 
-/*
- * Class reponsible for viewing/updating employee's attributes in the database
+/**
+ * This class constructs the basic properties of an employee at a restraunt, also has getters and setters for an employee and their properties
+ * @author Alexey Bobkov
  */
+
 public class Employee {
     private IntegerProperty employee_ID;
     private StringProperty name;
@@ -13,9 +15,8 @@ public class Employee {
     private BooleanProperty active_status;
     //edit column
 
-    /*
-     * Default constructor for an employee that sets all of its 
-     * attributes with JavaFX property bindings
+    /**
+     * Constructs employee with an ID, name, email, role, last login date, and active status
      */
     public Employee(){
         this.employee_ID = new SimpleIntegerProperty();
@@ -25,164 +26,128 @@ public class Employee {
         this.login_date = new SimpleObjectProperty();
         this.active_status = new SimpleBooleanProperty();
     }
-
     /**
-     * Returns the current value of the employee ID
-     * 
-     * @return the employee ID as an integer
+     * Gets an employee ID
+     * @return The employee ID
      */
     public int getEmployeeID(){
         return employee_ID.get();
     }
-
     /**
-     * Updates the current value of the employee ID with a new one
-     * 
-     * @param employee_ID as the new employee ID
+     * Sets an employee ID
+     * @param employee_ID The ID of the employee
      */
     public void setEmployeeID(int employee_ID){
         this.employee_ID.set(employee_ID);
     }
-
     /**
-     * Returns the employee ID property for data binding
-     * 
-     * @return the employee_ID property
+     * Gets an employee ID property
+     * @return The employee ID property
      */
     public IntegerProperty EmployeeIDProperty(){
         return employee_ID;
     }
-
     /**
-     * Returns the employee's current name
-     * 
-     * @return the employee's name as a string
+     * Gets an employee name
+     * @return The employee name
      */
     public String getEmployeeName(){
         return name.get();
     }
-
-    /**
-     * Updates the employee's current name with a new one
-     * 
-     * @param name as the employee's new name
+     /**
+     * Sets an employee name
+     * @param name The name of the employee
      */
     public void setEmployeeName(String name){
         this.name.set(name);
     }
-
     /**
-     * Returns the name property for data binding
-     * 
-     * @return the name property
+     * Gets an employee name property
+     * @return The employee name property
      */
     public StringProperty EmployeeNameProperty(){
         return name;
     }
-
     /**
-     * Returns the employee's current email
-     * 
-     * @return the employee's email as a string
+     * Gets an employee email
+     * @return The employee email
      */
     public String getEmployeeEmail(){
         return email.get();
     }
-
-    /**
-     * Updates the employee's current email with a new one
-     * 
-     * @param email as the employee's new email
+     /**
+     * Sets an employee email
+     * @param email The email of the employee
      */
     public void setEmployeeEmail(String email){
         this.email.set(email);
     }
-
     /**
-     * Returns the email property for data binding
-     * 
-     * @return the email property
+     * Gets an employee email property
+     * @return The employee email property
      */
     public StringProperty EmployeeEmailProperty(){
         return email;
     }
-
     /**
-     * Returns the employee's current role
-     * 
-     * @return the employee's role as a string
+     * Gets an employee role
+     * @return The employee role
      */
     public String getEmployeeRole(){
         return role.get();
     }
-
-    /**
-     * Updates the employee's current role with a new one
-     * 
-     * @param role as the employee's new role
+     /**
+     * Sets an employee role
+     * @param role The role of the employee
      */
     public void setEmployeeRole(String role){
         this.role.set(role);
     }
-
     /**
-     * Returns the role property for data binding
-     * 
-     * @return the role property
+     * Gets an employee role property
+     * @return The employee role property
      */
     public StringProperty EmployeeRoleProperty(){
         return role;
     }
-
     /**
-     * Returns the employee's last login date
-     * 
-     * @return the last login date as an Object 
+     * Gets an employee last login date
+     * @return The employee last login
      */
     public Object getEmployeeLogin(){
         return login_date.get();
     }
-
-    /**
-     * Updates the employee's last login date with a new one
-     * 
-     * @param login_date as the employee's new login date
+     /**
+     * Sets an employee last login date
+     * @param login_date The last login date of the employee
      */
     public void setEmployeeLogin(Date login_date){
         this.login_date.set(login_date);
     }
-
     /**
-     * Returns the login_date property for data binding
-     * 
-     * @return the login_date property
+     * Gets an employee login property
+     * @return The employee login property
      */
     public ObjectProperty EmployeeLoginProperty(){
         return login_date;
     }
-
     /**
-     * Returns the employee's current active status
-     * 
-     * @return the employee's current active status as a boolean
+     * Gets an employee status
+     * @return The employee status
      */
     public Boolean getEmployeeStatus(){
         return active_status.get();
     }
-
-    /**
-     * Updates the employee's current active status with a new one
-     * 
-     * @param active_status as the employee's new actice status
+     /**
+     * Sets an employee status
+     * @param active_status The status of the employee
      */
     public void setEmployeeStatus(Boolean active_status){
         this.active_status.set(active_status);
     }
-
     /**
-     * Returns the active_status property for data binding
-     * 
-     * @return the active_status property
+     * Gets an employee status property
+     * @return The employee status property
      */
     public BooleanProperty EmployeeStatusProperty(){
         return active_status;
