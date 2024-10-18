@@ -421,6 +421,18 @@ public class EmployeeTable {
     }
 
     /**
+     * Handles the action event for changing the scene to the analysis view.
+     * 
+     * @param actionEvent The action event.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver class is not found.
+     */
+    @FXML
+    private void changeToAnalysis(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        GUIRunner.changeScene("analysis");
+    }
+
+    /**
      * Handles the action event for logging out and changing the scene to the login view.
      * 
      * @param actionEvent The action event.
