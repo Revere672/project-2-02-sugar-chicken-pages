@@ -156,6 +156,12 @@ task dropAll{
     }
 }
 
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    classpath = configurations.runtimeClasspath
+    destinationDir = file("src/main/resources/javadocs")
+}
+
 
 run {
     args = ["${PGHOST}","${PGUSER}", "${PGPASSWORD}"]

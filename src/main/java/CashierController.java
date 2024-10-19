@@ -19,6 +19,9 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
+/**
+ * Class controller for the cashier view
+ */
 public class CashierController implements Initializable {
 
     private Scene scene;
