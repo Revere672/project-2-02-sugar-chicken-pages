@@ -66,7 +66,7 @@ public class Inventory {
     /**
      * Set the name of the product.
      * 
-     * @param inventory_ID The name of the product.
+     * @param product_name The name of the product.
      */
     public void setProductName(String product_name) {
         this.product_name.set(product_name);
@@ -93,7 +93,7 @@ public class Inventory {
     /**
      * Set the supplier of the product.
      * 
-     * @param inventory_ID The supplier of the product.
+     * @param supplier The supplier of the product.
      */
     public void setSupplier(String supplier) {
         this.supplier.set(supplier);
@@ -120,7 +120,7 @@ public class Inventory {
     /**
      * Set the cost of the product.
      * 
-     * @param inventory_ID The cost of the product.
+     * @param cost The cost of the product.
      */
     public void setCost(double cost) {
         this.cost.set(cost);
@@ -147,7 +147,7 @@ public class Inventory {
     /**
      * Set the quantity of the product.
      * 
-     * @param inventory_ID The quantity of the product.
+     * @param quantity The quantity of the product.
      */
     public void setQuantity(double quantity) {
         this.quantity.set(quantity);

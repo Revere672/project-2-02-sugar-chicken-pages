@@ -21,9 +21,9 @@ public class GUIBuilder {
     /**
      * Default constructor for the GUIBuilder class.
      * 
-     * @throws ClassNotFoundException
-     * @throws SQLException
-     * @throws IOException
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public GUIBuilder() throws ClassNotFoundException, SQLException, IOException {
         loadScenes();
@@ -34,9 +34,9 @@ public class GUIBuilder {
      * This method loads the inventory, cashier, employees, order history, and
      * analysis scenes.
      * 
-     * @throws IOException
-     * @throws SQLException
-     * @throws ClassNotFoundException
+     * @throws ClassNotFoundException if the database driver class is not found.
+     * @throws SQLException if a database access error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     private void loadScenes() throws IOException, SQLException, ClassNotFoundException {
         Scene inventory = new Scene(FXMLLoader.load(getClass().getResource("/fxml/inventory.fxml")));
